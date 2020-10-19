@@ -33,7 +33,7 @@ Cada jogador tem as suas ***allied colours***. Estas são usadas para conectar o
 - Cada cor pode apenas ser ganha por 1 jogador.
 - O jogo termina quando um dos jogadores ganha a sua segunda cor, sendo atribuida a vitória a esse mesmo jogador.
 - Se uma jogada bloquear qualquer jogada subsequente que permita um jogador ganhar uma cor, o oponente do jogador bloqueado ganha essa cor.
-- No caso de um jogada formar uma conexão para ambos os jogadores, a cor e atribuida ao jogador que colocou o disco
+- No caso de um jogada formar uma conexão para ambos os jogadores, a cor e atribuida ao jogador que colocou o disco.
 
 ![](imgs/alliances_win1.png)
 
