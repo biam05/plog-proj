@@ -1,0 +1,144 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+\documentclass[article, a4paper, 12pt, oneside]{memoir}
+
+% Margins
+\usepackage[top=3cm,left=2cm,right=2cm,bottom=3cm]{geometry}
+
+% Encondings
+\usepackage[utf8]{inputenc}
+
+% Language
+\usepackage[portuguese]{babel}
+
+% Graphics and images
+\usepackage{graphicx}
+	\graphicspath{{../images/}}
+
+% Tables
+\usepackage{tabularx}
+
+% Paragraph Spacing
+\usepackage{parskip}
+\usepackage{indentfirst}
+\setlength{\parskip}{0.5cm}
+
+% Hyperreferences
+\usepackage{hyperref}
+
+% Repeated commands
+\usepackage{expl3}
+\ExplSyntaxOn
+\cs_new_eq:NN \Repeat \prg_replicate:nn
+\ExplSyntaxOff
+
+% Header and Footer Things
+\usepackage{wallpaper}
+\usepackage{fancyhdr}
+
+% Following code to edit the pagestyle
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Projeto PLOG}
+\lhead{\leftmark}
+\rfoot{Página \thepage}
+
+% Commands
+\usepackage{xargs}
+
+%% Linked Email
+\newcommand{\email}[1]{
+{\texttt{\href{mailto:#1}{#1}} }
+}
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+% Title
+\title{\Huge \texttt{TÍTULO} }
+% Authors
+\author{
+\LARGE \textbf{Grupo XXX}\\\\
+\begin{tabular}{l r}
+	\email{up201806551@fe.up.pt} & Beatriz Costa Silva Mendes			\\
+	\email{up201806490@fe.up.pt} & Hugo Miguel Monteiro Guimarães		\\
+\end{tabular}
+}
+
+%\institute{Faculdade de Engenharia da Universidade do Porto - PLOG}
+
+% Date for the report
+\date{\today}
+
+% Table of Contents
+\addto\captionsportuguese{\renewcommand*\contentsname{Índice}}
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+%----------------------------------------------------------------------------------------
+%	Front Page
+%----------------------------------------------------------------------------------------
+% Title Author and Date
+\maketitle
+
+% More information for front page
+\begin{center}
+\textbf{Projeto PLOG - 2020/21 - MIEIC}
+\Repeat{2}{\linebreak}
+\begin{tabular}{l r}
+	\textbf{Professor das Aulas Laboratoriais}: & Daniel Augusto Gama de Castro Silva
+\end{tabular}
+\Repeat{4}{\linebreak}
+% FEUP Logo
+\includegraphics[scale=0.4]{FEUPlogo.png}
+
+\end{center}
+
+\newpage
+% Header Image
+\CenterWallPaper{0.1}{FEUPlogo.png}
+\addtolength{\wpXoffset}{-7.5cm}
+\addtolength{\wpYoffset}{13.8cm}
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+\tableofcontents*
+
+\newpage
+%----------------------------------------------------------------------------------------
+%	CHAPTER 1 - Contexto
+%----------------------------------------------------------------------------------------
+\chapter[Contexto][Contexto]{Contexto} \label{\thechapter}
+
+\newpage
+%----------------------------------------------------------------------------------------
+%	CHAPTER 2 
+%----------------------------------------------------------------------------------------
+\chapter[][]{} \label{\thechapter}
+
+
+\newpage
+%----------------------------------------------------------------------------------------
+%	CHAPTER 3
+%----------------------------------------------------------------------------------------
+\chapter[][]{} \label{\thechapter}
+
+\newpage
+%----------------------------------------------------------------------------------------
+%	CHAPTER 4
+%----------------------------------------------------------------------------------------
+\chapter[][]{} \label{\thechapter}
+
+
+\newpage
+%----------------------------------------------------------------------------------------
+%	CHAPTER 5
+%----------------------------------------------------------------------------------------
+\chapter[][]{} \label{\thechapter}
+
+
+\end{document}
