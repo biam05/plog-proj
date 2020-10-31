@@ -47,8 +47,8 @@ Cada jogador tem as suas ***allied colours***. Estas são usadas para conectar o
 ## Representação interna do estado de jogo
 
 - Tabuleiro - É representado através de uma lista de listas de uma malha hexagonal, contendo os seguintes átomos:
-    - 'x'- `position`: Representa uma posição que ainda não está ocupada.
-    - ' '- `empty`: Representa um espaço vazio não jogável (apenas para formatação da malha hexagonal).
+    - '_' - `position`: Representa uma posição que ainda não está ocupada.
+    - ' ' - `empty`: Representa um espaço vazio não jogável (apenas para formatação da malha hexagonal).
     - 'g' - `green`: Representa uma posição preenchida pela cor verde.
     - 'p' - `purple`: Representa uma posição preenchida pela cor roxa.
     - 'o' - `orange`: Representa uma posição preenchida pela cor laranja.
@@ -65,6 +65,15 @@ O estado de jogo é visualizado através do predicado recursivo
     - `Player` - Corresponde a um átomo que permita indicar qual o jogador que irá efetuar a próxima jogada.
 
 O predicado imprime recursivamente o estado de jogo e, no fim, imprime qual o jogador que irá efetuar a próxima jogada.
+
+##### Estado inicial de jogo :
+![Estado Inicial](imgs/initial.png)
+
+##### Estado intermédio de jogo :
+![Estado Intermédio ](imgs/intermediate.png)
+
+##### Estado final de jogo :
+![estado Final](imgs/final.png)
 
 
 ## Fontes
