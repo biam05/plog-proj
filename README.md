@@ -46,6 +46,26 @@ Cada jogador tem as suas ***allied colours***. Estas são usadas para conectar o
 
 ## Representação interna do estado de jogo
 
+- Tabuleiro - É representado através de uma lista de listas de uma malha hexagonal, contendo os seguintes átomos:
+    - 'x'- `position`: Representa uma posição que ainda não está ocupada.
+    - ' '- `empty`: Representa um espaço vazio não jogável (apenas para formatação da malha hexagonal).
+    - 'g' - `greenPlayer`: Representa uma posição preenchida pela cor verde.
+    - 'p' - `purplePlayer`: Representa uma posição preenchida pela cor roxa.
+    - 'o' - `orangePlayer`: Representa uma posição preenchida pela cor laranja.
+    - 'G' - `green`: Indica um dos extremos de conexão da cor verde.
+    - 'P' - `purple`: Indica um dos extremos de conexão da cor roxa.
+    - 'O' - `orange`: Indica um dos extremos de conexão da cor laranja.
+- Jogador - É representado através dos átomos `player1` e `player2`, sendo o próximo jogador a jogar imprimido no ecrã.
+
+## Visualização do estado de jogo
+
+O estado de jogo é visualizado através do predicado recursivo
+- `display_game([Head|Tail],Player)`
+    - `[Head|Tail]` - Corresponde a uma lista contendo o estado de jogo.
+    - `Player` - Corresponde a um átomo que permita indicar qual o jogador que irá efetuar a próxima jogada.
+
+O predicado imprime recursivamente o estado de jogo e, no fim, imprime qual o jogador que irá efetuar a próxima jogada.
+
 
 ## Fontes
 [Alliances Abstract Strategy Board game - How to Setup Playthrough and Review * Amass Games *](https://www.youtube.com/watch?v=VNyHiCfOWhw)
