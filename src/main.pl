@@ -18,7 +18,7 @@ square :-
 
 % inicialização do array com o estado inicial de jogo
 
-initBoard([
+initial([
     [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    orange,   empty,    orange,   empty,    orange,   empty,    orange,   empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
     [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    position, empty,    position, empty,    position, empty,    position, empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
     [empty,  empty,    empty,    empty,    green,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, purple,   empty,    empty,    empty,    empty],
@@ -35,6 +35,26 @@ initBoard([
     [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    position, empty,    position, empty,    position, empty,    position, empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
     [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    orange,   empty,    orange,   empty,    orange,   empty,    orange,   empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty]
 ]).
+
+
+intermediate([
+    [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    orange,   empty,    orange,   empty,    orange,   empty,    orange,   empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
+    [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    position, empty,    position, empty,    position, empty,    position, empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
+    [empty,  empty,    empty,    empty,    green,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, purple,   empty,    empty,    empty,    empty],
+    [empty,  empty,    empty,    green,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, purple,   empty,    empty,    empty],
+    [empty,  empty,    green,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, purple,   empty,    empty],
+    [empty,  green,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, purple,   empty],
+    [green,  position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, purple],
+    [empty,  empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    empty],
+    [purple, position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, green],
+    [empty,  purple,   position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, green,    empty],    
+    [empty,  empty,    purple,   position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, green,    empty,    empty],
+    [empty,  empty,    empty,    purple,   position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, green,    empty,    empty,    empty],  
+    [empty,  empty,    empty,    empty,    purple,   position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, green,    empty,    empty,    empty,    empty],
+    [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    position, empty,    position, empty,    position, empty,    position, empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
+    [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    orange,   empty,    orange,   empty,    orange,   empty,    orange,   empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty]
+]).
+
 
 % Board hard coded
 /*printBoard :-
@@ -66,12 +86,19 @@ symbol(purple, S)       :- S='P'.
 symbol(orange, S)       :- S='O'.
 
 % Funcão para percorrer a lista
-printBoard([Head|Tail]) :-
+display_game([Head|Tail],Player) :-
     printLine(Head),
     nl,
-    printBoard(Tail).
+    display_game(Tail).
 
-printBoard([]).
+display_game([],player1) :-
+    write('Player1 turn').
+
+display_game([],player2) :-
+    write('Player2 turn').
+
+display_game([],_) :-
+    write('Wrong Player given').
 
 printLine([Head|Tail]) :-
     symbol(Head, S),
@@ -81,10 +108,7 @@ printLine([Head|Tail]) :-
 printLine([]).
 
 
-/*
-*               PARA EXECUTAR
-*   
-*   initBoard(Initial), printBoard(Initial).
-*   NOTA: perguntar ao professor
-*/
+play :-
+    initial(GameState),
+    display_game(GameState,Player).
 
