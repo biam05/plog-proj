@@ -49,12 +49,12 @@ Cada jogador tem as suas ***allied colours***. Estas são usadas para conectar o
 - Tabuleiro - É representado através de uma lista de listas de uma malha hexagonal, contendo os seguintes átomos:
     - 'x'- `position`: Representa uma posição que ainda não está ocupada.
     - ' '- `empty`: Representa um espaço vazio não jogável (apenas para formatação da malha hexagonal).
-    - 'g' - `greenPlayer`: Representa uma posição preenchida pela cor verde.
-    - 'p' - `purplePlayer`: Representa uma posição preenchida pela cor roxa.
-    - 'o' - `orangePlayer`: Representa uma posição preenchida pela cor laranja.
-    - 'G' - `green`: Indica um dos extremos de conexão da cor verde.
-    - 'P' - `purple`: Indica um dos extremos de conexão da cor roxa.
-    - 'O' - `orange`: Indica um dos extremos de conexão da cor laranja.
+    - 'g' - `green`: Representa uma posição preenchida pela cor verde.
+    - 'p' - `purple`: Representa uma posição preenchida pela cor roxa.
+    - 'o' - `orange`: Representa uma posição preenchida pela cor laranja.
+    - 'G' - `gWall`: Indica um dos extremos de conexão da cor verde.
+    - 'P' - `pWall`: Indica um dos extremos de conexão da cor roxa.
+    - 'O' - `oWall`: Indica um dos extremos de conexão da cor laranja.
 - Jogador - É representado através dos átomos `player1` e `player2`, sendo o próximo jogador a jogar imprimido no ecrã.
 
 ## Visualização do estado de jogo
