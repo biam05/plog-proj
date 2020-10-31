@@ -19,21 +19,21 @@ square :-
 % inicialização do array com o estado inicial de jogo
 
 initial([
-    [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    orange,   empty,    orange,   empty,    orange,   empty,    orange,   empty,    orange,   empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
+    [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
     [empty,  empty,    empty,    empty,    empty,    empty,    empty ,   empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
-    [empty,  empty,    empty,    empty,    green,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, purple,   empty,    empty,    empty,    empty],
-    [empty,  empty,    empty,    green,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, purple,   empty,    empty,    empty],
-    [empty,  empty,    green,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, purple,   empty,    empty],
-    [empty,  green,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, purple,   empty],
-    [green,  position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, purple],
+    [empty,  empty,    empty,    empty,    gWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, pWall,    empty,    empty,    empty,    empty],
+    [empty,  empty,    empty,    gWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, pWall,    empty,    empty,    empty],
+    [empty,  empty,    gWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, pWall,    empty,    empty],
+    [empty,  gWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, pWall,   empty],
+    [gWall,  position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, pWall],
     [empty,  empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    empty],
-    [purple, position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, green],
-    [empty,  purple,   position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, green,    empty],    
-    [empty,  empty,    purple,   position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, green,    empty,    empty],
-    [empty,  empty,    empty,    purple,   position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, green,    empty,    empty,    empty],  
-    [empty,  empty,    empty,    empty,    purple,   position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, green,    empty,    empty,    empty,    empty],
+    [pWall,  position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,     position, gWall],
+    [empty,  pWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, gWall,    empty],    
+    [empty,  empty,    pWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, gWall,    empty,    empty],
+    [empty,  empty,    empty,    pWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, gWall,    empty,    empty,    empty],  
+    [empty,  empty,    empty,    empty,    pWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, gWall,    empty,    empty,    empty,    empty],
     [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
-    [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    orange,   empty,    orange,   empty,    orange,   empty,    orange,   empty,    orange,   empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty]
+    [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty]
 ]).
 
 
@@ -113,14 +113,14 @@ final([
 */
 
 % Funções para dar draw e cada elemento
-symbol(position, S)     :- S='x'.
-symbol(empty, S)        :- S=' '.
-symbol(greenPlayer, S)  :- S='g'.
-symbol(purplePlayer, S) :- S='p'.
-symbol(orangePlayer, S) :- S='o'.
-symbol(green, S)        :- S='G'.
-symbol(purple, S)       :- S='P'.
-symbol(orange, S)       :- S='O'.
+symbol(position, S)    :- S='x'.
+symbol(empty, S)       :- S=' '.
+symbol(green, S)       :- S='g'.
+symbol(purple, S)      :- S='p'.
+symbol(orange, S)      :- S='o'.
+symbol(gWall, S)       :- S='G'.
+symbol(pWall, S)       :- S='P'.
+symbol(oWall, S)       :- S='O'.
 
 % Funcão para percorrer a lista
 display_game([Head|Tail],Player) :-
