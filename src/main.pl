@@ -89,7 +89,7 @@ symbol(orange, S)       :- S='O'.
 display_game([Head|Tail],Player) :-
     printLine(Head),
     nl,
-    display_game(Tail).
+    display_game(Tail,Player).
 
 display_game([],player1) :-
     write('Player1 turn').
