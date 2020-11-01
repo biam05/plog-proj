@@ -64,7 +64,11 @@ O estado de jogo é visualizado através do predicado recursivo
     - `[Head|Tail]` - Corresponde a uma lista contendo o estado de jogo.
     - `Player` - Corresponde a um átomo que permita indicar qual o jogador que irá efetuar a próxima jogada.
 
-O predicado imprime recursivamente o estado de jogo e, no fim, imprime qual o jogador que irá efetuar a próxima jogada.
+O predicado imprime recursivamente o estado de jogo e, no fim, imprime qual o jogador que irá efetuar a próxima jogada. 
+Em cima do tabuleiro estará um *header* correspondente ao *Player1* que apresenta o número de cores que conseguiu ao longo do jogo e as suas *win conditions*. Um *header* semelhante também será apresentado para o *Player2*.
+
+##### Player Header 
+![Header](imgs/header.png)
 
 ##### Estado inicial de jogo :
 ![Estado Inicial](imgs/initial.png)
