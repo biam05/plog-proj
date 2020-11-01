@@ -1,12 +1,3 @@
-% Main Predicate of the game
-% Calls display_game(GameState,Player).
-% play/0. 
-
-% Displays the game 
-% display_game(GameState,Player).
-
-% Returns the initial state of the game
-% initial(GameState).
 
 % inicialização do array com o estado inicial de jogo
 initial([
@@ -66,7 +57,7 @@ final([
 ]).
 
 
-% Funções para dar draw e cada elemento
+% predicados para dar draw e cada elemento
 symbol(position, S)    :- S='_'.
 symbol(empty, S)       :- S=' '.
 symbol(green, S)       :- S='g'.
@@ -76,7 +67,7 @@ symbol(gWall, S)       :- S='G'.
 symbol(pWall, S)       :- S='P'.
 symbol(oWall, S)       :- S='O'.
 
-% Funcão para percorrer a lista
+% predicado para percorrer a lista
 display_game([Head|Tail],Player) :-
     write('\t\t\t'),
     printLine(Head),
@@ -90,7 +81,7 @@ display_game([],player2).
 display_game([],_) :-
     write('Wrong Player given\n').
 
-
+% predicado para imprimir cada linha
 printLine([Head|Tail]) :-
     symbol(Head, S),
     write(S),
@@ -98,6 +89,7 @@ printLine([Head|Tail]) :-
 
 printLine([]).
 
+%predicado para imprimir o headers de dados de jogo do player1 (hardcoded by now)
 displayHeader(player1) :-
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 1'), nl,
@@ -107,6 +99,7 @@ displayHeader(player1) :-
     write('Green : Purple & Green ; Purple : Orange & Purple ; Orange : Green & Orange'), nl,
     write('----------------------------------------------------------------------------'), nl, nl.
 
+%predicado para imprimir o headers de dados de jogo do playe2 (hardcoded by now)
 displayHeader(player2) :-
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 2'), nl,
@@ -118,21 +111,8 @@ displayHeader(player2) :-
 displayHeader(_) :-
     write('Wrong Player Name').
 
-/*
-play :-
-    write('INITIAL BOARD\n\n'),
-    initial(InitialState),    
-    displayHeader(player1),
-    display_game(InitialState,player1),
-    displayHeader(player2),
-    write('\n\nINTERMEDIATE BOARD\n\n'),
-    intermediate(IntermediateState),
-    display_game(IntermediateState,player1),
-    write('\n\nFINAL BOARD\n\n'),
-    final(FinalState),
-    display_game(FinalState,player1).
-*/
-
+% Predicado que permite correr o jogo
+% De momento está hardcoded para mostar os headers no inicio e os estados de jogo pedidos
 play :-
     displayHeader(player1),
     displayHeader(player2),
