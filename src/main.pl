@@ -1,4 +1,3 @@
-
 % Main Predicate of the game
 % Calls display_game(GameState,Player).
 % play/0. 
@@ -7,17 +6,9 @@
 % display_game(GameState,Player).
 
 % Returns the initial state of the game
-% initial(GameState).~
-
-/*
-square :- 
-    write(' ___ '), nl,
-    put_code(9585), write('   '), put_code(9586), nl,
-    put_code(9586), write('___'), put_code(9585).
-*/
+% initial(GameState).
 
 % inicialização do array com o estado inicial de jogo
-
 initial([
     [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
     [empty,  empty,    empty,    empty,    empty,    empty,    empty ,   empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
@@ -36,7 +27,7 @@ initial([
     [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty]
 ]).
 
-
+% inicialização do array com o estado intermédio de jogo
 intermediate([
     [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
     [empty,  empty,    empty,    empty,    empty,    empty,    empty ,   empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
@@ -55,7 +46,7 @@ intermediate([
     [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty]
 ]).
 
-
+% inicialização do array com o estado final de jogo
 final([
     [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
     [empty,  empty,    empty,    empty,    empty,    empty,    empty ,   empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
@@ -63,54 +54,17 @@ final([
     [empty,  empty,    empty,    gWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, pWall,    empty,    empty,    empty],
     [empty,  empty,    gWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, pWall,    empty,    empty],
     [empty,  gWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    purple,   pWall,   empty],
-    [gWall,  position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    green,    empty,    position, pWall],
+    [gWall,  orange,   empty,    green,    empty,    orange,   empty,    green,    empty,    orange,   empty,    green,    empty,    position, empty,    position, empty,    position, empty,    position, empty,    green,    empty,    position, pWall],
     [empty,  empty,    position, empty,    position, empty,    position, empty,    purple,   empty,    purple,   empty,    green,    empty,    green,    empty,    purple,   empty,    position, empty,    purple,   empty,    position, empty,    empty],
-    [pWall,  position, empty,    position, empty,    position, empty,    purple,   empty,    position, empty,    position, empty,    position, empty,    position, empty,    green,    empty,    green,    empty,    position, empty,     position, gWall],
-    [empty,  pWall,    position, empty,    position, empty,    green,    empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, gWall,    empty],    
-    [empty,  empty,    pWall,    purple  , empty,    purple,   empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, gWall,    empty,    empty],
-    [empty,  empty,    empty,    pWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, gWall,    empty,    empty,    empty],  
+    [pWall,  position, empty,    position, empty,    position, empty,    purple,   empty,    position, empty,    position, empty,    orange,   empty,    position, empty,    green,    empty,    green,    empty,    position, empty,     position, gWall],
+    [empty,  pWall,    position, empty,    position, empty,    green,    empty,    position, empty,    position, empty,    position, empty,    orange,   empty,    position, empty,    position, empty,    position, empty,    position, gWall,    empty],    
+    [empty,  empty,    pWall,    purple  , empty,    purple,   empty,    position, empty,    position, empty,    position, empty,    position, empty,    orange,   empty,    position, empty,    position, empty,    position, gWall,    empty,    empty],
+    [empty,  empty,    empty,    pWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    green,    empty,    orange,   empty,    green,    gWall,    empty,    empty,    empty],  
     [empty,  empty,    empty,    empty,    pWall,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, gWall,    empty,    empty,    empty,    empty],
     [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    position, empty,    position, empty,    position, empty,    position, empty,    position, empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty],
     [empty,  empty,    empty,    empty,    empty,    empty,    empty,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    oWall,    empty,    empty,    empty,    empty,    empty,    empty,    empty,    empty]
 ]).
 
-
-% Board hard coded
-/*initial :-
-    write('        O O O O O        '),nl,
-    write('        x x x x x        '),nl,
-    write('    Gx x x x x x x xP    '),nl,
-    write('   Gx x x x x x x x xP   '),nl,
-    write('  Gx x x x x x x x x xP  '),nl,
-    write(' Gx x x x x x x x x x xP '),nl,
-    write('Gx x x x x x x x x x x xP'),nl,
-    write('  x x x x x x x x x x x  '),nl,
-    write('Px x x x x x x x x x x xG'),nl,
-    write(' Px x x x x x x x x x xG '),nl,
-    write('  Px x x x x x x x x xG  '),nl,
-    write('   Px x x x x x x x xG   '),nl,
-    write('    Px x x x x x x xG    '),nl,
-    write('        x x x x x        '),nl,
-    write('        O O O O O        '),nl.
-*/
-
-/*intermediate :-
-    write('        O O O O O        '),nl,
-    write('        x x x x x        '),nl,
-    write('    Gx x x x x x x xP    '),nl,
-    write('   Gx x x x x x x x xP   '),nl,
-    write('  Gx x x x x x x x x xP  '),nl,
-    write(' Gx x x x x x x x x x xP '),nl,
-    write('Gx x x x x x x x x x x xP'),nl,
-    write('  x x x x x x x x x x x  '),nl,
-    write('Px x x x x x x x x x x xG'),nl,
-    write(' Px x x x x x x x x x xG '),nl,
-    write('  Px x x x x x x x x xG  '),nl,
-    write('   Px x x x x x x x xG   '),nl,
-    write('    Px x x x x x x xG    '),nl,
-    write('        x x x x x        '),nl,
-    write('        O O O O O        '),nl.
-*/
 
 % Funções para dar draw e cada elemento
 symbol(position, S)    :- S='_'.
@@ -129,14 +83,14 @@ display_game([Head|Tail],Player) :-
     nl,
     display_game(Tail,Player).
 
-display_game([],_) :-
-    write('Wrong Player given\n').
-
 display_game([],player1) :-
-    write('Player1 turn').
+    write('Next turn for Player1').
 
 display_game([],player2) :-
-    write('Player2 turn').
+    write('Next turn for Player2').
+
+display_game([],_) :-
+    write('Wrong Player given\n').
 
 
 printLine([Head|Tail]) :-
@@ -150,7 +104,7 @@ displayHeader(player1) :-
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 1'), nl,
     write('----------------------------------------------------------------------------'), nl,
-    write('Victories: '), nl,
+    write('Victories: 0 '), nl,
     write('\t\t\t     Win Conditions'), nl,
     write('Green : Purple & Green ; Purple : Orange & Purple ; Orange : Green & Orange'), nl,
     write('----------------------------------------------------------------------------'), nl, nl.
@@ -159,16 +113,39 @@ displayHeader(player2) :-
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 2'), nl,
     write('----------------------------------------------------------------------------'), nl,
-    write('Victories: '), nl,
+    write('Victories: 0 '), nl,
     write('\t\t\t     Win Conditions'), nl,
     write('Green : Orange & Green ; Purple : Green & Purple ; Orange : Purple & Orange'), nl, nl.
 
 displayHeader(_) :-
     write('Wrong Player Name').
 
+/*
 play :-
-    final(GameState),
+    write('INITIAL BOARD\n\n'),
+    initial(InitialState),    
     displayHeader(player1),
-    display_game(GameState,player1),
-    displayHeader(player2).
+    display_game(InitialState,player1),
+    displayHeader(player2),
+    write('\n\nINTERMEDIATE BOARD\n\n'),
+    intermediate(IntermediateState),
+    display_game(IntermediateState,player1),
+    write('\n\nFINAL BOARD\n\n'),
+    final(FinalState),
+    display_game(FinalState,player1).
+*/
+
+play :-
+    displayHeader(player1),
+    displayHeader(player2),
+    initial(InitialState),    
+    intermediate(IntermediateState),
+    final(FinalState),
+    write('\n\nINITIAL BOARD\n\n'),
+    display_game(InitialState,player1),
+    write('\n\nINTERMEDIATE BOARD\n\n'),
+    display_game(IntermediateState,player1),
+    write('\n\nFINAL BOARD\n\n'),
+    display_game(FinalState,player1).
+
 
