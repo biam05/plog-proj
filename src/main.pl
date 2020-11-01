@@ -83,11 +83,9 @@ display_game([Head|Tail],Player) :-
     nl,
     display_game(Tail,Player).
 
-display_game([],player1) :-
-    write('Next turn for Player1').
+display_game([],player1).
 
-display_game([],player2) :-
-    write('Next turn for Player2').
+display_game([],player2).
 
 display_game([],_) :-
     write('Wrong Player given\n').
@@ -145,7 +143,9 @@ play :-
     display_game(InitialState,player1),
     write('\n\nINTERMEDIATE BOARD\n\n'),
     display_game(IntermediateState,player1),
+    write('\nPlayer2 won 1 color! One more to go!!\n\n'),
     write('\n\nFINAL BOARD\n\n'),
-    display_game(FinalState,player1).
+    display_game(FinalState,player1),
+    write('\nPlayer2 Victory!!').
 
 
