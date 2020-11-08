@@ -7,7 +7,8 @@
 play :-
     displayHeader(0),
     coordinates,
-    initial(InitialState),
-    display_game(InitialState,1,0),
+    %initial(InitialState),
+    form(Test),
+    display_game(Test,1,0),
     displayHeader(1).
 
