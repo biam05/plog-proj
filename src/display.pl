@@ -35,16 +35,15 @@ symbol(gWall, 'G').
 symbol(pWall, 'P').
 symbol(oWall, 'O').
 
-display_game(L,Player) :-
-    displayHeader(Player),
+display_game(GameState,Player) :-
     Player2 is Player + 1,
     Player1 is mod(Player2, 2),
-    board(L),
-    displayTurn(Player, Player2),
-    displayHeader(Player2),
+    displayHeader(Player),
+    displayTurn(Player, Player1),
     getPosition(Column,Row,Color),
-    changeState(L,L2,Column,Row,Color),
-    board(L2).
+    changeState(GameState,GameState2,Column,Row,Color),
+    board(GameState2),
+    display_game(GameState2,Player1).
     
 display_game(_,_).
 
@@ -101,6 +100,8 @@ board(L) :-
     nth0(20,L,L20),
     nth0(21,L,L21),
     nth0(22,L,L22),
+    write(L0),nl,
+    write(L1),nl,
     write('                __    __'),nl,
     format('             __/~w\\__/~w\\__~n',L0),
     format('          __/~w\\__/~w\\__/~w\\__~n',L1),

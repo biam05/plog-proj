@@ -7,6 +7,7 @@
 play :-
     %displayHeader(0),
     initial(GameState),
+    board(GameState),
     display_game(GameState,0).
     %displayHeader(1).
 
