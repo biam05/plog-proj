@@ -41,7 +41,10 @@ display_game(L,Player) :-
     Player1 is mod(Player2, 2),
     board(L),
     displayTurn(Player, Player2),
-    displayHeader(Player2).
+    displayHeader(Player2),
+    getPosition(Column,Row,Color),
+    changeState(L,L2,Column,Row,Color),
+    board(L2).
     
 display_game(_,_).
 
@@ -123,6 +126,62 @@ board(L) :-
     format('         \\__/~w\\__/~w\\__/~w\\__/~n',L21),
     format('            \\__/~w\\__/~w\\__/~n',L22),
      write('               \\__/  \\__/'),nl.
+
+
+
+replace(E,S,[],[]).
+replace(E,S,[E|T1],[S|T2]):-replace(E,S,T1,T2).
+replace(E,S,[H|T1],[H|T2]):-E\=H, replace(E,S,T1,T2).
      
 
+getPosition(Column,Row,Color) :-
+    write('Please Enter the column letter: '),
+    read(Col),
+    char_code(Col,Col2),
+    Column is Col2 - 97,
+    write('Please Enter the row number :'),
+    read(Row),
+    write('please Enter the color to be written'),
+    read(Color),
+    write(Col),nl,
+    write(Row),nl.
+
+
+changeState(Column,Row,GameState) :-
     
+    nth0(Row,GameState,L).
+
+tea :-
+    X = ['a1', 'a2'],
+    nth0(1,X,L1),
+    write(X),nl,
+    write(L1),nl,
+    select(L1,X,3,R),
+    write(R).
+
+tea2 :-
+    X = [['a1', 'a2'],['b1', 'b2', 'b3']],
+    nth0(1,X,L1),
+    nth0(2,L1,R2),
+    select(R2,L1,'g',R),
+    write(X),nl,
+    write(L1),nl,
+    write(R2),nl,
+    write(R),nl,nl,nl,
+    replace(L1,R,X,S),
+    write(X),nl,
+    write(S),
+    X is S,
+    write(X).
+
+changeState(Initial,Final,Row,Column,Value) :-
+    nth0(Row,Initial,Col),
+    nth1(Column,Col,Val),
+    select(Val,Col,Value,Changed),
+    replace(Col,Changed,Initial,Final).
+
+
+
+
+
+
