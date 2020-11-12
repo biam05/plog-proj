@@ -5,9 +5,8 @@
 % Predicado que permite correr o jogo
 % De momento está hardcoded para mostar os headers no inicio e os estados de jogo pedidos
 play :-
-    displayHeader(0),
-    coordinates,
-    initial(InitialState),
-    display_game(InitialState,1,0),
-    displayHeader(1).
+    %displayHeader(0),
+    initial(GameState),
+    display_game(GameState,0).
+    %displayHeader(1).
 
