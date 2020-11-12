@@ -1,101 +1,61 @@
 :- use_module(library(lists)).
 
-% coordenadas do tabuleiro
-coordinates:-
-    write('     A   |   B   |   C   |   D   |   E   |   F   |   G   |   H   |   I   |   J   |   K   |   L   |   M'), nl,
-    write('-----------------------------------------------------------------------------------------------------').
-
 % inicialização do array com o estado inicial de jogo
 initial([
-    [f1, h1],
-    [e2, g2, i2],
-    [d3, f3, h3, j3],
-    [c4, e4, g4, i4, k4],
-    [b5, d5, f5, h5, j5, l5],
-    [c6, e6, g6, i6, k6],
-    [b7, d7, f7, h7, j7, l7],
-    [a8, c8, e8, g8, i8, k8, m8],
-    [b9, d9, f9, h9, j9, l9],
-    [a10, c10, e10, g10, i10, k10, m10],
-    [b11, d11, f11, h11, j11, l11],
-    [a12, c12, e12, g12, i12, k12, m12],
-    [b13, d13, f13, h13, j13, l13],
-    [a14, c14, e14, g14, i14, k14, m14],
-    [b15, d15, f15, h15, j15, l15],
-    [a16, c16, e16, g16, i16, k16, m16],
-    [b17, d17, f17, h17, j17, l17],
-    [c18, e18, g18, i18, k18],
-    [b19, d19, f19, h19, j19, l19],
-    [c20, e20, g20, i20, k20],
-    [d21, f21, h21, j21],
-    [e22, g22, i22],
-    [f23, h23]
+    ['a1', 'a2'],
+    ['b1', 'b2', 'b3'],
+    ['c1', 'c2', 'c3', 'c4'],
+    ['d1', 'd2', 'd3', 'd4', 'd5'],
+    ['e1', 'e2', 'e3', 'e4', 'e5', 'e6'],
+    ['f1', 'f2', 'f3', 'f4', 'f5'],
+    ['g1', 'g2', 'g3', 'g4', 'g5', 'g6'],
+    ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7'],
+    ['i1', 'i2', 'i3', 'i4', 'i5', 'i6'],
+    ['j1', 'j2', 'j3', 'j4', 'j5', 'j6', 'j7'],
+    ['k1', 'k2', 'k3', 'k4', 'k5', 'k6'],
+    ['l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7'],
+    ['m1', 'm2', 'm3', 'm4', 'm5', 'm6'],
+    ['n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7'],
+    ['o1', 'o2', 'o3', 'o4', 'o5', 'o6'],
+    ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7'],
+    ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'],
+    ['r1', 'r2', 'r3', 'r4', 'r5'],
+    ['s1', 's2', 's3', 's4', 's5', 's6'],
+    ['t1', 't2', 't3', 't4', 't5'],
+    ['u1', 'u2', 'u3', 'u4'],
+    ['v1', 'v2', 'v3'],
+    ['w1', 'w2']
 ]).
 
-% predicados para dar draw e cada elemento
-/*symbol(position, S)    :- S='_'.
-symbol(empty, S)       :- S=' '.
-symbol(green, S)       :- S='g'.
-symbol(purple, S)      :- S='p'.
-symbol(orange, S)      :- S='o'.
-symbol(gWall, 'G ').
-symbol(pWall, S)       :- S='P'.
-symbol(oWall, S)       :- S='O'.
-symbol(f, '                                      ').
-symbol(horizontal, ' ___').
-symbol(leftbar, '/').
-symbol(rightbar, '\\').
-symbol(newline, '\n').
-symbol(f1, '   ').*/
-
+% colors
 symbol(green, 'g').
 symbol(purple,'p').
 symbol(orange,'o').
 symbol(gWall, 'G').
 symbol(pWall, 'P').
 symbol(oWall, 'O').
-symbol(_, ' ').
 
-
-% predicado para percorrer a lista
-/*display_game([Head|Tail],Player,Number) :-
-    write('\t\t\t'),
-    nl,
-    Number1 is Number + 1,
-    write(Number1), write(' |'),
-    printLine(Head),
+display_game(L,Player) :-
+    displayHeader(Player),
     Player2 is Player + 1,
-    Player1 is mod(Player2,2) + 1,
-    nl, write('---'),
-    display_game(Tail,Player,Number1).*/
+    Player1 is mod(Player2, 2),
+    board(L),
+    displayTurn(Player, Player2),
+    displayHeader(Player2).
+    
+display_game(_,_).
 
-display_game([Head|Tail],Player,Number) :-
-    printLine(Head),
-    display_game(Tail, Player, Number).
+displayTurn(Player1, Player2) :-
+    format('~n~*t ~w ~w ~w ~w ~53|~n', [32, 'Player', Player1, 'Turn; Next: Player', Player2]).
 
-/*display_game(_,Player,_) :-
-    Player1 is Player + 1,
-    format('~n~*t ~w ~w ~w ~w ~53|~n', [32, 'Player', Player, 'Turn; Next: Player', Player1]).
+display_game([],_) :-
+    write('\n\nWrong Player given\n').
 
-display_game([],_,_) :-
-    write('\n\nWrong Player given\n').*/
-
-% predicado para imprimir cada linha
-/*printLine([Head|Tail]) :-
-    symbol(Head, S),
-    write(S),
-    printLine(Tail).*/
-
-printLine([Head|Tail]) :-
-    Head,
-    printLine(Tail).
-
-printLine([]).
 
 %predicado para imprimir o headers de dados de jogo do player1 (hardcoded by now)
 displayHeader(0) :-
     write('----------------------------------------------------------------------------'), nl,
-    write('\t\t\t\tPLAYER 1'), nl,
+    write('\t\t\t\tPLAYER 0'), nl,
     write('----------------------------------------------------------------------------'), nl,
     write('Victories: 0 '), nl,
     write('\t\t\t     Win Conditions'), nl,
@@ -105,7 +65,7 @@ displayHeader(0) :-
 %predicado para imprimir o headers de dados de jogo do playe2 (hardcoded by now)
 displayHeader(1) :-
     write('----------------------------------------------------------------------------'), nl,
-    write('\t\t\t\tPLAYER 2'), nl,
+    write('\t\t\t\tPLAYER 1'), nl,
     write('----------------------------------------------------------------------------'), nl,
     write('Victories: 0 '), nl,
     write('\t\t\t     Win Conditions'), nl,
@@ -114,59 +74,55 @@ displayHeader(1) :-
 displayHeader(_) :-
     write('Wrong Player Name').
 
-/*form :-
-     write('                __    __'),nl,
-    format('             __/ ~w\\__/ ~w\\__~n',['2','2']),
-    format('          __/ ~w\\__/ ~w\\__/ ~w\\__~n',['3','3','3']),
-    format('       __/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__~n',['4','4','4','4']),
-    format('    __/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__~n',['5','5','5','5','5']),
-    format('   / ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['6','6','6','6','6','6']),
-    format('   \\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['5','5','5','5','5']),
-    format(' __/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__~n',['6','6','6','6','6','6']),
-    format('/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['7','7','7','7','7','7','7']),
-    format('\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['6','6','6','6','6','6']),
-    format('/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['7','7','7','7','7','7','7']),
-    format('\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['6','6','6','6','6','6']),
-    format('/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['7','7','7','7','7','7','7']),
-    format('\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['6','6','6','6','6','6']),
-    format('/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['7','7','7','7','7','7','7']),
-    format('\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['6','6','6','6','6','6']),
-    format('/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['7','7','7','7','7','7','7']),
-    format('\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['6','6','6','6','6','6']),
-    format('   \\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['5','5','5','5','5']),
-    format('   / ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['6','6','6','6','6','6']),
-    format('   \\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['5','5','5','5','5']),
-    format('      \\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['4','4','4','4']),
-    format('         \\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['3','3','3']),
-    format('            \\__/ ~w\\__/ ~w\\__/~n',['2','2']),
+board(L) :-
+    nth0(0,L,L0),
+    nth0(1,L,L1),
+    nth0(2,L,L2),
+    nth0(3,L,L3),
+    nth0(4,L,L4),
+    nth0(5,L,L5),
+    nth0(6,L,L6),
+    nth0(7,L,L7),
+    nth0(8,L,L8),
+    nth0(9,L,L9),
+    nth0(10,L,L10),
+    nth0(11,L,L11),
+    nth0(12,L,L12),
+    nth0(13,L,L13),
+    nth0(14,L,L14),
+    nth0(15,L,L15),
+    nth0(16,L,L16),
+    nth0(17,L,L17),
+    nth0(18,L,L18),
+    nth0(19,L,L19),
+    nth0(20,L,L20),
+    nth0(21,L,L21),
+    nth0(22,L,L22),
+    write('                __    __'),nl,
+    format('             __/~w\\__/~w\\__~n',L0),
+    format('          __/~w\\__/~w\\__/~w\\__~n',L1),
+    format('       __/~w\\__/~w\\__/~w\\__/~w\\__~n',L2),
+    format('    __/~w\\__ ~w\\__/~w\\__/~w\\__/~w\\__~n',L3),
+    format('   /~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\~n',L4),
+    format('   \\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~n',L5),
+    format(' __/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__~n',L6),
+    format('/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\~n',L7),
+    format('\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~n',L8),
+    format('/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\~n',L9),
+    format('\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~n',L10),
+    format('/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\~n',L11),
+    format('\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~n',L12),
+    format('/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\~n',L13),
+    format('\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~n',L14),
+    format('/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\~n',L15),
+    format('\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~n',L16),
+    format('   \\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~n',L17),
+    format('   /~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\~n',L18),
+    format('   \\__/~w\\__/~w\\__/~w\\__/~w\\__/~w\\__/~n',L19),
+    format('      \\__/~w\\__/~w\\__/~w\\__/~w\\__/~n',L20),
+    format('         \\__/~w\\__/~w\\__/~w\\__/~n',L21),
+    format('            \\__/~w\\__/~w\\__/~n',L22),
      write('               \\__/  \\__/'),nl.
-*/
+     
 
-form([
-    [write('                            __    __')],
-    [format('             __/ ~w\\__/ ~w\\__~n',['2','2'])],
-    [format('          __/ ~w\\__/ ~w\\__/ ~w\\__~n',['3','3','3'])],
-    [format('       __/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__~n',['4','4','4','4'])],
-    [format('    __/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__~n',['5','5','5','5','5'])],
-    [format('   / ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['6','6','6','6','6','6'])],
-    [format('   \\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['5','5','5','5','5'])],
-    [format(' __/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__~n',['6','6','6','6','6','6'])],
-    [format('/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['7','7','7','7','7','7','7'])],
-    [format('\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['6','6','6','6','6','6'])],
-    [format('/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['7','7','7','7','7','7','7'])],
-    [format('\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['6','6','6','6','6','6'])],
-    [format('/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['7','7','7','7','7','7','7'])],
-    [format('\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['6','6','6','6','6','6'])],
-    [format('/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['7','7','7','7','7','7','7'])],
-    [format('\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['6','6','6','6','6','6'])],
-    [format('/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['7','7','7','7','7','7','7'])],
-    [format('\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['6','6','6','6','6','6'])],
-    [format('   \\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['5','5','5','5','5'])],
-    [format('   / ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\~n',['6','6','6','6','6','6'])],
-    [format('   \\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['5','5','5','5','5'])],
-    [format('      \\__/ ~w\\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['4','4','4','4'])],
-    [format('         \\__/ ~w\\__/ ~w\\__/ ~w\\__/~n',['3','3','3'])],
-    [format('            \\__/ ~w\\__/ ~w\\__/~n',['2','2'])],
-    [write('               \\__/  \\__/')]
-]).
     
