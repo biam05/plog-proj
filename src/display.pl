@@ -38,14 +38,20 @@ symbol(oWall, 'O').
 display_game(GameState,Player) :-
     Player2 is Player + 1,
     Player1 is mod(Player2, 2),
+    write('before header\n'),
     displayHeader(Player),
     displayTurn(Player, Player1),
     getPosition(Column,Row,Color),
+    write('gonna check now\n'),
+    checkPosition(GameState,Column,Row),
+    write(Row),nl,
+    write(Column),nl,
+    write('checkPassed\n'),
     changeState(GameState,GameState2,Column,Row,Color),
+    write('state changed\n'),
     board(GameState2),
     display_game(GameState2,Player1).
-    
-display_game(_,_).
+
 
 displayTurn(Player1, Player2) :-
     format('~n~*t ~w ~w ~w ~w ~53|~n', [32, 'Player', Player1, 'Turn; Next: Player', Player2]).
@@ -73,8 +79,8 @@ displayHeader(1) :-
     write('\t\t\t     Win Conditions'), nl,
     write('Green : Orange & Green ; Purple : Green & Purple ; Orange : Purple & Orange'), nl, nl.
 
-displayHeader(_) :-
-    write('Wrong Player Name').
+%displayHeader(_) :-
+ %   write('Wrong Player Name').
 
 board(L) :-
     nth0(0,L,L0),
@@ -143,42 +149,22 @@ getPosition(Column,Row,Color) :-
     read(Row),
     write('please Enter the color to be written'),
     read(Color),
-    write(Col),nl,
+    write(Column),nl,
     write(Row),nl.
 
+checkPosition(GameState,Row,Column):-
+    nth0(Row,GameState,Col),
+    write(Col),nl,
+    nth1(Column,Col,Val),
+    write(Val),nl.
 
-changeState(Column,Row,GameState) :-
-    
-    nth0(Row,GameState,L).
-
-tea :-
-    X = ['a1', 'a2'],
-    nth0(1,X,L1),
-    write(X),nl,
-    write(L1),nl,
-    select(L1,X,3,R),
-    write(R).
-
-tea2 :-
-    X = [['a1', 'a2'],['b1', 'b2', 'b3']],
-    nth0(1,X,L1),
-    nth0(2,L1,R2),
-    select(R2,L1,'g',R),
-    write(X),nl,
-    write(L1),nl,
-    write(R2),nl,
-    write(R),nl,nl,nl,
-    replace(L1,R,X,S),
-    write(X),nl,
-    write(S),
-    X is S,
-    write(X).
 
 changeState(Initial,Final,Row,Column,Value) :-
     nth0(Row,Initial,Col),
     nth1(Column,Col,Val),
     select(Val,Col,Value,Changed),
     replace(Col,Changed,Initial,Final).
+
 
 
 
