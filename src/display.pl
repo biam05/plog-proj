@@ -38,43 +38,49 @@ symbol(oWall, 'O').
 display_game(GameState,Player) :-
     Player2 is Player + 1,
     Player1 is mod(Player2, 2),
-    displayHeader(Player),
+    write('Player '), write(Player), nl,
+    displayHeader(Player, 0),
+    board(GameState),
     displayTurn(Player, Player1),
+    displayHeader(Player1, 0),
     getPosition(Column,Row,Color),
     changeState(GameState,GameState2,Column,Row,Color),
-    board(GameState2),
+    write(GameState2),nl,
+    (GameState2 =:= [] -> GameState2 = GameState, write(GameState2,nl);write(GameState2)),
     display_game(GameState2,Player1).
-    
-display_game(_,_).
-
-displayTurn(Player1, Player2) :-
-    format('~n~*t ~w ~w ~w ~w ~53|~n', [32, 'Player', Player1, 'Turn; Next: Player', Player2]).
 
 display_game([],_) :-
     write('\n\nWrong Player given\n').
 
 
+displayTurn(Player1, Player2) :-
+    format('~n~*t ~w ~w ~w ~w ~53|~n', [32, 'Player', Player1, 'Turn; Next: Player', Player2]).
+
+
+
+
 %predicado para imprimir o headers de dados de jogo do player1 (hardcoded by now)
-displayHeader(0) :-
+displayHeader(0, Victories) :-
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 0'), nl,
     write('----------------------------------------------------------------------------'), nl,
-    write('Victories: 0 '), nl,
+    format('Victories: ~w~n', Victories),
     write('\t\t\t     Win Conditions'), nl,
     write('Green : Purple & Green ; Purple : Orange & Purple ; Orange : Green & Orange'), nl,
     write('----------------------------------------------------------------------------'), nl, nl.
 
 %predicado para imprimir o headers de dados de jogo do playe2 (hardcoded by now)
-displayHeader(1) :-
+displayHeader(1, Victories) :-
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 1'), nl,
     write('----------------------------------------------------------------------------'), nl,
-    write('Victories: 0 '), nl,
+    format('Victories: ~w~n', Victories),
     write('\t\t\t     Win Conditions'), nl,
-    write('Green : Orange & Green ; Purple : Green & Purple ; Orange : Purple & Orange'), nl, nl.
+    write('Green : Orange & Green ; Purple : Green & Purple ; Orange : Purple & Orange'), nl,
+    write('----------------------------------------------------------------------------'), nl, nl.
 
-displayHeader(_) :-
-    write('Wrong Player Name').
+displayHeader(_,_) :-
+    write('Wrong Player Name\n').
 
 board(L) :-
     nth0(0,L,L0),
@@ -146,39 +152,16 @@ getPosition(Column,Row,Color) :-
     write(Col),nl,
     write(Row),nl.
 
-
-changeState(Column,Row,GameState) :-
-    
-    nth0(Row,GameState,L).
-
-tea :-
-    X = ['a1', 'a2'],
-    nth0(1,X,L1),
-    write(X),nl,
-    write(L1),nl,
-    select(L1,X,3,R),
-    write(R).
-
-tea2 :-
-    X = [['a1', 'a2'],['b1', 'b2', 'b3']],
-    nth0(1,X,L1),
-    nth0(2,L1,R2),
-    select(R2,L1,'g',R),
-    write(X),nl,
-    write(L1),nl,
-    write(R2),nl,
-    write(R),nl,nl,nl,
-    replace(L1,R,X,S),
-    write(X),nl,
-    write(S),
-    X is S,
-    write(X).
-
 changeState(Initial,Final,Row,Column,Value) :-
     nth0(Row,Initial,Col),
     nth1(Column,Col,Val),
     select(Val,Col,Value,Changed),
     replace(Col,Changed,Initial,Final).
+
+errorInput(Initial,Final) :-
+    write('\nInvalid position given\n'),
+    Final = Initial.
+    
 
 
 
