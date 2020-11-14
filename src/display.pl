@@ -41,14 +41,10 @@ display_game(GameState,Player) :-
     write('before header\n'),
     displayHeader(Player),
     displayTurn(Player, Player1),
+    repeat,
     getPosition(Column,Row,Color),
-    write('gonna check now\n'),
-    checkPosition(GameState,Column,Row),
-    write(Row),nl,
-    write(Column),nl,
-    write('checkPassed\n'),
+    %checkPosition(GameState,Column,Row),
     changeState(GameState,GameState2,Column,Row,Color),
-    write('state changed\n'),
     board(GameState2),
     display_game(GameState2,Player1).
 
@@ -161,9 +157,14 @@ checkPosition(GameState,Row,Column):-
 
 changeState(Initial,Final,Row,Column,Value) :-
     nth0(Row,Initial,Col),
-    nth1(Column,Col,Val),
+    nth1(Column,Col,Val),!,
     select(Val,Col,Value,Changed),
     replace(Col,Changed,Initial,Final).
+
+changeState(Initial,Final,Row,Column,Value) :-
+    write('Error reading coordinates.\n'),
+    write('Trying again\n'),
+    fail.
 
 
 
