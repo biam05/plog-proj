@@ -1,39 +1,48 @@
 :- use_module(library(lists)).
 
+coordinates :-
+    write('    1| 2| 3| 4| 5| 6| 7| 8| 9|10|11|12|13|'), nl,
+    write('------------------------------------------'), nl.
 % inicialização do array com o estado inicial de jogo
 initial([
-    ['a1', 'a2'],
-    ['b1', 'b2', 'b3'],
-    ['c1', 'c2', 'c3', 'c4'],
-    ['d1', 'd2', 'd3', 'd4', 'd5'],
-    ['e1', 'e2', 'e3', 'e4', 'e5', 'e6'],
-    ['f1', 'f2', 'f3', 'f4', 'f5'],
-    ['g1', 'g2', 'g3', 'g4', 'g5', 'g6'],
-    ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7'],
-    ['i1', 'i2', 'i3', 'i4', 'i5', 'i6'],
-    ['j1', 'j2', 'j3', 'j4', 'j5', 'j6', 'j7'],
-    ['k1', 'k2', 'k3', 'k4', 'k5', 'k6'],
-    ['l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7'],
-    ['m1', 'm2', 'm3', 'm4', 'm5', 'm6'],
-    ['n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7'],
-    ['o1', 'o2', 'o3', 'o4', 'o5', 'o6'],
-    ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7'],
-    ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'],
-    ['r1', 'r2', 'r3', 'r4', 'r5'],
-    ['s1', 's2', 's3', 's4', 's5', 's6'],
-    ['t1', 't2', 't3', 't4', 't5'],
-    ['u1', 'u2', 'u3', 'u4'],
-    ['v1', 'v2', 'v3'],
-    ['w1', 'w2']
+    [o, o, o, o, o, gWall, a6, a8, oWall],
+    [o, o, o, o, gWall, b5, b7, b9, oWall],
+    [o, o, o, gWall, c4, c6, c8, c10, oWall],
+    [o, o, gWall, d3, d5, d7, d9, d11, oWall],
+    [o, gWall, e2, e4, e6, e8, e10, e12, oWall],
+    [o, o, o, f3, f5, f7, f9, f11],
+    [o, o, g2, g4, g6, g8, g10, g12],
+    [pWall, h1, h3, h5, h7, h9, h11, h13, pWall],
+    [pWall, o, i2, i4, i6, i8, i10, i12, pWall],
+    [pWall,j1, j3, j5, j7, j9, j11, j13, pWall],
+    [pWall,o, k2, k4, k6, k8, k10, k12, pWall],
+    [pWall,l1, l3, l5, l7, l9, l11, l13, pWall],
+    [pWall,o, m2, m4, m6, m8, m10, m12, pWall],
+    [pWall,n1, n3, n5, n7, n9, n11, n13, pWall],
+    [pWall,o, o2, o4, o6, o8, o10, o12, pWall],
+    [pWall,p1, p3, p5, p7, p9, p11, p13, pWall],
+    [o, o, q2, q4, q6, q8, q10, q12],
+    [o, o, r1, r3, r5, r7, r9, r11],
+    [o, oWall, s2, s4, s6, s8, s10, s12, gWall],
+    [o, o, oWall, t3, t5, t7, t9, t11, gWall],
+    [o, o, o, oWall, u4, u6, u8, u10, gWall],
+    [o, o, o, o, oWall, v5, v7, v9, gWall],
+    [o, o, o, o, o, oWall, w6, w8, gWall]
 ]).
 
 % colors
 symbol(green, 'g').
 symbol(purple,'p').
 symbol(orange,'o').
-symbol(gWall, 'G').
-symbol(pWall, 'P').
-symbol(oWall, 'O').
+symbol(gWall, 'GGG').
+symbol(pWall, 'PPP').
+symbol(oWall, 'OOO').
+symbol(o, '   ').
+symbol(_, 'x').
+
+getletter(N, L) :- 
+    Aux is 64 + N,
+    char_code(L, Aux).
 
 display_game(GameState,Player) :-
     Player2 is Player + 1,
@@ -48,6 +57,47 @@ display_game(GameState,Player) :-
     board(GameState2),
     display_game(GameState2,Player1).
 
+
+
+% ------------------ INICIO DOS TESTES ----------------- 
+display_game2([Head|Tail],Player,N) :-
+    getletter(N, L),
+    write(L), write('|'),
+    printLine(Head),
+    Number1 is N + 1,
+    nl,
+    display_game2(Tail,Player,Number1).
+
+display_game2([],player1,_).
+
+display_game2([],player2,_).
+
+display_game2([],_,_) :-
+    write('\n\nWrong Player given\n').
+
+
+printLine([]).
+
+% predicado para imprimir cada linha
+printLine([Head|Tail]) :-
+    symbol(Head, S),
+    /*((Head = o) -> write(S);
+        ((Head = gWall) -> write(S);
+            ((Head = pWall) -> write(S);
+                ((Head = oWall) -> write(S);
+                    ((Tail = [oWall]) -> write('|'), write(S), write(' |');    
+                        (write('|'), write(S), write(' |'), write('__'))))))),*/
+    checkWalls(Head, R),
+    (R = true) -> write(S),
+    printLine(Tail).
+
+%checkPadding(o).
+checkWalls(oWall, true) ,!.
+checkWalls(gWall, true) ,!.
+checkWalls(pWall, true) ,!.
+checkWalls(_, false).
+
+% ----------------- FIM DOS TESTES ----------------- 
 
 displayTurn(Player1, Player2) :-
     format('~n~*t ~w ~w ~w ~w ~53|~n', [32, 'Player', Player1, 'Turn; Next: Player', Player2]).
@@ -78,6 +128,7 @@ displayHeader(1) :-
 %displayHeader(_) :-
  %   write('Wrong Player Name').
 
+/*
 board(L) :-
     nth0(0,L,L0),
     nth0(1,L,L1),
@@ -128,7 +179,7 @@ board(L) :-
     format('          OOOO\\__/~w\\__/~w\\__/GGGG~n',L22),
      write('             OOOO\\__/  \\__/GGGG'),nl,
      write('                OOOO    GGGG'),nl.
-
+*/
 
 
 replace(E,S,[],[]).

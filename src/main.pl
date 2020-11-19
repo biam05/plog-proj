@@ -7,7 +7,8 @@
 play :-
     %displayHeader(0),
     initial(GameState),
-    board(GameState),
-    display_game(GameState,0).
+    coordinates,
+    %board(GameState),
+    display_game2(GameState,0, 1).
     %displayHeader(1).
 
