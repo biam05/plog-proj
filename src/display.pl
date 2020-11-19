@@ -1,5 +1,4 @@
 :- use_module(library(lists)).
-
 % inicialização do array com o estado inicial de jogo
 initial([
     ['a1', 'a2'],
@@ -27,6 +26,32 @@ initial([
     ['w1', 'w2']
 ]).
 
+initial2([
+    ['a6', 'a8'],
+    ['b5', 'b7', 'b9'],
+    ['c4', 'c6', 'c8', 'c10'],
+    ['d3', 'd5', 'd7', 'd9', 'd11'],
+    ['e2', 'e4', 'e6', 'e8', 'e10', 'e12'],
+    ['f3', 'f5', 'f7', 'f9', 'f11'],
+    ['g2', 'g4', 'g6', 'g8', 'g10', 'g12'],
+    ['h1', 'h3', 'h5', 'h7', 'h9', 'h11', 'h13'],
+    ['i2', 'i4', 'i6', 'i8', 'i10', 'i12'],
+    ['j1', 'j3', 'j5', 'j7', 'j9', 'j11', 'j13'],
+    ['k2', 'k4', 'k6', 'k8', 'k10', 'k12'],
+    ['l1', 'l3', 'l5', 'l7', 'l9', 'l11', 'l13'],
+    ['m2', 'm4', 'm6', 'm8', 'm10', 'm12'],
+    ['n1', 'n3', 'n5', 'n7', 'n9', 'n11', 'n13'],
+    ['o2', 'o4', 'o6', 'o8', 'o10', 'o12'],
+    ['p1', 'p3', 'p5', 'p7', 'p9', 'p11', 'p13'],
+    ['q2', 'q4', 'q6', 'q8', 'q10', 'q12'],
+    ['r3', 'r5', 'r7', 'r9', 'r11'],
+    ['s2', 's4', 's6', 's8', 's10', 's12'],
+    ['t3', 't5', 't7', 't9', 't11'],
+    ['u4', 'u6', 'u8', 'u10'],
+    ['v5', 'v7', 'v9'],
+    ['w6', 'w8']
+]).
+
 % colors
 symbol(green, 'g').
 symbol(purple,'p').
@@ -42,9 +67,9 @@ display_game(GameState,Player) :-
     displayHeader(Player),
     displayTurn(Player, Player1),
     repeat,
-    getPosition(Column,Row,Color),
+    getPosition2(Row,Column,Color),
     %checkPosition(GameState,Column,Row),
-    changeState(GameState,GameState2,Column,Row,Color),
+    changeState2(GameState,GameState2,Row,Column,Color),
     board(GameState2),
     display_game(GameState2,Player1).
 
@@ -148,6 +173,16 @@ getPosition(Column,Row,Color) :-
     write(Column),nl,
     write(Row),nl.
 
+getPosition2(Column,Row,Color) :-
+    write('Please Enter the column letter: '),
+    read(Column),
+    write('Please Enter the row number :'),
+    read(Row),
+    write('please Enter the color to be written'),
+    read(Color),
+    write(Column),nl,
+    write(Row),nl.
+
 checkPosition(GameState,Row,Column):-
     nth0(Row,GameState,Col),
     write(Col),nl,
@@ -165,6 +200,93 @@ changeState(Initial,Final,Row,Column,Value) :-
     write('Error reading coordinates.\n'),
     write('Trying again\n'),
     fail.
+
+
+changeState2(Initial,Final,Row,Column,Value):-
+    char_code(Row,Row2),nl,
+    RowNumber is Row2 - 97,
+    nth0(RowNumber,Initial,Col),
+    atom_concat(Row, Column, X),
+    select(X,Col,Value,Changed),
+    select(Col,Initial,Changed,Final).
+
+changeState2(Initial,Final,Row,Column,Value) :-
+    write('Error reading coordinates.\n'),
+    write('Trying again\n'),
+    fail.
+
+
+r:-
+    initial2(State),
+    changeState2(State,Fin,'d','5','gg'),
+    write(Fin).
+
+
+adjacent(Row,Column,Adj):-
+    BRow is Row -1,
+    BBRow is Row -2,
+    NRow is Row +1,
+    NNRow is Row +2,
+    BColumn is Column -1,
+    NColumn is Column +1,
+    Adj = [(BRow-BColumn),(BRow-NColumn),(NRow-BColumn),(NRow-NColumn),(BBRow-Column),(NNRow-Column)].
+
+display_adjacent([]).
+display_adjacent([H1-H2|T]):-
+    write(H1-H2),nl,
+    display_adjacent(T).
+
+t:-
+    adjacent(9,3,Adj),
+    display_adjacent(Adj).
+
+
+checkBounds(Row-Column):-
+    initial2(Initial),
+    RowCode is Row + 97,
+    char_code(Letter,RowCode),
+    numberToAtom(Column,ColumnAtom),
+    atom_concat(Letter, ColumnAtom, Position),
+    nth0(Row,Initial,Col),
+    member(Position,Col).
+
+f:-
+    checkBounds(0-2).
+
+k :-
+    Varr is 5,
+    write(Varr),nl,
+    write('Varr').
+
+numberToAtom(Number,Atom):-
+    NumberASCCI is Number + 48,
+    char_code(Atom,NumberASCCI).
+
+
+v:-
+    adjacent(7,1,Adj),
+    write(Adj),nl,
+    filterAdjacent(Adj,[],Final),
+    write(Final).
+
+filterAdjacent([],X,X).
+filterAdjacent([H1-H2|T],Current,Final):-
+    checkBounds(H1-H2),
+    filterAdjacent(T,[H1-H2|Current],Final),!.
+
+filterAdjacent([H1-H2|T],Current,Final):-
+    filterAdjacent(T,Current,Final).
+
+
+
+
+
+    
+
+
+
+
+
 
 
 
