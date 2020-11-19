@@ -1,32 +1,7 @@
 :- use_module(library(lists)).
 % inicialização do array com o estado inicial de jogo
-initial([
-    ['a1', 'a2'],
-    ['b1', 'b2', 'b3'],
-    ['c1', 'c2', 'c3', 'c4'],
-    ['d1', 'd2', 'd3', 'd4', 'd5'],
-    ['e1', 'e2', 'e3', 'e4', 'e5', 'e6'],
-    ['f1', 'f2', 'f3', 'f4', 'f5'],
-    ['g1', 'g2', 'g3', 'g4', 'g5', 'g6'],
-    ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7'],
-    ['i1', 'i2', 'i3', 'i4', 'i5', 'i6'],
-    ['j1', 'j2', 'j3', 'j4', 'j5', 'j6', 'j7'],
-    ['k1', 'k2', 'k3', 'k4', 'k5', 'k6'],
-    ['l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7'],
-    ['m1', 'm2', 'm3', 'm4', 'm5', 'm6'],
-    ['n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7'],
-    ['o1', 'o2', 'o3', 'o4', 'o5', 'o6'],
-    ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7'],
-    ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'],
-    ['r1', 'r2', 'r3', 'r4', 'r5'],
-    ['s1', 's2', 's3', 's4', 's5', 's6'],
-    ['t1', 't2', 't3', 't4', 't5'],
-    ['u1', 'u2', 'u3', 'u4'],
-    ['v1', 'v2', 'v3'],
-    ['w1', 'w2']
-]).
 
-initial2([
+initial([
     ['a6', 'a8'],
     ['b5', 'b7', 'b9'],
     ['c4', 'c6', 'c8', 'c10'],
@@ -67,9 +42,9 @@ display_game(GameState,Player) :-
     displayHeader(Player),
     displayTurn(Player, Player1),
     repeat,
-    getPosition2(Row,Column,Color),
+    getPosition(Row,Column,Color),
     %checkPosition(GameState,Column,Row),
-    changeState2(GameState,GameState2,Row,Column,Color),
+    changeState(GameState,GameState2,Row,Column,Color),
     board(GameState2),
     display_game(GameState2,Player1).
 
@@ -100,8 +75,7 @@ displayHeader(1) :-
     write('\t\t\t     Win Conditions'), nl,
     write('Green : Orange & Green ; Purple : Green & Purple ; Orange : Purple & Orange'), nl, nl.
 
-%displayHeader(_) :-
- %   write('Wrong Player Name').
+
 
 board(L) :-
     nth0(0,L,L0),
@@ -155,25 +129,9 @@ board(L) :-
      write('                OOOO    GGGG'),nl.
 
 
-
-replace(E,S,[],[]).
-replace(E,S,[E|T1],[S|T2]):-replace(E,S,T1,T2).
-replace(E,S,[H|T1],[H|T2]):-E\=H, replace(E,S,T1,T2).
      
 
 getPosition(Column,Row,Color) :-
-    write('Please Enter the column letter: '),
-    read(Col),
-    char_code(Col,Col2),
-    Column is Col2 - 97,
-    write('Please Enter the row number :'),
-    read(Row),
-    write('please Enter the color to be written'),
-    read(Color),
-    write(Column),nl,
-    write(Row),nl.
-
-getPosition2(Column,Row,Color) :-
     write('Please Enter the column letter: '),
     read(Column),
     write('Please Enter the row number :'),
@@ -183,43 +141,20 @@ getPosition2(Column,Row,Color) :-
     write(Column),nl,
     write(Row),nl.
 
-checkPosition(GameState,Row,Column):-
-    nth0(Row,GameState,Col),
-    write(Col),nl,
-    nth1(Column,Col,Val),
-    write(Val),nl.
 
-
-changeState(Initial,Final,Row,Column,Value) :-
-    nth0(Row,Initial,Col),
-    nth1(Column,Col,Val),!,
-    select(Val,Col,Value,Changed),
-    replace(Col,Changed,Initial,Final).
-
-changeState(Initial,Final,Row,Column,Value) :-
-    write('Error reading coordinates.\n'),
-    write('Trying again\n'),
-    fail.
-
-
-changeState2(Initial,Final,Row,Column,Value):-
+changeState(Initial,Final,Row,Column,Value):-
     char_code(Row,Row2),nl,
     RowNumber is Row2 - 97,
     nth0(RowNumber,Initial,Col),
-    atom_concat(Row, Column, X),
+    numberToAtom(Column,ColumnAtom),
+    atom_concat(Row, ColumnAtom, X),
     select(X,Col,Value,Changed),
     select(Col,Initial,Changed,Final).
 
-changeState2(Initial,Final,Row,Column,Value) :-
+changeState(Initial,Final,Row,Column,Value) :-
     write('Error reading coordinates.\n'),
     write('Trying again\n'),
     fail.
-
-
-r:-
-    initial2(State),
-    changeState2(State,Fin,'d','5','gg'),
-    write(Fin).
 
 
 adjacent(Row,Column,Adj):-
@@ -236,10 +171,6 @@ display_adjacent([H1-H2|T]):-
     write(H1-H2),nl,
     display_adjacent(T).
 
-t:-
-    adjacent(9,3,Adj),
-    display_adjacent(Adj).
-
 
 checkBounds(Row-Column):-
     initial2(Initial),
@@ -250,25 +181,6 @@ checkBounds(Row-Column):-
     nth0(Row,Initial,Col),
     member(Position,Col).
 
-f:-
-    checkBounds(0-2).
-
-k :-
-    Varr is 5,
-    write(Varr),nl,
-    write('Varr').
-
-numberToAtom(Number,Atom):-
-    NumberASCCI is Number + 48,
-    char_code(Atom,NumberASCCI).
-
-
-v:-
-    adjacent(7,1,Adj),
-    write(Adj),nl,
-    filterAdjacent(Adj,[],Final),
-    write(Final).
-
 filterAdjacent([],X,X).
 filterAdjacent([H1-H2|T],Current,Final):-
     checkBounds(H1-H2),
@@ -276,6 +188,26 @@ filterAdjacent([H1-H2|T],Current,Final):-
 
 filterAdjacent([H1-H2|T],Current,Final):-
     filterAdjacent(T,Current,Final).
+
+
+
+numberToAtom(Number,Atom):-
+    number_chars(Number, CharList),
+    nAtoms(CharList,Atom).
+
+nAtoms([H,H2],Atom):-
+    atom_concat(H,H2,Atom).
+
+nAtoms([H],H).
+
+%tests if adjacents work
+v:-
+    adjacent(7,11,Adj),
+    write(Adj),nl,
+    filterAdjacent(Adj,[],Final),
+    write(Final).
+
+
 
 
 
