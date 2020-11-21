@@ -27,6 +27,8 @@ initial([
     ['w6', 'w8']
 ]).
 
+
+
 % colors
 symbol(green, 'g').
 symbol(purple,'p').
@@ -44,9 +46,13 @@ display_game(GameState,Player) :-
     repeat,
     getPosition(Row,Column,Color),
     %checkPosition(GameState,Column,Row),
-    changeState(GameState,GameState2,Row,Column,Color),
-    board(GameState2),
+    set_value(GameState,GameState2,Row,Column,Color),
+    add_connections(GameState,Row,Column),
+    board(GameState2),!,
+    \+ check_win,
     display_game(GameState2,Player1).
+
+
 
 
 displayTurn(Player1, Player2) :-
@@ -141,25 +147,35 @@ getPosition(Column,Row,Color) :-
     write(Column),nl,
     write(Row),nl.
 
-get_coordinates(Initial,Row,Column,Index) :-
+get_coordinates(Row,Column,RowIndex,ColumnIndex) :-
+    initial(Initial),
     char_code(Row,Row2),nl,
-    RowNumber is Row2 - 97,
-    nth0(RowNumber,Initial,Col),
+    RowIndex is Row2 - 97,
+    nth0(RowIndex,Initial,Col),
     numberToAtom(Column,ColumnAtom),
     atom_concat(Row, ColumnAtom, X),
-    nth0(Index,Col,X).   
+    nth0(ColumnIndex,Col,X).
 
-displayList([]).
-displayList([H|T]):-
-    write(H),nl,
-    displayList(T).
+find_value(GameState,RowIndex,ColumnIndex,Value) :-
+    nth0(RowIndex,GameState,Col),
+    nth0(ColumnIndex,Col,Value).
 
+h:- 
+    initial(Initial),
+    get_value(Initial,p,5,Value),
+    write(Value).
+
+get_value(GameState,Row,Column,Value):-
+    get_coordinates(Row,Column,RowIndex,ColumnIndex),
+    find_value(GameState,RowIndex,ColumnIndex,Value).
+    
 a:-
     initial(GameState),
+    write(GameState),
     get_coordinates(GameState,a,2,Index),
     write(Index).
 
-changeState(Initial,Final,Row,Column,Value):-
+set_value(Initial,Final,Row,Column,Value):-
     char_code(Row,Row2),nl,
     RowNumber is Row2 - 97,
     nth0(RowNumber,Initial,Col),
@@ -168,14 +184,16 @@ changeState(Initial,Final,Row,Column,Value):-
     select(X,Col,Value,Changed),
     select(Col,Initial,Changed,Final).
 
-changeState(Initial,Final,Row,Column,Value) :-
+set_value(Initial,Final,Row,Column,Value) :-
     write('Error reading coordinates.\n'),
     write('Trying again\n'),
     fail.
 
 
 get_adjacent(Row,Column,Adjacent):-
-    adjacent(Row,Column,Adj),
+    char_code(Row,Row2),nl,
+    RowIndex is Row2 - 97,
+    adjacent(RowIndex,Column,Adj),
     filterAdjacent(Adj,[],Adjacent).
 
 adjacent(Row,Column,Adj):-
@@ -213,6 +231,19 @@ nAtoms([H,H2],Atom):-
     atom_concat(H,H2,Atom).
 
 nAtoms([H],H).
+
+letter_to_index(Letter,Index):-
+    char_code(Letter,Number),
+    Index is Number - 97.
+
+index_to_letter(Index,Letter):-
+    Code is Index + 97,
+    char_code(Letter,Code).
+
+get_position_string(Row,Column,Position):-
+    numberToAtom(Column,ColumnAtom),
+    atom_concat(Row, ColumnAtom, Position).
+
 
 
 
