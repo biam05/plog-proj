@@ -38,7 +38,7 @@ symbol(gWall, '').
 symbol(pWall, '').
 symbol(oWall, '').
 symbol(o, ' ').
-symbol(_, ' __   ').
+symbol(_, '__').
 
 getletter(N, L) :- 
     Aux is 64 + N,
@@ -60,7 +60,7 @@ display_game(GameState,Player) :-
 
 
 % ------------------ INICIO DOS TESTES ----------------- 
-display_game2([Head|Tail],Player,N) :-
+display_game2([Head|Tail],Player,N) :-  
     getletter(N, L),
     write(L), write('|'),
     printBorder(L, Head),
@@ -80,8 +80,8 @@ printBorder('B', L) :- write('            G'), printLine(L), write('O').
 printBorder('C', L) :- write('         G'), printLine(L), write('O').
 printBorder('D', L) :- write('      G'), printLine(L), write('O').
 printBorder('E', L) :- write('   G'), printLine(L), write('O').
-printBorder('F', L) :- write('       '), printLine(L).
-printBorder('G', L) :- write('    '), printLine(L).
+printBorder('F', L) :- write('        '), printLine(L).
+printBorder('G', L) :- write('     '), printLine(L).
 printBorder('H', L) :- write('P'), printLine(L), write('P').
 printBorder('I', L) :- write('P   '), printLine(L), write('   P').
 printBorder('J', L) :- write('P'), printLine(L), write('P').
@@ -91,13 +91,13 @@ printBorder('M', L) :- write('P   '), printLine(L), write('   P').
 printBorder('N', L) :- write('P'), printLine(L), write('P').
 printBorder('O', L) :- write('P   '), printLine(L), write('   P').
 printBorder('P', L) :- write('P'), printLine(L), write('P').
-printBorder('Q', L) :- write('    '), printLine(L).
-printBorder('R', L) :- write('       '), printLine(L).
-printBorder('S', L) :- write('   O'), printLine(L), write('P').
-printBorder('T', L) :- write('      O'), printLine(L), write('P').
-printBorder('U', L) :- write('         O'), printLine(L), write('P').
-printBorder('V', L) :- write('            O'), printLine(L), write('P').
-printBorder('W', L) :- write('               O'), printLine(L), write('P').
+printBorder('Q', L) :- write('     '), printLine(L).
+printBorder('R', L) :- write('        '), printLine(L).
+printBorder('S', L) :- write('   O'), printLine(L), write('G').
+printBorder('T', L) :- write('      O'), printLine(L), write('G').
+printBorder('U', L) :- write('         O'), printLine(L), write('G').
+printBorder('V', L) :- write('            O'), printLine(L), write('G').
+printBorder('W', L) :- write('               O'), printLine(L), write('G').
 
 printBorder(_,_).
 
@@ -106,7 +106,9 @@ printLine([]).
 % predicado para imprimir cada linha
 printLine([Head|Tail]) :-
     symbol(Head, S),
-    write(S),
+    ((Head = gWall; Head = pWall; Head = oWall) -> write(S), write(' '); 
+    ((Tail = [gWall]; Tail = [pWall]; Tail = [oWall]) -> write(S);
+        (write(S), write('    ')))),
     printLine(Tail).
 
 % ----------------- FIM DOS TESTES ----------------- 
