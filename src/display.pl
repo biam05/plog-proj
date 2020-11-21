@@ -1,44 +1,44 @@
 :- use_module(library(lists)).
 
 coordinates :-
-    write('    1| 2| 3| 4| 5| 6| 7| 8| 9|10|11|12|13|'), nl,
+    write('     1| 2| 3| 4| 5| 6| 7| 8| 9|10|11|12|13|'), nl,
     write('------------------------------------------'), nl.
 % inicialização do array com o estado inicial de jogo
 initial([
-    [o, o, o, o, o, gWall, a6, a8, oWall],
-    [o, o, o, o, gWall, b5, b7, b9, oWall],
-    [o, o, o, gWall, c4, c6, c8, c10, oWall],
-    [o, o, gWall, d3, d5, d7, d9, d11, oWall],
-    [o, gWall, e2, e4, e6, e8, e10, e12, oWall],
-    [o, o, o, f3, f5, f7, f9, f11],
-    [o, o, g2, g4, g6, g8, g10, g12],
+    [gWall, a6, a8, oWall],
+    [gWall, b5, b7, b9, oWall],
+    [gWall, c4, c6, c8, c10, oWall],
+    [gWall, d3, d5, d7, d9, d11, oWall],
+    [gWall, e2, e4, e6, e8, e10, e12, oWall],
+    [f3, f5, f7, f9, f11],
+    [g2, g4, g6, g8, g10, g12],
     [pWall, h1, h3, h5, h7, h9, h11, h13, pWall],
-    [pWall, o, i2, i4, i6, i8, i10, i12, pWall],
-    [pWall,j1, j3, j5, j7, j9, j11, j13, pWall],
-    [pWall,o, k2, k4, k6, k8, k10, k12, pWall],
-    [pWall,l1, l3, l5, l7, l9, l11, l13, pWall],
-    [pWall,o, m2, m4, m6, m8, m10, m12, pWall],
-    [pWall,n1, n3, n5, n7, n9, n11, n13, pWall],
-    [pWall,o, o2, o4, o6, o8, o10, o12, pWall],
-    [pWall,p1, p3, p5, p7, p9, p11, p13, pWall],
-    [o, o, q2, q4, q6, q8, q10, q12],
-    [o, o, r1, r3, r5, r7, r9, r11],
-    [o, oWall, s2, s4, s6, s8, s10, s12, gWall],
-    [o, o, oWall, t3, t5, t7, t9, t11, gWall],
-    [o, o, o, oWall, u4, u6, u8, u10, gWall],
-    [o, o, o, o, oWall, v5, v7, v9, gWall],
-    [o, o, o, o, o, oWall, w6, w8, gWall]
+    [pWall, i2, i4, i6, i8, i10, i12, pWall],
+    [pWall, j1, j3, j5, j7, j9, j11, j13, pWall],
+    [pWall, k2, k4, k6, k8, k10, k12, pWall],
+    [pWall, l1, l3, l5, l7, l9, l11, l13, pWall],
+    [pWall, m2, m4, m6, m8, m10, m12, pWall],
+    [pWall, n1, n3, n5, n7, n9, n11, n13, pWall],
+    [pWall, o2, o4, o6, o8, o10, o12, pWall],
+    [pWall, p1, p3, p5, p7, p9, p11, p13, pWall],
+    [q2, q4, q6, q8, q10, q12],
+    [r3, r5, r7, r9, r11],
+    [oWall, s2, s4, s6, s8, s10, s12, gWall],
+    [oWall, t3, t5, t7, t9, t11, gWall],
+    [oWall, u4, u6, u8, u10, gWall],
+    [oWall, v5, v7, v9, gWall],
+    [oWall, w6, w8, gWall]
 ]).
 
 % colors
-symbol(green, 'g').
-symbol(purple,'p').
-symbol(orange,'o').
-symbol(gWall, 'GGG').
-symbol(pWall, 'PPP').
-symbol(oWall, 'OOO').
-symbol(o, '   ').
-symbol(_, 'x').
+symbol(green, 'gg   ').
+symbol(purple,'pp   ').
+symbol(orange,'oo   ').
+symbol(gWall, '').
+symbol(pWall, '').
+symbol(oWall, '').
+symbol(o, ' ').
+symbol(_, ' __   ').
 
 getletter(N, L) :- 
     Aux is 64 + N,
@@ -63,7 +63,7 @@ display_game(GameState,Player) :-
 display_game2([Head|Tail],Player,N) :-
     getletter(N, L),
     write(L), write('|'),
-    printLine(Head),
+    printBorder(L, Head),
     Number1 is N + 1,
     nl,
     display_game2(Tail,Player,Number1).
@@ -75,27 +75,39 @@ display_game2([],player2,_).
 display_game2([],_,_) :-
     write('\n\nWrong Player given\n').
 
+printBorder('A', L) :- write('               G'), printLine(L), write('O').
+printBorder('B', L) :- write('            G'), printLine(L), write('O').
+printBorder('C', L) :- write('         G'), printLine(L), write('O').
+printBorder('D', L) :- write('      G'), printLine(L), write('O').
+printBorder('E', L) :- write('   G'), printLine(L), write('O').
+printBorder('F', L) :- write('       '), printLine(L).
+printBorder('G', L) :- write('    '), printLine(L).
+printBorder('H', L) :- write('P'), printLine(L), write('P').
+printBorder('I', L) :- write('P   '), printLine(L), write('   P').
+printBorder('J', L) :- write('P'), printLine(L), write('P').
+printBorder('K', L) :- write('P   '), printLine(L), write('   P').
+printBorder('L', L) :- write('P'), printLine(L), write('P').
+printBorder('M', L) :- write('P   '), printLine(L), write('   P').
+printBorder('N', L) :- write('P'), printLine(L), write('P').
+printBorder('O', L) :- write('P   '), printLine(L), write('   P').
+printBorder('P', L) :- write('P'), printLine(L), write('P').
+printBorder('Q', L) :- write('    '), printLine(L).
+printBorder('R', L) :- write('       '), printLine(L).
+printBorder('S', L) :- write('   O'), printLine(L), write('P').
+printBorder('T', L) :- write('      O'), printLine(L), write('P').
+printBorder('U', L) :- write('         O'), printLine(L), write('P').
+printBorder('V', L) :- write('            O'), printLine(L), write('P').
+printBorder('W', L) :- write('               O'), printLine(L), write('P').
+
+printBorder(_,_).
 
 printLine([]).
 
 % predicado para imprimir cada linha
 printLine([Head|Tail]) :-
     symbol(Head, S),
-    /*((Head = o) -> write(S);
-        ((Head = gWall) -> write(S);
-            ((Head = pWall) -> write(S);
-                ((Head = oWall) -> write(S);
-                    ((Tail = [oWall]) -> write('|'), write(S), write(' |');    
-                        (write('|'), write(S), write(' |'), write('__'))))))),*/
-    checkWalls(Head, R),
-    (R = true) -> write(S),
+    write(S),
     printLine(Tail).
-
-%checkPadding(o).
-checkWalls(oWall, true) ,!.
-checkWalls(gWall, true) ,!.
-checkWalls(pWall, true) ,!.
-checkWalls(_, false).
 
 % ----------------- FIM DOS TESTES ----------------- 
 
