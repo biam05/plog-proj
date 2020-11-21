@@ -45,11 +45,18 @@ display_game(GameState,Player) :-
     displayTurn(Player, Player1),
     repeat,
     getPosition(Row,Column,Color),
+    write(1),
     %checkPosition(GameState,Column,Row),
     set_value(GameState,GameState2,Row,Column,Color),
+    write(2),
+    add_color(Row,Column,Color),
+    write(3),
     add_connections(GameState,Row,Column),
+    write(4),
     board(GameState2),!,
-    \+ check_win,
+    write(5),nl,
+    check_win(Player),
+    write(6),
     display_game(GameState2,Player1).
 
 
@@ -135,14 +142,17 @@ board(L) :-
      write('                OOOO    GGGG'),nl.
 
 
-     
+value(1, 'pp').
+value(2, 'gg').
+value(3, 'oo').
+value(_, '').
 
 getPosition(Column,Row,Color) :-
     write('Please Enter the column letter: '),
     read(Column),
     write('Please Enter the row number :'),
     read(Row),
-    write('please Enter the color to be written'),
+    write('please Enter the color to be written (purple - 1; green - 2; orange - 3)'),
     read(Color),
     write(Column),nl,
     write(Row),nl.
@@ -167,7 +177,8 @@ h:-
 
 get_value(GameState,Row,Column,Value):-
     get_coordinates(Row,Column,RowIndex,ColumnIndex),
-    find_value(GameState,RowIndex,ColumnIndex,Value).
+    value(Value, S),
+    find_value(GameState,RowIndex,ColumnIndex,S).
     
 a:-
     initial(GameState),
@@ -176,7 +187,7 @@ a:-
     write(Index).
 
 set_value(Initial,Final,Row,Column,Value):-
-    char_code(Row,Row2),nl,
+    char_code(Row,Row2),
     RowNumber is Row2 - 97,
     nth0(RowNumber,Initial,Col),
     numberToAtom(Column,ColumnAtom),
