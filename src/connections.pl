@@ -50,6 +50,9 @@ addConection(A,B):-
 
 
 
+
+
+
     
 
 

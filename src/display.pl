@@ -141,6 +141,23 @@ getPosition(Column,Row,Color) :-
     write(Column),nl,
     write(Row),nl.
 
+get_coordinates(Initial,Row,Column,Index) :-
+    char_code(Row,Row2),nl,
+    RowNumber is Row2 - 97,
+    nth0(RowNumber,Initial,Col),
+    numberToAtom(Column,ColumnAtom),
+    atom_concat(Row, ColumnAtom, X),
+    nth0(Index,Col,X).   
+
+displayList([]).
+displayList([H|T]):-
+    write(H),nl,
+    displayList(T).
+
+a:-
+    initial(GameState),
+    get_coordinates(GameState,a,2,Index),
+    write(Index).
 
 changeState(Initial,Final,Row,Column,Value):-
     char_code(Row,Row2),nl,
@@ -157,6 +174,10 @@ changeState(Initial,Final,Row,Column,Value) :-
     fail.
 
 
+get_adjacent(Row,Column,Adjacent):-
+    adjacent(Row,Column,Adj),
+    filterAdjacent(Adj,[],Adjacent).
+
 adjacent(Row,Column,Adj):-
     BRow is Row -1,
     BBRow is Row -2,
@@ -166,21 +187,6 @@ adjacent(Row,Column,Adj):-
     NColumn is Column +1,
     Adj = [(BRow-BColumn),(BRow-NColumn),(NRow-BColumn),(NRow-NColumn),(BBRow-Column),(NNRow-Column)].
 
-display_adjacent([]).
-display_adjacent([H1-H2|T]):-
-    write(H1-H2),nl,
-    display_adjacent(T).
-
-
-checkBounds(Row-Column):-
-    initial2(Initial),
-    RowCode is Row + 97,
-    char_code(Letter,RowCode),
-    numberToAtom(Column,ColumnAtom),
-    atom_concat(Letter, ColumnAtom, Position),
-    nth0(Row,Initial,Col),
-    member(Position,Col).
-
 filterAdjacent([],X,X).
 filterAdjacent([H1-H2|T],Current,Final):-
     checkBounds(H1-H2),
@@ -189,6 +195,14 @@ filterAdjacent([H1-H2|T],Current,Final):-
 filterAdjacent([H1-H2|T],Current,Final):-
     filterAdjacent(T,Current,Final).
 
+checkBounds(Row-Column):-
+    initial(Initial),
+    RowCode is Row + 97,
+    char_code(Letter,RowCode),
+    numberToAtom(Column,ColumnAtom),
+    atom_concat(Letter, ColumnAtom, Position),
+    nth0(Row,Initial,Col),
+    member(Position,Col).
 
 
 numberToAtom(Number,Atom):-
@@ -200,12 +214,6 @@ nAtoms([H,H2],Atom):-
 
 nAtoms([H],H).
 
-%tests if adjacents work
-v:-
-    adjacent(7,11,Adj),
-    write(Adj),nl,
-    filterAdjacent(Adj,[],Final),
-    write(Final).
 
 
 
