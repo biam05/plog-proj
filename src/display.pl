@@ -2,6 +2,7 @@
 :- use_module(library(random)).
 % inicialização do array com o estado inicial de jogo
 
+% Gameboard with initial variables
 initial([
     ['a6', 'a8'],
     ['b5', 'b7', 'b9'],
@@ -30,7 +31,7 @@ initial([
 
 
 
-% colors
+% colors used to display the board
 symbol(green, 'g').
 symbol(purple,'p').
 symbol(orange,'o').
@@ -45,7 +46,7 @@ display_game(GameState,Player) :-
     displayHeader(Player),
     displayTurn(Player, Player1),
     repeat,
-    getPosition(Row,Column,Color),
+    get_user_input(Row,Column,Color),
     write(1),
     %checkPosition(GameState,Column,Row),
     set_value(GameState,GameState2,Row,Column,Color),
@@ -62,7 +63,7 @@ display_game(GameState,Player) :-
 
 
 
-
+% Function used to display if this turn belongs to Player 0 or Player 1
 displayTurn(Player1, Player2) :-
     format('~n~*t ~w ~w ~w ~w ~53|~n', [32, 'Player', Player1, 'Turn; Next: Player', Player2]).
 
@@ -70,7 +71,11 @@ display_game([],_) :-
     write('\n\nWrong Player given\n').
 
 
-%predicado para imprimir o headers de dados de jogo do player1 (hardcoded by now)
+/*
+    *   Function used to display Players 0's header
+    *   Victories: number os colors won
+    *   Win conditions: colors that can be used to win a certain color
+*/
 displayHeader(0) :-
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 0'), nl,
@@ -80,7 +85,11 @@ displayHeader(0) :-
     write('Green : Purple & Green ; Purple : Orange & Purple ; Orange : Green & Orange'), nl,
     write('----------------------------------------------------------------------------'), nl, nl.
 
-%predicado para imprimir o headers de dados de jogo do playe2 (hardcoded by now)
+/*
+    *   Function used to display Players 1's header
+    *   Victories: number os colors won
+    *   Win conditions: colors that can be used to win a certain color
+*/
 displayHeader(1) :-
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 1'), nl,
@@ -90,7 +99,7 @@ displayHeader(1) :-
     write('Green : Orange & Green ; Purple : Green & Purple ; Orange : Purple & Orange'), nl, nl.
 
 
-
+% function to print the game board (EXPERIMENTAL VERSION)
 board(L) :-
     nth0(0,L,L0),
     nth0(1,L,L1),
@@ -143,12 +152,25 @@ board(L) :-
      write('                OOOO    GGGG'),nl.
 
 
+/*
+    *   Relation between the user's input and the color written in the board
+    *       1       - purple  (pp)
+    *       2       - green   (gg)
+    *       3       - orange  (oo)
+    *       other   - error
+*/
 value(1, 'pp').
 value(2, 'gg').
 value(3, 'oo').
 value(_, '').
 
-getPosition(Column,Row,Color) :-
+/*
+    *   Function used to read the user's input
+    *       Column  - column ('a' to 'w')
+    *       Row     - row    ('1' to '13')
+    *       Color   - color  ('1' - purple; '2' - green; '3' - orange)
+*/
+get_user_input(Column,Row,Color) :-
     write('Please Enter the column letter: '),
     read(Column),
     write('Please Enter the row number :'),
@@ -158,6 +180,12 @@ getPosition(Column,Row,Color) :-
     write(Column),nl,
     write(Row),nl.
 
+/*
+    *   Function used to get the coordinates that correspond to the user's input
+    *       Row         - row    ('1' to '13')
+    *       Column      - column ('a' to 'w')
+    *       RowIndex    - 
+*/
 get_coordinates(Row,Column,RowIndex,ColumnIndex) :-
     initial(Initial),
     char_code(Row,Row2),nl,
@@ -202,83 +230,7 @@ set_value(Initial,Final,Row,Column,Value) :-
     fail.
 
 
-get_adjacent(Row,Column,Adjacent):-
-    char_code(Row,Row2),nl,
-    RowIndex is Row2 - 97,
-    adjacent(RowIndex,Column,Adj),
-    filterAdjacent(Adj,[],Adjacent).
 
-adjacent(Row,Column,Adj):-
-    BRow is Row -1,
-    BBRow is Row -2,
-    NRow is Row +1,
-    NNRow is Row +2,
-    BColumn is Column -1,
-    NColumn is Column +1,
-    Adj = [(BRow-BColumn),(BRow-NColumn),(NRow-BColumn),(NRow-NColumn),(BBRow-Column),(NNRow-Column)].
-
-filterAdjacent([],X,X).
-filterAdjacent([H1-H2|T],Current,Final):-
-    checkBounds(H1-H2),
-    filterAdjacent(T,[H1-H2|Current],Final),!.
-
-filterAdjacent([H1-H2|T],Current,Final):-
-    filterAdjacent(T,Current,Final).
-
-checkBounds(Row-Column):-
-    initial(Initial),
-    RowCode is Row + 97,
-    char_code(Letter,RowCode),
-    numberToAtom(Column,ColumnAtom),
-    atom_concat(Letter, ColumnAtom, Position),
-    nth0(Row,Initial,Col),
-    member(Position,Col).
-
-
-numberToAtom(Number,Atom):-
-    number_chars(Number, CharList),
-    nAtoms(CharList,Atom).
-
-nAtoms([H,H2],Atom):-
-    atom_concat(H,H2,Atom).
-
-nAtoms([H],H).
-
-letter_to_index(Letter,Index):-
-    char_code(Letter,Number),
-    Index is Number - 97.
-
-
-index_to_letter(Index,Letter):-
-    Code is Index + 97,
-    char_code(Letter,Code).
-
-get_position_string(Row,Column,Position):-
-    numberToAtom(Column,ColumnAtom),
-    atom_concat(Row, ColumnAtom, Position).
-
-
-achata_lista([],[]).
-achata_lista(X,[X]):- atomic(X).
-achata_lista([Cab|Rest],L):-
-    achata_lista(Cab,L1),
-    achata_lista(Rest,L2),
-    append(L1,L2,L). 
-
-
-
-validMove(GameState,Position):-
-    name(Position,ListPosition),
-    get_list_head(ListPosition,Row),
-    RowNumber is Row - 97,
-    write(RowNumber),nl,
-    nth0(RowNumber,GameState,Col),!,
-    write(Position),nl,
-    write(Col),nl,
-    member(Position,Col),
-    write('here').
-
-get_list_head([H|_],H).
 
 /*
 checkBounds(Row-Column):-
