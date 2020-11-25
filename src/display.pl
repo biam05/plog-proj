@@ -1,4 +1,5 @@
 :- use_module(library(lists)).
+:- use_module(library(random)).
 % inicialização do array com o estado inicial de jogo
 
 initial([
@@ -247,6 +248,7 @@ letter_to_index(Letter,Index):-
     char_code(Letter,Number),
     Index is Number - 97.
 
+
 index_to_letter(Index,Letter):-
     Code is Index + 97,
     char_code(Letter,Code).
@@ -254,6 +256,46 @@ index_to_letter(Index,Letter):-
 get_position_string(Row,Column,Position):-
     numberToAtom(Column,ColumnAtom),
     atom_concat(Row, ColumnAtom, Position).
+
+
+achata_lista([],[]).
+achata_lista(X,[X]):- atomic(X).
+achata_lista([Cab|Rest],L):-
+    achata_lista(Cab,L1),
+    achata_lista(Rest,L2),
+    append(L1,L2,L). 
+
+random_bot(GameState,RandomMove):-
+    achata_lista(GameState, Flat),
+    random_member(RandomMove, Flat).
+
+validMove(GameState,Position):-
+    name(Position,ListPosition),
+    get_list_head(ListPosition,Row),
+    RowNumber is Row - 97,
+    nth0(RowNumber,GameState,Col),
+    select(Position,Col,_).
+
+get_list_head([H|_],H).
+
+/*
+checkBounds(Row-Column):-
+    initial(Initial),
+    RowCode is Row + 97,
+    char_code(Letter,RowCode),
+    numberToAtom(Column,ColumnAtom),
+    atom_concat(Letter, ColumnAtom, Position),
+    nth0(Row,Initial,Col),
+    member(Position,Col).
+*/
+
+z:-
+    initial(Initial),
+    random_bot(Initial,Move),
+    write(Move),nl,
+    validMove(Initial,a5).
+
+
 
 
 
