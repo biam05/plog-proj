@@ -10,6 +10,15 @@ numberToAtom(Number,Atom):-
     nAtoms(CharList,Atom).
 
 /*
+    * Function that concatenates 2 List items into an Element
+    *   [H, H2] -
+    *   Atom    -
+*/
+nAtoms([H],H).
+nAtoms([H,H2],Atom):-
+    atom_concat(H,H2,Atom).
+
+/*
     * Function that turns a letter into a number representing the Column index position in the Gamestate List
     *   Letter  - letter to be transformed
     *   Index   - letter's index
@@ -94,10 +103,3 @@ achata_lista([Cab|Rest],L):-
 get_list_head([H|_],H).
 
 % 
-/*
-    * Function that concatenates 2 List items into an Element
-    *   [H, H2] -
-    *   Atom    -
-*/    
-nAtoms([H,H2],Atom):-
-    atom_concat(H,H2,Atom).

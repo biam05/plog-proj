@@ -180,56 +180,6 @@ get_user_input(Column,Row,Color) :-
     write(Column),nl,
     write(Row),nl.
 
-/*
-    *   Function used to get the coordinates that correspond to the user's input
-    *       Row         - row    ('1' to '13')
-    *       Column      - column ('a' to 'w')
-    *       RowIndex    - 
-*/
-get_coordinates(Row,Column,RowIndex,ColumnIndex) :-
-    initial(Initial),
-    char_code(Row,Row2),nl,
-    RowIndex is Row2 - 97,
-    nth0(RowIndex,Initial,Col),
-    numberToAtom(Column,ColumnAtom),
-    atom_concat(Row, ColumnAtom, X),
-    nth0(ColumnIndex,Col,X).
-
-find_value(GameState,RowIndex,ColumnIndex,Value) :-
-    nth0(RowIndex,GameState,Col),
-    nth0(ColumnIndex,Col,Value).
-
-h:- 
-    initial(Initial),
-    get_value(Initial,p,5,Value),
-    write(Value).
-
-get_value(GameState,Row,Column,Value):-
-    get_coordinates(Row,Column,RowIndex,ColumnIndex),
-    value(Value, S),
-    find_value(GameState,RowIndex,ColumnIndex,S).
-    
-a:-
-    initial(GameState),
-    write(GameState),
-    get_coordinates(GameState,a,2,Index),
-    write(Index).
-
-set_value(Initial,Final,Row,Column,Value):-
-    char_code(Row,Row2),
-    RowNumber is Row2 - 97,
-    nth0(RowNumber,Initial,Col),
-    numberToAtom(Column,ColumnAtom),
-    atom_concat(Row, ColumnAtom, X),
-    select(X,Col,Value,Changed),
-    select(Col,Initial,Changed,Final).
-
-set_value(Initial,Final,Row,Column,Value) :-
-    write('Error reading coordinates.\n'),
-    write('Trying again\n'),
-    fail.
-
-
 
 
 /*
