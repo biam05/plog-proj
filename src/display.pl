@@ -265,16 +265,18 @@ achata_lista([Cab|Rest],L):-
     achata_lista(Rest,L2),
     append(L1,L2,L). 
 
-random_bot(GameState,RandomMove):-
-    achata_lista(GameState, Flat),
-    random_member(RandomMove, Flat).
+
 
 validMove(GameState,Position):-
     name(Position,ListPosition),
     get_list_head(ListPosition,Row),
     RowNumber is Row - 97,
-    nth0(RowNumber,GameState,Col),
-    select(Position,Col,_).
+    write(RowNumber),nl,
+    nth0(RowNumber,GameState,Col),!,
+    write(Position),nl,
+    write(Col),nl,
+    member(Position,Col),
+    write('here').
 
 get_list_head([H|_],H).
 
@@ -288,12 +290,14 @@ checkBounds(Row-Column):-
     nth0(Row,Initial,Col),
     member(Position,Col).
 */
-
-z:-
+/*
+fu:-
     initial(Initial),
-    random_bot(Initial,Move),
-    write(Move),nl,
-    validMove(Initial,a5).
+    random_bot(Initial,Move),!,
+    %write(Move),nl,
+    %validMove(Initial,a6).
+*/
+    
 
 
 

@@ -3,6 +3,7 @@
 :- ensure_loaded(display).
 :- ensure_loaded(connections).
 :- ensure_loaded(bot).
+:- ensure_loaded(utils).
 
 % Predicado que permite correr o jogo
 % De momento está hardcoded para mostar os headers no inicio e os estados de jogo pedidos
