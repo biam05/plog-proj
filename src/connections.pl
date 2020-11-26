@@ -4,7 +4,7 @@
 :-dynamic(color/2).
 
 % EStes valores são experimentais para verificar se o código está a funcionar
-connected(h1,i2).
+/*connected(h1,i2).
 connected(i2,h3).
 connected(h3,i4).
 connected(i4,h5).
@@ -15,9 +15,9 @@ connected(i8,h9).
 connected(h9,i10).
 connected(i10,h11).
 connected(h11,i12).
-connected(i12,h13).
+connected(i12,h13).*/
 
-color(h1,2).
+/*color(h1,2).
 color(h3,2).
 color(h5,2).
 color(h7,2).
@@ -29,7 +29,7 @@ color(i4,2).
 color(i6,2).
 color(i8,2).
 color(i10,2).
-color(i12,2).
+color(i12,2).*/
 
 
 
@@ -96,13 +96,13 @@ coords(3,[
 
 check_win_color(Player,Color):-
     coords(Color,Coords),
-    write(Coords),nl,
+    %write(Coords),nl,
     check_win_color(Coords,Player,Color).
     
 check_win_color([],_,_).
 check_win_color([C1-C2|T],Player,Color):-
-    write(C1),
-    write(C2),nl,
+    %write(C1),
+    %write(C2),nl,
     \+resolva_profundidade(C1,C2,Solution,Color,Player),
     check_win_color(T,Player,Color).
 
@@ -115,8 +115,8 @@ check_win_color_block(Player,Color):-
     
 check_win_color_block([],Player,Color).
 check_win_color_block([C1-C2|T],Player,Color):-
-    write(C1),
-    write(C2),nl,
+    %write(C1),
+    %write(C2),nl,
     \+resolva_profundidade_bloqueio(C1,C2,Solution,Color,Player),
     check_win_color_block(T,Player,Color).
     
@@ -126,19 +126,19 @@ check_win_color_block([C1-C2|T],Player,Color):-
 % Checks if there's a win for each color using the Player's win conditions    
 check_win(Player):-
     write(Player),nl,
-    write('entered check win'),nl,
+    %write('entered check win'),nl,
     check_win_color(Player,1),
-    write('checked purple'),nl,
+    %write('checked purple'),nl,
     check_win_color(Player,2),
-    write('checked green'),nl,
+    %write('checked green'),nl,
     check_win_color(Player,3),
-    write('checked orange'),nl,
+    %write('checked orange'),nl,
     check_win_color_block(Player,1),
-    write('checked purple block'),nl.
+    %write('checked purple block'),nl.
     check_win_color_block(Player,2),
-    write('checked purple block'),nl.
-    check_win_color_block(Player,3),
-    write('checked purple block'),nl.
+    %write('checked purple block'),nl.
+    check_win_color_block(Player,3).
+    %write('checked purple block'),nl.
     
 resolva_profundidade(No_inicial,No_meta,Solucao,Color,Player) :-
     profundidade([],No_inicial,No_meta,Sol_inv,Color,Player),
@@ -146,13 +146,13 @@ resolva_profundidade(No_inicial,No_meta,Solucao,Color,Player) :-
 profundidade(Caminho,No_meta,No_meta,[No_meta|Caminho],Color,Player).
 profundidade(Caminho,No,No_meta,Sol,Color,Player) :-
     connected(No,No1),
-    write(Caminho),nl,
-    write(No),
-    write(No1),nl,  
+    %write(Caminho),nl,
+    %write(No),
+    %write(No1),nl,  
     check_color(No,Color,Player),
-    write('color1 checked'),nl,
+    %write('color1 checked'),nl,
     check_color(No1,Color,Player),
-    write('color2 checked'),nl,
+    %write('color2 checked'),nl,
     \+member(No1,Caminho),
     profundidade([No|Caminho],No1,No_meta,Sol,Color,Player).
 
@@ -162,9 +162,9 @@ resolva_profundidade_bloqueio(No_inicial,No_meta,Solucao,Color,Player) :-
 profundidade_bloqueio(Caminho,No_meta,No_meta,[No_meta|Caminho],Color,Player).
 profundidade_bloqueio(Caminho,No,No_meta,Sol,Color,Player) :-
     connected(No,No1),
-    write(Caminho),nl,
-    write(No),
-    write(No1),nl,
+    %write(Caminho),nl,
+    %write(No),
+    %write(No1),nl,
     color(No,Color),
     color(No1,Color),
     \+member(No1,Caminho),
@@ -186,19 +186,19 @@ addConection(A,B):-
 
 add_connections(Gamestate,Row,Column):-
     get_adjacent(Row,Column,Adjacent),
-    write(Adjacent),nl,
+    %write(Adjacent),nl,
     get_position_string(Row,Column,String),
     check_existance(Adjacent,Gamestate,String).
 
 check_existance([],_,_).
 check_existance([H1-H2|T],Gamestate,Position):-
-    write('reaches'),nl,
+    %write('reaches'),nl,
     index_to_letter(H1,Letter),
     get_position_string(Letter,H2,String),
     validMove(String),
-    write(Letter),nl,
-    write(H2),nl,nl,
-    write('passed'),nl,
+    %write(Letter),nl,
+    %write(H2),nl,nl,
+    %write('passed'),nl,
     addConection(String,Position),
     check_existance(T,Gamestate,Position).
 
@@ -208,8 +208,8 @@ check_existance([H1-H2|T],Gamestate,Position):-
 
 f:-
     initial(Initial),
-    add_connections(Initial,e,4),
-    write(added),nl.
+    add_connections(Initial,e,4).
+    %write(added),nl.
 
 
 xxx:-

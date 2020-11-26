@@ -25,7 +25,7 @@ nAtoms([H,H2],Atom):-
 */
 letter_to_index(Letter,Index):-
     char_code(Letter,Number),
-    Index is Number - 97.
+    Index is Number - 96.
 
 /*
     * Function that turns an index representing the list Column in the Gamestate into a number 
@@ -33,7 +33,7 @@ letter_to_index(Letter,Index):-
     *   Letter  - letter in the index given
 */
 index_to_letter(Index,Letter):-
-    Code is Index + 97,
+    Code is Index + 96,
     char_code(Letter,Code).
 
 /*
@@ -102,4 +102,6 @@ achata_lista([Cab|Rest],L):-
 */
 get_list_head([H|_],H).
 
-% 
+count([],X,0).
+count([X|T],X,Y):- count(T,X,Z), Y is 1+Z.
+count([X1|T],X,Z):- X1\=X,count(T,X,Z).

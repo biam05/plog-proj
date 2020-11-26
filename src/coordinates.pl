@@ -14,7 +14,7 @@ validMove(Position):-
 validMove(GameState,Position):-
     name(Position,ListPosition),
     get_list_head(ListPosition,Row),
-    RowNumber is Row - 97,
+    RowNumber is Row - 96,
     nth0(RowNumber,GameState,Col),!,
     member(Position,Col).
 
@@ -23,7 +23,7 @@ get_adjacent(Position,Adjacent):-
     get_adjacent(Row,Column,Adjacent).
 get_adjacent(Row,Column,Adjacent):-
     char_code(Row,Row2),nl,
-    RowIndex is Row2 - 97,
+    RowIndex is Row2 - 96,
     adjacent(RowIndex,Column,Adj),
     filterAdjacent(Adj,[],Adjacent).
 
@@ -39,7 +39,7 @@ adjacent(Row,Column,Adj):-
 
 checkBounds(Row-Column):-
     initial(Initial),
-    RowCode is Row + 97,
+    RowCode is Row + 96,
     char_code(Letter,RowCode),
     numberToAtom(Column,ColumnAtom),
     atom_concat(Letter, ColumnAtom, Position),
@@ -65,7 +65,7 @@ filterAdjacent([H1-H2|T],Current,Final):-
 get_coordinates(Row,Column,RowIndex,ColumnIndex) :-
     initial(Initial),
     char_code(Row,Row2),nl,
-    RowIndex is Row2 - 97,
+    RowIndex is Row2 - 96,
     nth0(RowIndex,Initial,Col),
     numberToAtom(Column,ColumnAtom),
     atom_concat(Row, ColumnAtom, X),
@@ -83,7 +83,7 @@ get_value(GameState,Row,Column,Value):-
 
 set_value(Initial,Final,Row,Column,Value):-
     char_code(Row,Row2),
-    RowNumber is Row2 - 97,
+    RowNumber is Row2 - 96,
     nth0(RowNumber,Initial,Col),
     numberToAtom(Column,ColumnAtom),
     atom_concat(Row, ColumnAtom, X),

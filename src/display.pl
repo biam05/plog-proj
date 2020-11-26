@@ -4,6 +4,8 @@
 
 % Gameboard with initial variables
 initial([
+    % P, G, O
+    [0, 0, 0],
     ['a6', 'a8'],
     ['b5', 'b7', 'b9'],
     ['c4', 'c6', 'c8', 'c10'],
@@ -42,23 +44,24 @@ symbol(oWall, 'O').
 display_game(GameState,Player) :-
     Player2 is Player + 1,
     Player1 is mod(Player2, 2),
-    write('before header\n'),
-    displayHeader(Player),
+    nth0(0,GameState,Victories),
+    %write('before header\n'),
+    displayHeader(Player, Victories),
     displayTurn(Player, Player1),
     repeat,
     get_user_input(Row,Column,Color),
-    write(1),
+    %write(1),
     %checkPosition(GameState,Column,Row),
     set_value(GameState,GameState2,Row,Column,Color),
-    write(2),
+    %write(2),
     add_color(Row,Column,Color),
-    write(3),
+    %write(3),
     add_connections(GameState,Row,Column),
-    write(4),
+    %write(4),
     board(GameState2),!,
-    write(5),nl,
+    %write(5),nl,
     check_win(Player),
-    write(6),
+    %write(6),
     display_game(GameState2,Player1).
 
 
@@ -76,11 +79,12 @@ display_game([],_) :-
     *   Victories: number os colors won
     *   Win conditions: colors that can be used to win a certain color
 */
-displayHeader(0) :-
+displayHeader(0, Victories) :-
+    count(Victories, 1, X),
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 0'), nl,
     write('----------------------------------------------------------------------------'), nl,
-    write('Victories: 0 '), nl,
+    format('Victories: ~w~n', X),
     write('\t\t\t     Win Conditions'), nl,
     write('Green : Purple & Green ; Purple : Orange & Purple ; Orange : Green & Orange'), nl,
     write('----------------------------------------------------------------------------'), nl, nl.
@@ -90,40 +94,42 @@ displayHeader(0) :-
     *   Victories: number os colors won
     *   Win conditions: colors that can be used to win a certain color
 */
-displayHeader(1) :-
+displayHeader(1, Victories) :-
+    count(Victories, 2, X),
+    write(X),
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 1'), nl,
     write('----------------------------------------------------------------------------'), nl,
-    write('Victories: 0 '), nl,
+    format('Victories: ~w~n', X),
     write('\t\t\t     Win Conditions'), nl,
     write('Green : Orange & Green ; Purple : Green & Purple ; Orange : Purple & Orange'), nl, nl.
 
 
 % function to print the game board (EXPERIMENTAL VERSION)
 board(L) :-
-    nth0(0,L,L0),
-    nth0(1,L,L1),
-    nth0(2,L,L2),
-    nth0(3,L,L3),
-    nth0(4,L,L4),
-    nth0(5,L,L5),
-    nth0(6,L,L6),
-    nth0(7,L,L7),
-    nth0(8,L,L8),
-    nth0(9,L,L9),
-    nth0(10,L,L10),
-    nth0(11,L,L11),
-    nth0(12,L,L12),
-    nth0(13,L,L13),
-    nth0(14,L,L14),
-    nth0(15,L,L15),
-    nth0(16,L,L16),
-    nth0(17,L,L17),
-    nth0(18,L,L18),
-    nth0(19,L,L19),
-    nth0(20,L,L20),
-    nth0(21,L,L21),
-    nth0(22,L,L22),
+    nth0(1,L,L0),
+    nth0(2,L,L1),
+    nth0(3,L,L2),
+    nth0(4,L,L3),
+    nth0(5,L,L4),
+    nth0(6,L,L5),
+    nth0(7,L,L6),
+    nth0(8,L,L7),
+    nth0(9,L,L8),
+    nth0(10,L,L9),
+    nth0(11,L,L10),
+    nth0(12,L,L11),
+    nth0(13,L,L12),
+    nth0(14,L,L13),
+    nth0(15,L,L14),
+    nth0(16,L,L15),
+    nth0(17,L,L16),
+    nth0(18,L,L17),
+    nth0(19,L,L18),
+    nth0(20,L,L19),
+    nth0(21,L,L20),
+    nth0(22,L,L21),
+    nth0(23,L,L22),
     write('                GGGG    OOOO'),nl,
     format('             GGGG/~w\\__/~w\\OOOO~n',L0),
     format('          GGGG/~w\\__/~w\\__/~w\\OOOO~n',L1),
