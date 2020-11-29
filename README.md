@@ -92,13 +92,10 @@ Em cima do tabuleiro estará um *header* correspondente ao *Player1* que apresen
 
 ### Lista de Jogadas Válidas
 
-Obtenção de lista com jogadas possíveis.
-
-TODO
-
-````pl
+````prolog
 valid_moves(+GameState, +Player, -ListOfMoves)
 ````
+Com o objetivo de se obter uma lista com todas as jogadas possíveis no tabuleiro atual, criamos o predicado ````valid_moves````. Este achata a lista de listas correspondente ao ````GameState```` passado como argumento, remove todos os números presentes (uma vez que os números correspondem a posições já jogadas) e retorna a lista obtida com todas as jogadas possíveis em ````ListOfMoves````. Note-se que no caso do nosso jogo, o argumento ````Player```` acaba por não ter utilidade uma vez que cada jogador pode jogar em qualquer local do tabuleiro desde que esta posição não tenha sido jogada anteriormente.
 
 ### Execução de Jogadas
 
@@ -106,19 +103,17 @@ Validação e execução de uma jogada, obtendo o novo estado do jogo
 
 TODO
 
-````pl
+````prolog
 move(+GameState,+Move,-NewGameState)​
 ````
 
 ### Final do Jogo
 
-Verificação do fim do jogo, com identificação do vencedor
-
-TODO
-
-````pl
+````prolog
 game_over(+GameState, -Winner)
 ````
+
+Para se terminar o *loop* principal do nosso jogo, foi criado o predicado ````game_over````. O jogo *Alliances* termina quando um dos jogadores obtiver duas cores, logo neste predicado é feito um *count* de cores ganhas por cada jogador. Esta informação encontra-se na primeira lista presente na lista do ````GameState````. Se algum destes tiver um valor igual a 2, este jogador será retornado em ````Winner```` e será terminado o loop principal do jogo. 
 
 ### Avaliação do Tabuleiro
 
@@ -126,7 +121,7 @@ Forma(s) de avaliação do estado do jogo.
 
 TODO
 
-````pl
+````prolog
 ​value(+GameState, +Player, -Value)
 ````
 
@@ -136,7 +131,7 @@ Escolha da jogada a efetuar pelo computador, dependendo do nível de dificuldade
 
 TODO
 
-````pl
+````prolog
 choose_move(+GameState, +Player, +Level, -Move)
 ````
 

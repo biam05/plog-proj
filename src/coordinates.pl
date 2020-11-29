@@ -38,6 +38,8 @@ adjacent(Row,Column,Adj):-
 
 
 checkBounds(Row-Column):-
+    Row =\= 0,
+    Row =\= -1,
     initial(Initial),
     RowCode is Row + 96,
     char_code(Letter,RowCode),
@@ -117,3 +119,43 @@ valid_moves(GameState,Player,ListOfMoves):-
     achata_lista(GameState,Flat),
     remove_numbers(Flat,ListReady),
     findall(Move,member(Move,ListReady),ListOfMoves).
+
+
+
+valid_move(GameState,Row,Column):-
+    get_position_string(Row,Column,Position),
+    valid_move(GameState,Position).
+
+valid_move(GameState,Position):-
+    achata_lista(GameState,Flat),
+    remove_numbers(Flat,ListReady),
+    member(Move,ListReady).
+
+    % P, G, O
+    
+set_color_gamestate(Color,Player,Initial,Final):-
+
+    nth0(0,Initial,Col),        
+    nth1(Color,Col,_,Changed),
+    nth1(Color,ColFinal,Player,Changed),
+      
+    select(Col,Initial,ColFinal,Final).
+
+
+won_color(Color,GameState,Value):-
+    nth0(0, GameState, Colors),
+    nth1(Color,Colors,Value).
+    
+    
+trying:-
+    Lis = [0,0,0],
+    nth1(2,Lis,_,Changed),
+    nth1(2,ColFinal,1,Changed),
+    write(ColFinal).
+
+at:-
+    initial(Initial),
+    set_color_gamestate(2,1,Initial,Final),
+    write(Final),
+    won_color(2,Final),
+    won_color(1,Final).

@@ -3,7 +3,8 @@
 :-dynamic(connected/2).
 :-dynamic(color/2).
 
-% EStes valores são experimentais para verificar se o código está a funcionar
+% EStes valores são experimentais para verificar se o código está a funciona
+/*
 connected(h1,i2).
 connected(i2,h3).
 connected(h3,i4).
@@ -33,7 +34,7 @@ color(i8,1).
 color(i10,1).
 color(i12,1).
 color(g12,1).
-
+*/
 
 
 
@@ -96,11 +97,17 @@ coords(3,[
     e2-w6, e2-v5, e2-u4, e2-t3, e2-s2
 ]).
 
-
-check_win_color(Player,Color):-
+check_win_cl(_,_,0).
+check_win_cl(_,_,1).
+check_win_cl(Player,Color,Value):-
     coords(Color,Coords),
     %write(Coords),nl,
     check_win_color(Coords,Player,Color).
+
+check_win_color(Player,Color,Gamestate):-
+    nth0(0,Gamestate,FirstRow),
+    nth0(Color,FirstRow,1),
+
     
 check_win_color([],_,_).
 check_win_color([C1-C2|T],Player,Color):-
@@ -109,8 +116,9 @@ check_win_color([C1-C2|T],Player,Color):-
     \+resolva_profundidade(C1,C2,Solution,Color,Player),
     check_win_color(T,Player,Color).
 
-
-check_win_color_block(Player,Color):-
+check_win_cl_block(_,_,0).
+check_win_cl_block(_,_,1).
+check_win_cl_block(Player,Color,Value):-
     coords(Color,Coords),
     get_single_color(Player,Color,ColorBlock),
     nl,nl,write(ColorBlock),nl,nl,
@@ -124,24 +132,31 @@ check_win_color_block([C1-C2|T],Player,Color):-
     check_win_color_block(T,Player,Color).
     
 
+check_wins_color(Player,Color,ValueColor,InitialGamestate,FinalGamestate):-
+    check_win_cl(Player,Color,ValueColor),
+    check_win_cl_block(Player,Color,ValueColor),
+    FinalGamestate = InitialGamestate.
+
+check_wins_color(Player,Color,ValueColor,InitialGamestate,FinalGamestate):-
+    set_color_gamestate(Color,Player,Initial,Final),
+    fail.
+
 
 
 % Checks if there's a win for each color using the Player's win conditions    
-check_win(Player):-
+check_win(Player,InitialGamestate,FinalGamestate):-
     write(Player),nl,
+
+    won_color(1,InitialGamestate,ValuePurple),
+    won_color(2,InitialGamestate,ValueGreen),
+    won_color(3,InitialGamestate,ValueOrange),
     %write('entered check win'),nl,
-    check_win_color(Player,1),
+    check_wins_color(Player,1,ValueGreen,InitialGamestate,FinalGamestate),
     %write('checked purple'),nl,
-    check_win_color(Player,2),
+    check_wins_color(Player,2,ValueGreen,InitialGamestate,FinalGamestate),
     %write('checked green'),nl,
-    check_win_color(Player,3),
+    check_wins_color(Player,3,ValueOrange,InitialGamestate,FinalGamestate).
     %write('checked orange'),nl,
-    check_win_color_block(Player,1),
-    %write('checked purple block'),nl.
-    check_win_color_block(Player,2),
-    %write('checked purple block'),nl.
-    check_win_color_block(Player,3).
-    %write('checked purple block'),nl.
     
 resolva_profundidade(No_inicial,No_meta,Solucao,Color,Player) :-
     profundidade([],No_inicial,No_meta,Sol_inv,Color,Player),
@@ -182,21 +197,21 @@ add_color(Row,Column,Color):-
 
 
 addConection(A,B):-
-    \+connected(A,B),
-    \+connected(B,A),
+    %\+connected(A,B),
+    %\+connected(B,A),
     Conection = connected(A,B),
     ConectionReverse = connected(B,A),
     assert(Conection),
     assert(ConectionReverse).
 
-add_connections(Gamestate,Row,Column):-
+add_connections(Row,Column):-
     get_adjacent(Row,Column,Adjacent),
     %write(Adjacent),nl,
     get_position_string(Row,Column,String),
-    check_existance(Adjacent,Gamestate,String).
+    check_existance(Adjacent,String).
 
-check_existance([],_,_).
-check_existance([H1-H2|T],Gamestate,Position):-
+check_existance([],_).
+check_existance([H1-H2|T],Position):-
     %write('reaches'),nl,
     index_to_letter(H1,Letter),
     get_position_string(Letter,H2,String),
@@ -205,10 +220,10 @@ check_existance([H1-H2|T],Gamestate,Position):-
     %write(H2),nl,nl,
     %write('passed'),nl,
     addConection(String,Position),
-    check_existance(T,Gamestate,Position).
+    check_existance(T,Position).
 
-check_existance([H1-H2|T],Gamestate,Position):-
-    check_existance(T,Gamestate,Position).
+check_existance([H1-H2|T],Position):-
+    check_existance(T,Position).
 
 
 f:-

@@ -5,7 +5,7 @@
 % Gameboard with initial variables
 initial([
     % P, G, O
-    [0, 0, 0],
+    [2, 2, 2],
     ['a6', 'a8'],
     ['b5', 'b7', 'b9'],
     ['c4', 'c6', 'c8', 'c10'],
@@ -73,11 +73,26 @@ display_game2(GameState,Player) :-
     Player1 is mod(Player2, 2),
     nth0(0,GameState,Victories),
     displayHeader(Player, Victories),
+    displayHeader(Player1, Victories),
     displayTurn(Player, Player1), 
     board(GameState).
 
 % move(+GameState,+Move,-NewGameState)
-move(GameState, Move, NewGameState).
+move(GameState, Move, GameState2):-
+    get_user_input(Row,Column,Color),
+    valid_move(GameState,Row,Column),
+    write(1),nl,
+    set_value(GameState,GameState2,Row,Column,Color),
+    write(2),nl,
+    add_color(Row,Column,Color),
+    write(3),nl,
+    %trace,
+    add_connections(Row,Column),
+    write(5),nl.
+
+move(GameState, Move, GameState2):- 
+    move(GameState, Move, GameState2).
+
 
 % ------------------------------------------------------------
 % ----------------------- FIM DE TESTES ---------------------- 
@@ -97,7 +112,7 @@ display_game([],_) :-
     *   Win conditions: colors that can be used to win a certain color
 */
 displayHeader(0, Victories) :-
-    count(Victories, 1, X),
+    count(Victories, 0, X),
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 0'), nl,
     write('----------------------------------------------------------------------------'), nl,
@@ -112,7 +127,7 @@ displayHeader(0, Victories) :-
     *   Win conditions: colors that can be used to win a certain color
 */
 displayHeader(1, Victories) :-
-    count(Victories, 2, X),
+    count(Victories, 1, X),
     write(X),
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 1'), nl,
