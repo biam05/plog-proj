@@ -108,13 +108,28 @@ coords_blocking(1,Coords):-
     permutation_(InitialNodes,FinalNodes,Coords).
 
 coords_blocking(2,Coords):-
-    InitialNodes = [a6,b7,a8,,b9,c10,d11],
-    FinalNodes = [],
+    InitialNodes = [a6,b7,a8,b9,c10,d11,e12,g12,h13,j13,l13,n13,p13,q12,s12],
+    FinalNodes = [e2,g2,h1,j1,l1,n1,p1,q2,s2,t3,u4,v5,w6,v7,w8],
     permutation_(InitialNodes,FinalNodes,Coords).
 
 coords_blocking(3,Coords):-
-    InitialNodes = [],
-    FinalNodes = [],
+    InitialNodes = [s2,q2,p1,n1,l1,j1,h1,g2,e2,d3,c4,b5,a6,b7,a8],
+    FinalNodes = [w6,v7,w8,v9,u10,t11,s12,q12,p13,n13,l13,j13,h13,g12,e12],
+    permutation_(InitialNodes,FinalNodes,Coords).
+
+coords_(1,Coords):-
+    InitialNodes = [h1,j1,l1,n1,p1],
+    FinalNodes = [h13,j13,l13,n13,p13],
+    permutation_(InitialNodes,FinalNodes,Coords).
+
+coords_(2,Coords):-
+    InitialNodes = [e2,d3,c4,b5,a6],
+    FinalNodes = [w8,v9,u10,t11,s12],
+    permutation_(InitialNodes,FinalNodes,Coords).
+
+coords_(3,Coords):-
+    InitialNodes = [a8,b9,c10,d11,e12],
+    FinalNodes = [s2,t3,u4,v5,w6],
     permutation_(InitialNodes,FinalNodes,Coords).
 
 coords_block(1,[
@@ -166,7 +181,7 @@ coords_block(3,[
     q2-h13, q2-j13, q2-l13, q2-n13, q2-p13, q2-q12, q2-s12, q2-t11, q2-u10, q2-v9, q2-v8, q2-v7
 ]).
 
-
+/*
 coords(1,[
     h1-h13, h1-j13, h1-l13, h1-n13, h1-p13,
     j1-h13, j1-j13, j1-l13, j1-n13, j1-p13,
@@ -190,11 +205,11 @@ coords(3,[
     d3-w6, d3-v5, d3-u4, d3-t3, d3-s2,
     e2-w6, e2-v5, e2-u4, e2-t3, e2-s2
 ]).
-
+*/
 check_win_cl(_,_,0).
 check_win_cl(_,_,1).
 check_win_cl(Player,Color,_Value):-
-    coords(Color,Coords),
+    coords_(Color,Coords),
     %write(Coords),nl,
     check_win_color(Coords,Player,Color).
 
