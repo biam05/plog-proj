@@ -64,18 +64,14 @@ display_game(GameState,Player) :-
     %write(6),
     display_game(GameState2,Player1).
 
-% ------------------------------------------------------------
-% --------------------- INICIO DE TESTES --------------------- 
-% ------------------------------------------------------------
-
 display_game2(GameState,Player) :-
     Player2 is Player + 1,
     Player1 is mod(Player2, 2),
     nth0(0,GameState,Victories),
-    displayHeader(Player, Victories),
-    displayHeader(Player1, Victories),
+    displayHeader(0, Victories),
+    board(GameState),
     displayTurn(Player, Player1), 
-    board(GameState).
+    displayHeader(1, Victories).
 
 % move(+GameState,+Move,-NewGameState)
 move(GameState, Move, GameState2):-
@@ -93,10 +89,6 @@ move(GameState, Move, GameState2):-
 move(GameState, Move, GameState2):- 
     move(GameState, Move, GameState2).
 
-
-% ------------------------------------------------------------
-% ----------------------- FIM DE TESTES ---------------------- 
-% ------------------------------------------------------------
 
 % Function used to display if this turn belongs to Player 0 or Player 1
 displayTurn(Player1, Player2) :-
@@ -239,9 +231,10 @@ fu:-
 */
     
 
-
-
-
+choose_move(GameState,_,_, Move,Color):-
+    random_bot(GameState,Move,Color).
+    
+starting_menu :-
 
 
 

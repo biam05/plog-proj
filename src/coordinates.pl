@@ -138,7 +138,7 @@ set_color_gamestate(Color,Player,Initial,Final):-
     nth0(0,Initial,Col),        
     nth1(Color,Col,_,Changed),
     nth1(Color,ColFinal,Player,Changed),
-      
+    write(ColFinal),
     select(Col,Initial,ColFinal,Final).
 
 
