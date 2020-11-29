@@ -22,7 +22,8 @@ play_game(GameState,Player) :-
     Player1 is mod(Player2, 2),
     display_game2(GameState,Player),
     \+game_over(GameState,Winner),
-    move(GameState, Move, GameState2),
+    getUserInput(Row,Column,Color),
+    move(GameState, Row,Column,Color, GameState2),
     write(4),nl,
     check_win(Player,GameState2,GameState3),
     write('checked vic'),nl,
@@ -53,40 +54,52 @@ play_game :-
 play_game :-
     write('Game Won!!').
 */
+botInputHandler :- once(read(Enter)).
 
 %Bot is Player 1
 play_player_bot(GameState,1):-
-    display_game2(GameState,0),
+    display_game2(GameState,1),
     \+game_over(GameState,Winner),
+    botInputHandler,
     choose_move(GameState,Player,_, Move,Color),
-    move(GameState, Move, GameState2),
+    move(GameState,Move,Color,GameState2),
     check_win(Player,GameState2,GameState3),
-    write('checked vic'),nl,
     play_player_bot(GameState3, 0).
 
 play_player_bot(GameState,0):-
     display_game2(GameState,0),
     \+game_over(GameState,Winner),
-    move(GameState, Move, GameState2),
+    getUserInput(Row,Column,Color),
+    move(GameState, Row,Column,Color, GameState2),
     check_win(Player,GameState2,GameState3),
-    write('checked vic'),nl,
     play_player_bot(GameState3, 1).
-
 
 
 play_bot_player(GameState,0):-
     display_game2(GameState,0),
     \+game_over(GameState,Winner),
-    move(GameState, Move, GameState2),
+    botInputHandler,
+    choose_move(GameState,Player,_, Move,Color),
+    move(GameState,Move,Color,GameState2),
     check_win(Player,GameState2,GameState3),
-    write('checked vic'),nl,
     play_bot_player(GameState3, 1).
 
 play_bot_player(GameState,1):-
-    display_game2(GameState,0),
+    display_game2(GameState,1),
     \+game_over(GameState,Winner),
-    choose_move(GameState,Player,_, Move,Color),
-    move(GameState, Move, GameState2),
+    getUserInput(Row,Column,Color),
+    move(GameState,Row,Column,Color,GameState2),
     check_win(Player,GameState2,GameState3),
-    write('checked vic'),nl,
     play_bot_player(GameState3, 0).
+
+
+play_bot_bot(GameState,Player):-
+    Player2 is Player + 1,
+    Player1 is mod(Player2, 2),
+    display_game2(GameState,Player),
+    \+game_over(GameState,Winner),
+    botInputHandler,
+    choose_move(GameState,Player,_, Move,Color),
+    move(GameState,Move,Color,GameState2),
+    check_win(Player,GameState2,GameState3),
+    play_bot_bot(GameState3, Player1).

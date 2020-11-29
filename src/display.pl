@@ -74,20 +74,18 @@ display_game2(GameState,Player) :-
     displayHeader(1, Victories).
 
 % move(+GameState,+Move,-NewGameState)
-move(GameState, Move, GameState2):-
-    get_user_input(Row,Column,Color),
-    valid_move(GameState,Row,Column),
-    write(1),nl,
-    set_value(GameState,GameState2,Row,Column,Color),
-    write(2),nl,
-    add_color(Row,Column,Color),
-    write(3),nl,
-    %trace,
-    add_connections(Row,Column),
-    write(5),nl.
+move(GameState,Move,Color,GameState2):-
+    position_to_row_column(Move,Row,Column),
+    move(GameState,Row,Column,Color,GameState2).
 
-move(GameState, Move, GameState2):- 
-    move(GameState, Move, GameState2).
+move(GameState,Row,Column,Color,GameState2):-
+    valid_move(GameState,Row,Column),
+    write('Move is Valid'),
+    set_value(GameState,GameState2,Row,Column,Color),
+    add_color(Row,Column,Color),
+    add_connections(Row,Column).
+
+    
 
 
 % Function used to display if this turn belongs to Player 0 or Player 1
@@ -126,7 +124,8 @@ displayHeader(1, Victories) :-
     write('----------------------------------------------------------------------------'), nl,
     format('Victories: ~w~n', X),
     write('\t\t\t     Win Conditions'), nl,
-    write('Green : Orange & Green ; Purple : Green & Purple ; Orange : Purple & Orange'), nl, nl.
+    write('Green : Orange & Green ; Purple : Green & Purple ; Orange : Purple & Orange'), nl,
+    write('----------------------------------------------------------------------------'), nl, nl.
 
 
 % function to print the game board (EXPERIMENTAL VERSION)
@@ -194,23 +193,53 @@ value(2, 'gg').
 value(3, 'oo').
 value(_, '').
 
+% -----------------------------------------------
+% -------------------- TESTES -------------------
+% -----------------------------------------------
 /*
     *   Function used to read the user's input
     *       Column  - column ('a' to 'w')
     *       Row     - row    ('1' to '13')
     *       Color   - color  ('1' - purple; '2' - green; '3' - orange)
 */
-get_user_input(Column,Row,Color) :-
-    write('Please Enter the column letter: '),
-    read(Column),
-    write('Please Enter the row number :'),
-    read(Row),
-    write('please Enter the color to be written (purple - 1; green - 2; orange - 3)'),
-    read(Color),
-    write(Column),nl,
-    write(Row),nl.
+getUserInput(Column, Row, Color) :-
+    repeat,
+        write('Please Enter Valid Coordinates'),nl,
+        getUserColumn(Column),
+        getUserRow(Row),
+        getUserColor(Color).
 
 
+getUserColumn(Column) :-
+    repeat,
+        write('Enter the column letter:\n'),
+        once(read(Column)),
+        checkReadColumn(Column),!.
+
+checkReadColumn(Column) :- atomic(Column), char_code(Column,Number), Number >= 97, Number =< 119.
+checkReadColumn(_) :- write('Invalid Column. Has to be between \'a\' and \'w\'. Try Again\n'), fail.
+
+getUserRow(Row) :-
+    repeat,
+        write('Enter the row number:\n'),
+        once(read(Row)),
+        checkReadRow(Row),!.
+
+checkReadRow(Row) :- integer(Row), Row >= 1, Row =< 13.
+checkReadRow(_) :- write('Invalid Row. Has to be between \'1\' and \'13\'. Try Again\n'), fail.
+
+getUserColor(Color) :-
+    repeat,
+        write('Enter the color number (purple - 1; green - 2; orange - 3):\n'),
+        once(read(Color)),
+        checkReadColor(Color),!.
+
+checkReadColor(Color) :- integer(Color), Color >= 1, Color =< 3.
+checkReadColor(_) :- write('Invalid Color. Try Again\n'), fail.
+
+% -----------------------------------------------
+% -------------------- TESTES -------------------
+% -----------------------------------------------
 
 /*
 checkBounds(Row-Column):-
@@ -273,6 +302,24 @@ printDifficultyMenu :-
     write('                      | 0. Exit                 |                      \n'),
     write('                      |_________________________|                      \n').
 
+printBotPlayerMenu :-
+    nl, nl, nl,
+    write('                       _ _ _                                           \n'),
+    write('                 /\\   | | (_)                                         \n'),
+    write('                /  \\  | | |_  __ _ _ __   ___ ___  ___                \n'),
+    write('               / /\\ \\ | | | |/ _` | \'_ \\ / __/ _ \\/ __|           \n'),
+    write('              / ____ \\| | | | (_| | | | | (_|  __/\\__ \\             \n'),
+    write('             /_/    \\_\\_|_|_|\\__,_|_| |_|\\___\\___||___/           \n'),
+    write('                                                                       \n'),
+    write('                               Bot Player                              \n'),
+    write('                       _________________________                       \n'),
+    write('                      |                         |                      \n'),
+    write('                      | 1. Bot is Player 0      |                      \n'),
+    write('                      |                         |                      \n'),
+    write('                      | 2. Bot is Player 1      |                      \n'),
+    write('                      |                         |                      \n'),
+    write('                      | 0. Exit                 |                      \n'),
+    write('                      |_________________________|                      \n').
 
 
 

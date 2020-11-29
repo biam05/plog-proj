@@ -215,6 +215,7 @@ check_wins_color(Player,Color,ValueColor,InitialGamestate,FinalGamestate):-
 check_wins_color(Player,Color,ValueColor,InitialGamestate,FinalGamestate):-
     write('hey'),nl,
     set_color_gamestate(Color,Player,InitialGamestate,FinalGamestate),!,
+    format('Player ~w Won Color!! ~w ~n',[Player,Color]),
     write('set'),nl.
 
 

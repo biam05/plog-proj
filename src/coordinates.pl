@@ -120,6 +120,9 @@ valid_moves(GameState,Player,ListOfMoves):-
     remove_numbers(Flat,ListReady),
     findall(Move,member(Move,ListReady),ListOfMoves).
 
+tv:-
+    initial(Initial),
+    valid_move(Initial,'a5').
 
 
 valid_move(GameState,Row,Column):-
@@ -127,11 +130,8 @@ valid_move(GameState,Row,Column):-
     valid_move(GameState,Position).
 
 valid_move(GameState,Position):-
-    achata_lista(GameState,Flat),
-    remove_numbers(Flat,ListReady),
-    member(Move,ListReady).
-
-    % P, G, O
+    valid_moves(GameState, _, ListOfMoves),!,
+    member(Position, ListOfMoves).
     
 set_color_gamestate(Color,Player,Initial,Final):-
 
@@ -159,3 +159,8 @@ at:-
     write(Final),
     won_color(2,Final),
     won_color(1,Final).
+
+kkk:-
+    initial(Initial),
+    achata_lista(Initial,X),
+    write(X).

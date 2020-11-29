@@ -38,7 +38,27 @@ checkDifficultyOption(Option) :- Option >= 0, Option =< 1.
 checkDifficultyOption(_) :- write('Invalid Option. Try Again\n'), fail.
 
 runPVBOption(0) :- write('Goodbye!\n').
-runPVBOption(1) :- write('Not yet implemented\n').
+runPVBOption(1) :-
+    printBotPlayerMenu,
+    repeat,
+        write('Select which player the Bot should be:\n'),
+        once(read(Option)),
+        checkPlayerOption(Option),
+    runPlayerOption(Option).
+
+checkPlayerOption(Option) :- Option >= 0, Option =< 2.
+checkPlayerOption(_) :- write('Invalid Option. Try Again\n'), fail.
+
+runPlayerOption(1) :-
+    initial(Initial),
+    play_bot_player(Initial, 0).
+    
+
+runPlayerOption(2) :-
+    initial(Initial),
+    play_player_bot(Initial, 0).
 
 runBVBOption(0) :- write('Goodbye!\n').
-runBVBOption(1) :- write('Not yet implemented\n').
+runBVBOption(1) :- 
+    initial(Initial),
+    play_bot_bot(Initial, 0).
