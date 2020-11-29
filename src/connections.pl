@@ -108,7 +108,7 @@ coords_blocking(1,Coords):-
     permutation_(InitialNodes,FinalNodes,Coords).
 
 coords_blocking(2,Coords):-
-    InitialNodes = [a6,b7,a8,,b9,c10,d11],
+    InitialNodes = [a6,b7,a8,b9,c10,d11],
     FinalNodes = [],
     permutation_(InitialNodes,FinalNodes,Coords).
 
