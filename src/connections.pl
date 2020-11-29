@@ -104,6 +104,7 @@ get_single_color(1,3,2). %orange wins with green block
 
 
 coords_block(1,[
+    g2-q2, g2-s2, g2-t3, g2-u4, g2-v5, g2-w6, g2-v7, g2-w8, g2-v9, g2-u10, g2-t11, g2-s12, g2-q12,
     e2-q2, e2-s2, e2-t3, e2-u4, e2-v5, e2-w6, e2-v7, e2-w8, e2-v9, e2-u10, e2-t11, e2-s12, e2-q12,
     d3-q2, d3-s2, d3-t3, d3-u4, d3-v5, d3-w6, d3-v7, d3-w8, d3-v9, d3-u10, d3-t11, d3-s12, d3-q12,
     c4-q2, c4-s2, c4-t3, c4-u4, c4-v5, c4-w6, c4-v7, c4-w8, c4-v9, c4-u10, c4-t11, c4-s12, c4-q12,
@@ -120,6 +121,7 @@ coords_block(1,[
 
 
 coords_block(2,[
+    g2-b7, g2-a8, g2-b9, g2-c10, g2-d11, g2-e12, g2-g12, g2-h13, g2-j13, g2-l13, g2-n13, g2-p13, g2-q12,
     h1-b7, h1-a8, h1-b9, h1-c10, h1-d11, h1-e12, h1-g12, h1-h13, h1-j13, h1-l13, h1-n13, h1-p13, h1-q12,
     j1-b7, j1-a8, j1-b9, j1-c10, j1-d11, j1-e12, j1-g12, j1-h13, j1-j13, j1-l13, j1-n13, j1-p13, j1-q12,
     l1-b7, l1-a8, l1-b9, l1-c10, l1-d11, l1-e12, l1-g12, l1-h13, l1-j13, l1-l13, l1-n13, l1-p13, l1-q12,
@@ -128,13 +130,14 @@ coords_block(2,[
     q2-b7, q2-a8, q2-b9, q2-c10, q2-d11, q2-e12, q2-g12, q2-h13, q2-j13, q2-l13, q2-n13, q2-p13, q2-q12,
     s2-b7, s2-a8, s2-b9, s2-c10, s2-d11, s2-e12, s2-g12, s2-h13, s2-j13, s2-l13, s2-n13, s2-p13, s2-q12,
     t3-b7, t3-a8, t3-b9, t3-c10, t3-d11, t3-e12, t3-g12, t3-h13, t3-j13, t3-l13, t3-n13, t3-p13, t3-q12,
-    t3-b7, t3-a8, t3-b9, t3-c10, t3-d11, t3-e12, t3-g12, t3-h13, t3-j13, t3-l13, t3-n13, t3-p13, t3-q12,
     u4-b7, u4-a8, u4-b9, u4-c10, u4-d11, u4-e12, u4-g12, u4-h13, u4-j13, u4-l13, u4-n13, u4-p13, u4-q12,
     v5-b7, v5-a8, v5-b9, v5-c10, v5-d11, v5-e12, v5-g12, v5-h13, v5-j13, v5-l13, v5-n13, v5-p13, v5-q12,
-    w6-b7, w6-a8, w6-b9, w6-c10, w6-d11, w6-e12, w6-g12, w6-h13, w6-j13, w6-l13, w6-n13, w6-p13, w6-q12 
+    w6-b7, w6-a8, w6-b9, w6-c10, w6-d11, w6-e12, w6-g12, w6-h13, w6-j13, w6-l13, w6-n13, w6-p13, w6-q12,
+    v7-b7, v7-a8, v7-b9, v7-c10, v7-d11, v7-e12, v7-g12, v7-h13, v7-j13, v7-l13, v7-n13, v7-p13, v7-q12  
 ]).
 
 coords_block(3,[
+    b7-h13, b7-j13, b7-l13, b7-n13, b7-p13, b7-q12, b7-s12, b7-t11, b7-u10, b7-v9, b7-v8, b7-v7,
     a6-h13, a6-j13, a6-l13, a6-n13, a6-p13, a6-q12, a6-s12, a6-t11, a6-u10, a6-v9, a6-v8, a6-v7,
     b5-h13, b5-j13, b5-l13, b5-n13, b5-p13, b5-q12, b5-s12, b5-t11, b5-u10, b5-v9, b5-v8, b5-v7,
     c4-h13, c4-j13, c4-l13, c4-n13, c4-p13, c4-q12, c4-s12, c4-t11, c4-u10, c4-v9, c4-v8, c4-v7,

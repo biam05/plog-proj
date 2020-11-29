@@ -45,29 +45,6 @@ display_game(GameState,Player) :-
     Player2 is Player + 1,
     Player1 is mod(Player2, 2),
     nth0(0,GameState,Victories),
-    %write('before header\n'),
-    displayHeader(Player, Victories),
-    displayTurn(Player, Player1),
-    repeat,
-    get_user_input(Row,Column,Color),
-    %write(1),
-    %checkPosition(GameState,Column,Row),
-    set_value(GameState,GameState2,Row,Column,Color),
-    %write(2),
-    add_color(Row,Column,Color),
-    %write(3),
-    add_connections(GameState,Row,Column),
-    %write(4),
-    board(GameState2),!,
-    %write(5),nl,
-    check_win(Player),
-    %write(6),
-    display_game(GameState2,Player1).
-
-display_game2(GameState,Player) :-
-    Player2 is Player + 1,
-    Player1 is mod(Player2, 2),
-    nth0(0,GameState,Victories),
     displayHeader(0, Victories),
     board(GameState),
     displayTurn(Player, Player1), 
@@ -193,9 +170,6 @@ value(2, 'gg').
 value(3, 'oo').
 value(_, '').
 
-% -----------------------------------------------
-% -------------------- TESTES -------------------
-% -----------------------------------------------
 /*
     *   Function used to read the user's input
     *       Column  - column ('a' to 'w')
@@ -236,10 +210,6 @@ getUserColor(Color) :-
 
 checkReadColor(Color) :- integer(Color), Color >= 1, Color =< 3.
 checkReadColor(_) :- write('Invalid Color. Try Again\n'), fail.
-
-% -----------------------------------------------
-% -------------------- TESTES -------------------
-% -----------------------------------------------
 
 /*
 checkBounds(Row-Column):-
