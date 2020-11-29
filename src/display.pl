@@ -216,7 +216,7 @@ getUserColumn(Column) :-
         once(read(Column)),
         checkReadColumn(Column),!.
 
-checkReadColumn(Column) :- atomic(Column), char_code(Column,Number), Number >= 97, Number =< 119.
+checkReadColumn(Column) :- atom(Column), char_code(Column,Number), Number >= 97, Number =< 119.
 checkReadColumn(_) :- write('Invalid Column. Has to be between \'a\' and \'w\'. Try Again\n'), fail.
 
 getUserRow(Row) :-

@@ -21,7 +21,7 @@ play_game(GameState,Player) :-
     Player2 is Player + 1,
     Player1 is mod(Player2, 2),
     display_game2(GameState,Player),
-    \+game_over(GameState,Winner),
+    \+game_over(GameState,_Winner),
     getUserInput(Row,Column,Color),
     move(GameState, Row,Column,Color, GameState2),
     write(4),nl,
@@ -29,7 +29,7 @@ play_game(GameState,Player) :-
     write('checked vic'),nl,
     play_game(GameState3, Player1).
 
-play_game(GameState,Player) :-
+play_game(GameState,_Player) :-
     write('checking'),
     game_over(GameState, Winner),
     write('Game Won by Player '), write(Winner).
@@ -40,8 +40,8 @@ game_over(GameState, Winner) :-
     count(Victories, 1, VictoriesP1),
     getWinner(VictoriesP0, VictoriesP1, Winner).
 
-getWinner(V0, V1, 0) :- V0 >= 2.     % Player 0 won
-getWinner(V0, V1, 1) :- V1 >= 2.     % Player 1 won
+getWinner(V0, _V1, 0) :- V0 >= 2.     % Player 0 won
+getWinner(_V0, V1, 1) :- V1 >= 2.     % Player 1 won
 
 /*
 play_game :-
@@ -54,42 +54,42 @@ play_game :-
 play_game :-
     write('Game Won!!').
 */
-botInputHandler :- once(read(Enter)).
+botInputHandler :- once(read(_)).
 
 %Bot is Player 1
 play_player_bot(GameState,1):-
     display_game2(GameState,1),
-    \+game_over(GameState,Winner),
+    \+game_over(GameState,_Winner),
     botInputHandler,
-    choose_move(GameState,Player,_, Move,Color),
+    choose_move(GameState,_Player,_, Move,Color),
     move(GameState,Move,Color,GameState2),
-    check_win(Player,GameState2,GameState3),
+    check_win(1,GameState2,GameState3),
     play_player_bot(GameState3, 0).
 
 play_player_bot(GameState,0):-
     display_game2(GameState,0),
-    \+game_over(GameState,Winner),
+    \+game_over(GameState,_Winner),
     getUserInput(Row,Column,Color),
     move(GameState, Row,Column,Color, GameState2),
-    check_win(Player,GameState2,GameState3),
+    check_win(0,GameState2,GameState3),
     play_player_bot(GameState3, 1).
 
 
 play_bot_player(GameState,0):-
     display_game2(GameState,0),
-    \+game_over(GameState,Winner),
+    \+game_over(GameState,_Winner),
     botInputHandler,
-    choose_move(GameState,Player,_, Move,Color),
+    choose_move(GameState,_Player,_, Move,Color),
     move(GameState,Move,Color,GameState2),
-    check_win(Player,GameState2,GameState3),
+    check_win(0,GameState2,GameState3),
     play_bot_player(GameState3, 1).
 
 play_bot_player(GameState,1):-
     display_game2(GameState,1),
-    \+game_over(GameState,Winner),
+    \+game_over(GameState,_Winner),
     getUserInput(Row,Column,Color),
     move(GameState,Row,Column,Color,GameState2),
-    check_win(Player,GameState2,GameState3),
+    check_win(1,GameState2,GameState3),
     play_bot_player(GameState3, 0).
 
 
@@ -97,7 +97,7 @@ play_bot_bot(GameState,Player):-
     Player2 is Player + 1,
     Player1 is mod(Player2, 2),
     display_game2(GameState,Player),
-    \+game_over(GameState,Winner),
+    \+game_over(GameState,_Winner),
     botInputHandler,
     choose_move(GameState,Player,_, Move,Color),
     move(GameState,Move,Color,GameState2),

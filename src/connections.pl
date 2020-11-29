@@ -176,7 +176,7 @@ coords(3,[
 
 check_win_cl(_,_,0).
 check_win_cl(_,_,1).
-check_win_cl(Player,Color,Value):-
+check_win_cl(Player,Color,_Value):-
     coords(Color,Coords),
     %write(Coords),nl,
     check_win_color(Coords,Player,Color).
@@ -185,23 +185,23 @@ check_win_color([],_,_).
 check_win_color([C1-C2|T],Player,Color):-
     write(C1),
     write(C2),nl,
-    \+resolva_profundidade(C1,C2,Solution,Color,Player),
+    \+resolva_profundidade(C1,C2,_Solution,Color,Player),
     check_win_color(T,Player,Color).
 
 check_win_cl_block(_,_,0).
 check_win_cl_block(_,_,1).
-check_win_cl_block(Player,Color,Value):-
+check_win_cl_block(Player,Color,_Value):-
     coords_block(Color,Coords),
     nl,write(Color),nl,
     get_single_color(Player,Color,ColorBlock),
     nl,write(ColorBlock),nl,
     check_win_color_block(Coords,Player,ColorBlock).
     
-check_win_color_block([],Player,Color).
+check_win_color_block([],_Player,_Color).
 check_win_color_block([C1-C2|T],Player,Color):-
     %write(C1),
     %write(C2),nl,
-    \+resolva_profundidade_bloqueio(C1,C2,Solution,Color,Player),
+    \+resolva_profundidade_bloqueio(C1,C2,_Solution,Color,Player),
     check_win_color_block(T,Player,Color).
     
 
@@ -212,7 +212,7 @@ check_wins_color(Player,Color,ValueColor,InitialGamestate,FinalGamestate):-
     write('Checked block'),nl,
     FinalGamestate = InitialGamestate.
 
-check_wins_color(Player,Color,ValueColor,InitialGamestate,FinalGamestate):-
+check_wins_color(Player,Color,_ValueColor,InitialGamestate,FinalGamestate):-
     write('hey'),nl,
     set_color_gamestate(Color,Player,InitialGamestate,FinalGamestate),!,
     format('Player ~w Won Color!! ~w ~n',[Player,Color]),
@@ -248,7 +248,7 @@ resolva_profundidade(No_inicial,No_meta,Solucao,Color,Player) :-
     write(Sol_inv),
     reverse(Sol_inv,Solucao).
 
-profundidade(Caminho,No_meta,No_meta,[No_meta|Caminho],Color,Player).
+profundidade(Caminho,No_meta,No_meta,[No_meta|Caminho],_Color,_Player).
 profundidade(Caminho,No,No_meta,Sol,Color,Player) :-
     connected(No,No1),
     write(Caminho),nl,
@@ -264,7 +264,7 @@ profundidade(Caminho,No,No_meta,Sol,Color,Player) :-
 resolva_profundidade_bloqueio(No_inicial,No_meta,Solucao,Color,Player) :-
     profundidade_bloqueio([],No_inicial,No_meta,Sol_inv,Color,Player),
     reverse(Sol_inv,Solucao).
-profundidade_bloqueio(Caminho,No_meta,No_meta,[No_meta|Caminho],Color,Player).
+profundidade_bloqueio(Caminho,No_meta,No_meta,[No_meta|Caminho],_Color,_Player).
 profundidade_bloqueio(Caminho,No,No_meta,Sol,Color,Player) :-
     connected(No,No1),
     %write(Caminho),nl,
@@ -302,14 +302,14 @@ check_existance([H1-H2|T],Position):-
     %write('reaches'),nl,
     index_to_letter(H1,Letter),
     get_position_string(Letter,H2,String),
-    validMove(String),
+    valid_move(String),
     %write(Letter),nl,
     %write(H2),nl,nl,
     %write('passed'),nl,
     addConection(String,Position),
     check_existance(T,Position).
 
-check_existance([H1-H2|T],Position):-
+check_existance([_H1-_H2|T],Position):-
     check_existance(T,Position).
 
 

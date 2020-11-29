@@ -77,16 +77,6 @@ convertColumn([H1],Column):-
 convertColumn([H1,H2],Column):-
     number_codes(Column,[H1,H2]).
 
-
-
-
-
-    
-    
-
-
-    
-
 /*
     * Function that flattens a given list, returning the final result in the last argument
 */
@@ -102,7 +92,7 @@ achata_lista([Cab|Rest],L):-
 */
 get_list_head([H|_],H).
 
-count([],X,0).
+count([],_X,0).
 count([X|T],X,Y):- count(T,X,Z), Y is 1+Z.
 count([X1|T],X,Z):- X1\=X,count(T,X,Z).
 
