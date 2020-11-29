@@ -4,7 +4,7 @@
 :-dynamic(color/2).
 
 % EStes valores são experimentais para verificar se o código está a funcionar
-/*connected(h1,i2).
+connected(h1,i2).
 connected(i2,h3).
 connected(h3,i4).
 connected(i4,h5).
@@ -15,21 +15,24 @@ connected(i8,h9).
 connected(h9,i10).
 connected(i10,h11).
 connected(h11,i12).
-connected(i12,h13).*/
+connected(h11,g12).
+connected(g12,h13).
+connected(i12,h13).
 
-/*color(h1,2).
-color(h3,2).
-color(h5,2).
-color(h7,2).
-color(h9,2).
-color(h11,2).
-color(h13,2).
-color(i2,2).
-color(i4,2).
-color(i6,2).
-color(i8,2).
-color(i10,2).
-color(i12,2).*/
+color(h1,1).
+color(h3,1).
+color(h5,1).
+color(h7,1).
+color(h9,1).
+color(h11,1).
+color(h13,1).
+color(i2,1).
+color(i4,1).
+color(i6,1).    
+color(i8,1).
+color(i10,1).
+color(i12,1).
+color(g12,1).
 
 
 
@@ -179,6 +182,8 @@ add_color(Row,Column,Color):-
 
 
 addConection(A,B):-
+    \+connected(A,B),
+    \+connected(B,A),
     Conection = connected(A,B),
     ConectionReverse = connected(B,A),
     assert(Conection),
@@ -214,6 +219,8 @@ f:-
 
 xxx:-
     check_win_color(0,1).
+
+
 
 
 

@@ -72,7 +72,7 @@ convert([H|T],Row,Column):-
     *   Column      -
 */
 convertColumn([H1],Column):-
-    char_code(Column,H1).
+    number_codes(Column,[H1]).
 
 convertColumn([H1,H2],Column):-
     number_codes(Column,[H1,H2]).
@@ -105,3 +105,12 @@ get_list_head([H|_],H).
 count([],X,0).
 count([X|T],X,Y):- count(T,X,Z), Y is 1+Z.
 count([X1|T],X,Z):- X1\=X,count(T,X,Z).
+
+
+achata_lista([],[]).
+achata_lista(X,[X]):- atomic(X).
+achata_lista([Cab|Rest],L):-
+ achata_lista(Cab,L1),
+achata_lista(Rest,L2),
+append(L1,L2,L). 
+

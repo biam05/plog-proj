@@ -7,7 +7,13 @@
 - Beatriz Costa Silva Mendes - up201806551@fe.up.pt
 - Hugo Miguel Monteiro Guimarães - up201806490@fe.up.pt
 
-## Descrição do jogo
+## Instalção e Execução
+
+Todos os passos necessários para correta execução do jogo em ambientes Linux e Windows (para além da instalação do SICStus Prolog 4.6).
+
+TODO
+
+## O Jogo - Alliances
 
 ### Componentes
 
@@ -43,8 +49,11 @@ Cada jogador tem as suas ***allied colours***. Estas são usadas para conectar o
 
 *Exemplo 2: Jogador 2 venceu ao impedir usando uma barreira roxa o jogador 1 de conectar a cor laranja.*
 
+## Lógica do Jogo
+Descrever (​não basta copiar o código fonte​) o projeto e implementação da lógica do jogo em Prolog. ​O predicado de início de jogo deve ser ​````play/0````​. (até 2000 palavras no total)
+### Representação interna do estado de jogo
 
-## Representação interna do estado de jogo
+ATUALIZAR
 
 - Tabuleiro - É representado através de uma lista de listas de uma malha hexagonal, contendo os seguintes átomos:
     - '_' - `position`: Representa uma posição que ainda não está ocupada.
@@ -57,7 +66,9 @@ Cada jogador tem as suas ***allied colours***. Estas são usadas para conectar o
     - 'O' - `oWall`: Indica um dos extremos de conexão da cor laranja.
 - Jogador - É representado através dos átomos `player1` e `player2`, sendo o próximo jogador a jogar imprimido no ecrã.
 
-## Visualização do estado de jogo
+### Visualização do estado de jogo
+
+ATUALIZAR
 
 O estado de jogo é visualizado através do predicado recursivo
 - `display_game([Head|Tail],Player)`
@@ -79,8 +90,61 @@ Em cima do tabuleiro estará um *header* correspondente ao *Player1* que apresen
 ##### Estado final de jogo :
 ![estado Final](imgs/final.png)
 
+### Lista de Jogadas Válidas
 
-## Fontes
+Obtenção de lista com jogadas possíveis.
+
+TODO
+
+````pl
+valid_moves(+GameState, +Player, -ListOfMoves)
+````
+
+### Execução de Jogadas
+
+Validação e execução de uma jogada, obtendo o novo estado do jogo
+
+TODO
+
+````pl
+move(+GameState,+Move,-NewGameState)​
+````
+
+### Final do Jogo
+
+Verificação do fim do jogo, com identificação do vencedor
+
+TODO
+
+````pl
+game_over(+GameState, -Winner)
+````
+
+### Avaliação do Tabuleiro
+
+Forma(s) de avaliação do estado do jogo.
+
+TODO
+
+````pl
+​value(+GameState, +Player, -Value)
+````
+
+### Jogada do Computador
+
+Escolha da jogada a efetuar pelo computador, dependendo do nível de dificuldade
+
+TODO
+
+````pl
+choose_move(+GameState, +Player, +Level, -Move)
+````
+
+## Conclusões
+
+Conclusões do trabalho, incluindo limitações do trabalho desenvolvido (*​knownissues*​), assim como possíveis melhorias identificadas (​*roadmap​*) (250 palavras)
+
+## Bibliografia
 [Alliances Abstract Strategy Board game - How to Setup Playthrough and Review * Amass Games *](https://www.youtube.com/watch?v=VNyHiCfOWhw)
 
 [nestorgames - Alliances](https://nestorgames.com/#alliances_detail)

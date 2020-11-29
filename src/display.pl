@@ -64,7 +64,24 @@ display_game(GameState,Player) :-
     %write(6),
     display_game(GameState2,Player1).
 
+% ------------------------------------------------------------
+% --------------------- INICIO DE TESTES --------------------- 
+% ------------------------------------------------------------
 
+display_game2(GameState,Player) :-
+    Player2 is Player + 1,
+    Player1 is mod(Player2, 2),
+    nth0(0,GameState,Victories),
+    displayHeader(Player, Victories),
+    displayTurn(Player, Player1), 
+    board(GameState).
+
+% move(+GameState,+Move,-NewGameState)
+move(GameState, Move, NewGameState).
+
+% ------------------------------------------------------------
+% ----------------------- FIM DE TESTES ---------------------- 
+% ------------------------------------------------------------
 
 % Function used to display if this turn belongs to Player 0 or Player 1
 displayTurn(Player1, Player2) :-

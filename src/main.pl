@@ -5,6 +5,7 @@
 :- ensure_loaded(bot).
 :- ensure_loaded(utils).
 :- ensure_loaded(coordinates).
+:- ensure_loaded(brainstorm).
 
 
 % Predicado que permite correr o jogo

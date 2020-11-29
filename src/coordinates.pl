@@ -13,7 +13,7 @@ validMove(Position):-
 % Checks if the given move is valid according to the current GameState coordinates
 validMove(GameState,Position):-
     name(Position,ListPosition),
-    get_list_head(ListPosition,Row),
+    nth0(0,ListPosition,Row),
     RowNumber is Row - 96,
     nth0(RowNumber,GameState,Col),!,
     member(Position,Col).
@@ -22,7 +22,7 @@ validMove(GameState,Position):-
 get_adjacent(Position,Adjacent):-
     get_adjacent(Row,Column,Adjacent).
 get_adjacent(Row,Column,Adjacent):-
-    char_code(Row,Row2),nl,
+    char_code(Row,Row2),
     RowIndex is Row2 - 96,
     adjacent(RowIndex,Column,Adj),
     filterAdjacent(Adj,[],Adjacent).
@@ -64,7 +64,7 @@ filterAdjacent([H1-H2|T],Current,Final):-
 */
 get_coordinates(Row,Column,RowIndex,ColumnIndex) :-
     initial(Initial),
-    char_code(Row,Row2),nl,
+    char_code(Row,Row2),
     RowIndex is Row2 - 96,
     nth0(RowIndex,Initial,Col),
     numberToAtom(Column,ColumnAtom),
@@ -94,3 +94,26 @@ set_value(Initial,Final,Row,Column,Value) :-
     write('Error reading coordinates.\n'),
     write('Trying again\n'),
     fail.
+
+% valid_moves(+GameState, +Player, -ListOfMoves)
+
+
+remove_numbers(Flat,ListReady):-
+    remove_numbers(Flat,[],ListReady).
+
+remove_numbers([],X,X).
+remove_numbers([H|T],Current,Final):-
+    \+number(H),!,
+    append(Current,[H],NList),
+    remove_numbers(T,NList,Final).
+
+remove_numbers([H|T],Current,Final):-remove_numbers(T,Current,Final).
+
+ll(X):-
+    initial(Initial),
+    valid_moves(Initial,Player,X).
+
+valid_moves(GameState,Player,ListOfMoves):-
+    achata_lista(GameState,Flat),
+    remove_numbers(Flat,ListReady),
+    findall(Move,member(Move,ListReady),ListOfMoves).
