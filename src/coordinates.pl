@@ -5,11 +5,6 @@ validMove(GameState,Row,Column):-
     get_position_string(Row,Column,Position),
     validMove(GameState,Position).
 
-% Checks if the given move is valid according to the initial coordinates
-validMove(Position):-
-    initial(Initial),
-    validMove(GameState,Position).
-
 % Checks if the given move is valid according to the current GameState coordinates
 validMove(GameState,Position):-
     name(Position,ListPosition),
@@ -19,8 +14,8 @@ validMove(GameState,Position):-
     member(Position,Col).
 
 
-get_adjacent(Position,Adjacent):-
-    get_adjacent(Row,Column,Adjacent).
+get_adjacent(_Position,Adjacent):-
+    get_adjacent(_Row,_Column,Adjacent).
 get_adjacent(Row,Column,Adjacent):-
     char_code(Row,Row2),
     RowIndex is Row2 - 96,
@@ -54,7 +49,7 @@ filterAdjacent([H1-H2|T],Current,Final):-
     checkBounds(H1-H2),
     filterAdjacent(T,[H1-H2|Current],Final),!.
 
-filterAdjacent([H1-H2|T],Current,Final):-
+filterAdjacent([_H1-_H2|T],Current,Final):-
     filterAdjacent(T,Current,Final).
 
 
@@ -92,7 +87,7 @@ set_value(Initial,Final,Row,Column,Value):-
     select(X,Col,Value,Changed),
     select(Col,Initial,Changed,Final).
 
-set_value(Initial,Final,Row,Column,Value) :-
+set_value(_Initial,_Final,_Row,_Column,_Value) :-
     write('Error reading coordinates.\n'),
     write('Trying again\n'),
     fail.
@@ -109,13 +104,13 @@ remove_numbers([H|T],Current,Final):-
     append(Current,[H],NList),
     remove_numbers(T,NList,Final).
 
-remove_numbers([H|T],Current,Final):-remove_numbers(T,Current,Final).
+remove_numbers([_H|T],Current,Final):-remove_numbers(T,Current,Final).
 
 ll(X):-
     initial(Initial),
-    valid_moves(Initial,Player,X).
+    valid_moves(Initial,_Player,X).
 
-valid_moves(GameState,Player,ListOfMoves):-
+valid_moves(GameState,_Player,ListOfMoves):-
     achata_lista(GameState,Flat),
     remove_numbers(Flat,ListReady),
     findall(Move,member(Move,ListReady),ListOfMoves).
@@ -124,6 +119,9 @@ tv:-
     initial(Initial),
     valid_move(Initial,'a5').
 
+valid_move(Position):-
+    initial(Initial),
+    valid_move(Initial,Position).
 
 valid_move(GameState,Row,Column):-
     get_position_string(Row,Column,Position),

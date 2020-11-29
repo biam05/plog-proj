@@ -104,7 +104,7 @@ check_existance_bot([H1-H2|T],Position):-
     add_conection_bot(String,Position),
     check_existance_bot(T,Position).
 
-check_existance_bot([H1-H2|T],Position):-
+check_existance_bot([_H1-_H2|T],Position):-
     check_existance_bot(T,Position).
 
 
