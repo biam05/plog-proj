@@ -6,6 +6,7 @@
 :- ensure_loaded(utils).
 :- ensure_loaded(coordinates).
 :- ensure_loaded(brainstorm).
+:- ensure_loaded(menus).
 
 
 % Predicado que permite correr o jogo
@@ -13,8 +14,7 @@
 
 
 play:-
-    initial(GameState),
-    play_game(GameState,0).
+    starting_menu.
 
 
 play_game(GameState,Player) :-

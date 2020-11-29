@@ -233,10 +233,43 @@ fu:-
 
 choose_move(GameState,_,_, Move,Color):-
     random_bot(GameState,Move,Color).
-    
-starting_menu :-
 
 
+printStartingMenu :-
+    nl, nl, nl,
+    write('                       _ _ _                                           \n'),
+    write('                 /\\   | | (_)                                         \n'),
+    write('                /  \\  | | |_  __ _ _ __   ___ ___  ___                \n'),
+    write('               / /\\ \\ | | | |/ _` | \'_ \\ / __/ _ \\/ __|           \n'),
+    write('              / ____ \\| | | | (_| | | | | (_|  __/\\__ \\             \n'),
+    write('             /_/    \\_\\_|_|_|\\__,_|_| |_|\\___\\___||___/           \n'),
+    write('                                                                       \n'),
+    write('                       _________________________                       \n'),
+    write('                      |                         |                      \n'),
+    write('                      | 1. Player vs Player     |                      \n'),
+    write('                      |                         |                      \n'),
+    write('                      | 2. Player vs Computer   |                      \n'),
+    write('                      |                         |                      \n'),
+    write('                      | 3. Computer vs Computer |                      \n'),
+    write('                      |                         |                      \n'),
+    write('                      | 0. Exit                 |                      \n'),
+    write('                      |_________________________|                      \n').
+
+printDifficultyMenu :-
+    nl, nl, nl,
+    write('                       _ _ _                                           \n'),
+    write('                 /\\   | | (_)                                         \n'),
+    write('                /  \\  | | |_  __ _ _ __   ___ ___  ___                \n'),
+    write('               / /\\ \\ | | | |/ _` | \'_ \\ / __/ _ \\/ __|           \n'),
+    write('              / ____ \\| | | | (_| | | | | (_|  __/\\__ \\             \n'),
+    write('             /_/    \\_\\_|_|_|\\__,_|_| |_|\\___\\___||___/           \n'),
+    write('                                                                       \n'),
+    write('                       _________________________                       \n'),
+    write('                      |                         |                      \n'),
+    write('                      | 1. Easy                 |                      \n'),
+    write('                      |                         |                      \n'),
+    write('                      | 0. Exit                 |                      \n'),
+    write('                      |_________________________|                      \n').
 
 
 
