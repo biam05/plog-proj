@@ -256,7 +256,7 @@ printStartingMenu :-
     write('                      | 3. Bot vs Bot           |                      \n'),
     write('                      |                         |                      \n'),
     write('                      | 0. Exit                 |                      \n'),
-    write('                      |_________________________|                      \n').
+    write('                      |_________________________|                      \n\n\n').
 
 printDifficultyMenu :-
     nl, nl, nl,
@@ -273,7 +273,7 @@ printDifficultyMenu :-
     write('                      | 1. Easy                 |                      \n'),
     write('                      |                         |                      \n'),
     write('                      | 0. Exit                 |                      \n'),
-    write('                      |_________________________|                      \n').
+    write('                      |_________________________|                      \n\n\n').
 
 printBotPlayerMenu :-
     nl, nl, nl,
@@ -292,7 +292,7 @@ printBotPlayerMenu :-
     write('                      | 2. Bot is Player 1      |                      \n'),
     write('                      |                         |                      \n'),
     write('                      | 0. Exit                 |                      \n'),
-    write('                      |_________________________|                      \n').
+    write('                      |_________________________|                      \n\n\n').
 
 
 

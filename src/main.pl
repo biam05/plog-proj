@@ -26,8 +26,9 @@ play_game(GameState,Player) :-
     move(GameState, Row,Column,Color, GameState2),
     write(4),nl,
     check_win(Player,GameState2,GameState3),
+    check_win(Player1,GameState3,GameState4),
     write('checked vic'),nl,
-    play_game(GameState3, Player1).
+    play_game(GameState4, Player1).
 
 play_game(GameState,_Player) :-
     write('checking'),
@@ -43,17 +44,6 @@ game_over(GameState, Winner) :-
 getWinner(V0, _V1, 0) :- V0 >= 2.     % Player 0 won
 getWinner(_V0, V1, 1) :- V1 >= 2.     % Player 1 won
 
-/*
-play_game :-
-    %displayHeader(0),
-    initial(GameState),
-    board(GameState),
-    display_game(GameState,0).
-    %displayHeader(1).
-
-play_game :-
-    write('Game Won!!').
-*/
 botInputHandler :- once(read(_)).
 
 %Bot is Player 1
@@ -64,7 +54,8 @@ play_player_bot(GameState,1):-
     choose_move(GameState,_Player,_, Move,Color),
     move(GameState,Move,Color,GameState2),
     check_win(1,GameState2,GameState3),
-    play_player_bot(GameState3, 0).
+    check_win(0,GameState3,GameState4),
+    play_player_bot(GameState4, 0).
 
 play_player_bot(GameState,0):-
     display_game(GameState,0),
@@ -72,7 +63,8 @@ play_player_bot(GameState,0):-
     getUserInput(Row,Column,Color),
     move(GameState, Row,Column,Color, GameState2),
     check_win(0,GameState2,GameState3),
-    play_player_bot(GameState3, 1).
+    check_win(1,GameState3,GameState4),
+    play_player_bot(GameState4, 1).
 
 
 play_bot_player(GameState,0):-
@@ -82,7 +74,8 @@ play_bot_player(GameState,0):-
     choose_move(GameState,_Player,_, Move,Color),
     move(GameState,Move,Color,GameState2),
     check_win(0,GameState2,GameState3),
-    play_bot_player(GameState3, 1).
+    check_win(1,GameState3,GameState4),
+    play_bot_player(GameState4, 1).
 
 play_bot_player(GameState,1):-
     display_game(GameState,1),
@@ -90,7 +83,8 @@ play_bot_player(GameState,1):-
     getUserInput(Row,Column,Color),
     move(GameState,Row,Column,Color,GameState2),
     check_win(1,GameState2,GameState3),
-    play_bot_player(GameState3, 0).
+    check_win(0,GameState3,GameState4),
+    play_bot_player(GameState4, 0).
 
 
 play_bot_bot(GameState,Player):-
@@ -102,4 +96,5 @@ play_bot_bot(GameState,Player):-
     choose_move(GameState,Player,_, Move,Color),
     move(GameState,Move,Color,GameState2),
     check_win(Player,GameState2,GameState3),
-    play_bot_bot(GameState3, Player1).
+    check_win(Player1,GameState3,GameState4),
+    play_bot_bot(GameState4, Player1).
