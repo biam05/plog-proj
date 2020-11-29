@@ -7,9 +7,16 @@
 - Beatriz Costa Silva Mendes - up201806551@fe.up.pt
 - Hugo Miguel Monteiro Guimarães - up201806490@fe.up.pt
 
-## Instalção e Execução
+## Instalação e Execução
 
 Todos os passos necessários para correta execução do jogo em ambientes Linux e Windows (para além da instalação do SICStus Prolog 4.6).
+
+Para executar o jogo corretamente, é necessário cumprir os seguintes passos:
+
+- Abrir o SicStus
+- Executar a funcionalidade File -> Consult
+    - Selecionar o ficheiro que se encontra em /src/main.pl
+- Executar o predicado ***play.***
 
 TODO
 
@@ -106,6 +113,11 @@ TODO
 ````prolog
 move(+GameState,+Move,-NewGameState)​
 ````
+De modo a executar uma jogada, é primeiro necessário validar o input do utilizador. Tal é feito utilizado o predicado ````valid_move````, que verifica se a jogada recebida faz parte da lista ````valid_moves```` mencionada anteriormente.
+
+Após o sucesso da validação, é chamado o predicado ````move```, que altera a lista de listas ````GameState```` de acordo com a jogada recebida.
+
+Para além disso, é necesário atualizar os factos dos predicados ````color/2```` e ````connected/2````, os quais são essenciais para a verificação de condições de vitória
 
 ### Final do Jogo
 
@@ -114,6 +126,13 @@ game_over(+GameState, -Winner)
 ````
 
 Para se terminar o *loop* principal do nosso jogo, foi criado o predicado ````game_over````. O jogo *Alliances* termina quando um dos jogadores obtiver duas cores, logo neste predicado é feito um *count* de cores ganhas por cada jogador. Esta informação encontra-se na primeira lista presente na lista do ````GameState````. Se algum destes tiver um valor igual a 2, este jogador será retornado em ````Winner```` e será terminado o loop principal do jogo. 
+
+````prolog
+check_win(+Player,+InitialGamestate,-FinalGamestate)
+````
+É também relevante explicar o uso do predicado ````check_win````, dado que, tal como o nome indica, está integralmente associado à condição de vitória.
+
+Este predicado interpreta ````InitialGameState```` como um grafo e realiza uma pesquisa em profundidade em busca das condições de vitória, ou seja, de ligações diretas entre dois extremos do tabuleiro com a mesma cor.
 
 ### Avaliação do Tabuleiro
 
@@ -134,6 +153,9 @@ TODO
 ````prolog
 choose_move(+GameState, +Player, +Level, -Move)
 ````
+Este predicado calcula a jogada a ser feita conforme a dificuldade escolhida.
+
+Na dificuldade ````Easy```` a jogada é gerada aleatóriamente, sendo a posição um valor aleatório pertencente a ````valid_moves````, e a cor um valor aleatório entre as três cores possíveis.
 
 ## Conclusões
 
