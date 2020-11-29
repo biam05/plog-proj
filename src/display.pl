@@ -57,7 +57,6 @@ move(GameState,Move,Color,GameState2):-
 
 move(GameState,Row,Column,Color,GameState2):-
     valid_move(GameState,Row,Column),
-    write('Move is Valid'),
     set_value(GameState,GameState2,Row,Column,Color),
     add_color(Row,Column,Color),
     add_connections(Row,Column).
@@ -79,7 +78,7 @@ display_game([],_) :-
     *   Win conditions: colors that can be used to win a certain color
 */
 displayHeader(0, Victories) :-
-    count(Victories, 0, X),
+    count(Victories, 0, X), nl,nl,nl,
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 0'), nl,
     write('----------------------------------------------------------------------------'), nl,
@@ -95,7 +94,6 @@ displayHeader(0, Victories) :-
 */
 displayHeader(1, Victories) :-
     count(Victories, 1, X),
-    write(X),
     write('----------------------------------------------------------------------------'), nl,
     write('\t\t\t\tPLAYER 1'), nl,
     write('----------------------------------------------------------------------------'), nl,

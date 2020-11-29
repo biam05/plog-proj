@@ -136,7 +136,6 @@ set_color_gamestate(Color,Player,Initial,Final):-
     nth0(0,Initial,Col),        
     nth1(Color,Col,_,Changed),
     nth1(Color,ColFinal,Player,Changed),
-    write(ColFinal),
     select(Col,Initial,ColFinal,Final).
 
 
@@ -144,25 +143,6 @@ won_color(Color,GameState,Value):-
     nth0(0, GameState, Colors),
     nth1(Color,Colors,Value).
     
-    
-trying:-
-    Lis = [0,0,0],
-    nth1(2,Lis,_,Changed),
-    nth1(2,ColFinal,1,Changed),
-    write(ColFinal).
-
-at:-
-    initial(Initial),
-    set_color_gamestate(2,1,Initial,Final),
-    write(Final),
-    won_color(2,Final),
-    won_color(1,Final).
-
-kkk:-
-    initial(Initial),
-    achata_lista(Initial,X),
-    write(X).
-
 
 permutation_(NodeBaseList,NodeEndList,PermutationList):-
     findall(A-B,(member(A,NodeBaseList),member(B,NodeEndList)),PermutationList).

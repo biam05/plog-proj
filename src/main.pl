@@ -24,16 +24,13 @@ play_game(GameState,Player) :-
     \+game_over(GameState,_Winner),
     getUserInput(Row,Column,Color),
     move(GameState, Row,Column,Color, GameState2),
-    write(4),nl,
     check_win(Player,GameState2,GameState3),
     check_win(Player1,GameState3,GameState4),
-    write('checked vic'),nl,
     play_game(GameState4, Player1).
 
 play_game(GameState,_Player) :-
-    write('checking'),
     game_over(GameState, Winner),
-    write('Game Won by Player '), write(Winner).
+    write('              Game Won by Player '), write(Winner).
 
 game_over(GameState, Winner) :-
     nth0(0, GameState, Victories),

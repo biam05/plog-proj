@@ -157,13 +157,10 @@ check_win_cl(_,_,0).
 check_win_cl(_,_,1).
 check_win_cl(Player,Color,_Value):-
     coords(Color,Coords),
-    %write(Coords),nl,
     check_win_color(Coords,Player,Color).
 
 check_win_color([],_,_).
 check_win_color([C1-C2|T],Player,Color):-
-    write(C1),
-    write(C2),nl,
     \+resolva_profundidade(C1,C2,_Solution,Color,Player),
     check_win_color(T,Player,Color).
 
@@ -171,72 +168,45 @@ check_win_cl_block(_,_,0).
 check_win_cl_block(_,_,1).
 check_win_cl_block(Player,Color,_Value):-
     coords_blocking(Color,Coords),
-    nl,write(Color),nl,
     get_single_color(Player,Color,ColorBlock),
-    nl,write(ColorBlock),nl,
     check_win_color_block(Coords,Player,ColorBlock).
     
 check_win_color_block([],_Player,_Color).
 check_win_color_block([C1-C2|T],Player,Color):-
-    %write(C1),
-    %write(C2),nl,
     \+resolva_profundidade_bloqueio(C1,C2,_Solution,Color,Player),
     check_win_color_block(T,Player,Color).
     
 
 check_wins_color(Player,Color,ValueColor,InitialGamestate,FinalGamestate):-
     check_win_cl(Player,Color,ValueColor),
-    write('Checked normal'),nl,
     check_win_cl_block(Player,Color,ValueColor),!,
-    write('Checked block'),nl,
     FinalGamestate = InitialGamestate.
 
 check_wins_color(Player,Color,_ValueColor,InitialGamestate,FinalGamestate):-
-    write('hey'),nl,
     set_color_gamestate(Color,Player,InitialGamestate,FinalGamestate),!,
-    format('Player ~w Won Color!! ~w ~n',[Player,Color]),
-    write('set'),nl.
+    format('           Player ~w Won Color!! ~w ~n',[Player,Color]).
 
 
 
 % Checks if there's a win for each color using the Player's win conditions    
 check_win(Player,InitialGamestate,FinalGamestate):-
-    write(Player),nl,
 
     won_color(1,InitialGamestate,ValuePurple),
     won_color(2,InitialGamestate,ValueGreen),
     won_color(3,InitialGamestate,ValueOrange),
-
-    write(ValuePurple),nl,
-    write(ValueGreen),nl,
-    write(ValueOrange),nl,
-    %write('entered check win'),nl,
     check_wins_color(Player,1,ValuePurple,InitialGamestate,FinalGamestate1),
-    write('Exited won purple'),nl,
-    %write('checked purple'),nl,
     check_wins_color(Player,2,ValueGreen,FinalGamestate1,FinalGamestate2),
-    write('Exited won green'),nl,
-    %write('checked green'),nl,
-    check_wins_color(Player,3,ValueOrange,FinalGamestate2,FinalGamestate),
-    write('Exited won orange'),nl.
-    %write('checked orange'),nl,
+    check_wins_color(Player,3,ValueOrange,FinalGamestate2,FinalGamestate).
     
 resolva_profundidade(No_inicial,No_meta,Solucao,Color,Player) :-
-    %write('prof'),nl,
     profundidade([],No_inicial,No_meta,Sol_inv,Color,Player),
-    write(Sol_inv),
     reverse(Sol_inv,Solucao).
 
 profundidade(Caminho,No_meta,No_meta,[No_meta|Caminho],_Color,_Player).
 profundidade(Caminho,No,No_meta,Sol,Color,Player) :-
     connected(No,No1),
-    write(Caminho),nl,
-    %write(No),
-    %write(No1),nl,  
     check_color(No,Color,Player),
-    %write('color1 checked'),nl,
     check_color(No1,Color,Player),
-    %write('color2 checked'),nl,
     \+member(No1,Caminho),
     profundidade([No|Caminho],No1,No_meta,Sol,Color,Player).
 
@@ -246,9 +216,6 @@ resolva_profundidade_bloqueio(No_inicial,No_meta,Solucao,Color,Player) :-
 profundidade_bloqueio(Caminho,No_meta,No_meta,[No_meta|Caminho],_Color,_Player).
 profundidade_bloqueio(Caminho,No,No_meta,Sol,Color,Player) :-
     connected(No,No1),
-    %write(Caminho),nl,
-    %write(No),
-    %write(No1),nl,
     color(No,Color),
     color(No1,Color),
     \+member(No1,Caminho),
@@ -260,8 +227,6 @@ add_color(Row,Column,Color):-
     Clr = color(String,Color),
     assert(Clr).
 
-
-
 addConection(A,B):-
     \+connected(A,B),
     \+connected(B,A),
@@ -272,42 +237,17 @@ addConection(A,B):-
 
 add_connections(Row,Column):-
     get_adjacent(Row,Column,Adjacent),
-    %write(Adjacent),nl,
     get_position_string(Row,Column,String),
     check_existance(Adjacent,String).
 
 check_existance([],_).
 check_existance([H1-H2|T],Position):-
-    %write('reaches'),nl,
     index_to_letter(H1,Letter),
     get_position_string(Letter,H2,String),
     valid_move(String),
-    %write(Letter),nl,
-    %write(H2),nl,nl,
-    %write('passed'),nl,
     addConection(String,Position),
     check_existance(T,Position).
 
 check_existance([_H1-_H2|T],Position):-
     check_existance(T,Position).
-
-
-f:-
-    initial(Initial),
-    add_connections(Initial,e,4).
-    %write(added),nl.
-
-
-xxx:-
-    check_win_color(0,1).
-
-
-
-
-
-    
-
-should(X):-
-    coords_blocking(2,List),
-    member(X,List).
 
