@@ -98,3 +98,29 @@ count([X1|T],X,Z):- X1\=X,count(T,X,Z).
 
 
 
+keep_number_lists_of_lists([H|T],FinalList):-
+    keep_number_lists_of_lists([H|T],[],FinalList).
+
+keep_number_lists_of_lists([],X,X).
+keep_number_lists_of_lists([H|T],Current,FinalList):-
+    keep_numbers(H,ListReady),
+    append(Current,[ListReady],NewList),
+    keep_number_lists_of_lists(T,NewList,FinalList).
+
+
+
+keep_numbers(Flat,ListReady):-
+    keep_numbers(Flat,[],ListReady).
+
+keep_numbers([],X,X).
+keep_numbers([H|T],Current,Final):-
+    number(H),!,
+    append(Current,[H],NList),
+    keep_numbers(T,NList,Final).
+
+keep_numbers([_H|T],Current,Final):-
+    append(Current,[' '],NewList),
+    keep_numbers(T,NewList,Final).
+
+
+

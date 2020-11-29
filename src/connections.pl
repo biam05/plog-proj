@@ -102,6 +102,20 @@ get_single_color(1,1,2). %purple wins with green block
 get_single_color(1,2,3). %green wins with orange block
 get_single_color(1,3,2). %orange wins with green block
 
+coords_blocking(1,Coords):-
+    InitialNodes = [h1,g2,e2,d3,c4,b5,a6,b7,a8,b9,c10,d11,e12,g12,h13],
+    FinalNodes = [p1,q2,s2,t3,u4,v5,w6,v7,w8,v9,u10,t11,s12,q12,p13],
+    permutation_(InitialNodes,FinalNodes,Coords).
+
+coords_blocking(2,Coords):-
+    InitialNodes = [a6,b7,a8,,b9,c10,d11],
+    FinalNodes = [],
+    permutation_(InitialNodes,FinalNodes,Coords).
+
+coords_blocking(3,Coords):-
+    InitialNodes = [],
+    FinalNodes = [],
+    permutation_(InitialNodes,FinalNodes,Coords).
 
 coords_block(1,[
     g2-q2, g2-s2, g2-t3, g2-u4, g2-v5, g2-w6, g2-v7, g2-w8, g2-v9, g2-u10, g2-t11, g2-s12, g2-q12,

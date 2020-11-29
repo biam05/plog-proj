@@ -162,3 +162,7 @@ kkk:-
     initial(Initial),
     achata_lista(Initial,X),
     write(X).
+
+
+permutation_(NodeBaseList,NodeEndList,PermutationList):-
+    findall(A-B,(member(A,NodeBaseList),member(B,NodeEndList)),PermutationList).
