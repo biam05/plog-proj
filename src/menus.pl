@@ -51,18 +51,37 @@ runPVBOption(1) :-
         write('Select which player the Bot should be:\n'),
         once(read(Option)),
         checkPlayerOption(Option),
-    runPlayerOption(Option).
+    runEasyPlayerOption(Option).
+
+runPVBOption(2) :-
+    printBotPlayerMenu,
+    repeat,
+        write('Select which player the Bot should be:\n'),
+        once(read(Option)),
+        checkPlayerOption(Option),
+    runHardPlayerOption(Option).
 
 /*
-*   runPlayerOption(Option)
-*       - runs the option given by the user for the Bot player number
+*   runEasyPlayerOption(Option)
+*       - runs the option given by the user for the Bot player number (easy difficulty)
 */
-runPlayerOption(1) :-
+runEasyPlayerOption(1) :-
     initial(Initial),
-    play_bot_player(Initial, 0).
-runPlayerOption(2) :-
+    play_bot_player(Initial, 0, 1).
+runEasyPlayerOption(2) :-
     initial(Initial),
-    play_player_bot(Initial, 0).
+    play_player_bot(Initial, 0, 1).
+
+/*
+*   runHardPlayerOption(Option)
+*       - runs the option given by the user for the Bot player number (hard difficulty)
+*/
+runHardPlayerOption(1) :-
+    initial(Initial),
+    play_bot_player(Initial, 0, 2).
+runHardPlayerOption(2) :-
+    initial(Initial),
+    play_player_bot(Initial, 0, 2).
 
 /*
 *   runBVBOption(Option)
@@ -71,4 +90,7 @@ runPlayerOption(2) :-
 runBVBOption(0) :- write('Goodbye!\n').
 runBVBOption(1) :- 
     initial(Initial),
-    play_bot_bot(Initial, 0).
+    play_bot_bot(Initial, 0, 1).
+runBVBOption(2) :- 
+    initial(Initial),
+    play_bot_bot(Initial, 0, 2).

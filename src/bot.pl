@@ -63,6 +63,24 @@ l:-
     fake_color(a6,2),
     write(2).
 
+greedy_bot(GameState,Player,GreedyMove,GreedyColor):-
+
+    findall(Value-Move-Color,(valid_move(GameState,Move),simulate_play(GameState,0,Move,Color,GameState3,Value)),List),
+    %write(List),
+    sort(List,Sorted),
+    reverse(Sorted,Reverse),
+    nth0(0,Reverse,GreedyValue-GreedyMove-GreedyColor),
+
+    %write(Reverse),nl,
+    write(GreedyValue),nl,
+    write(GreedyMove),nl,
+    write(GreedyColor),nl.
+
+    %listing(connected_fake),
+    %retractall(connected_fake(_,_)),
+    %retractall(color_fake(_,_)).
+
+
 simulate_play(GameState,Player,Position,Color,GameState3,Value):-
     %valid_move(Position),
     random_member(Color, [1,2,3]),!,
@@ -87,7 +105,7 @@ rt:-
 
     initial(Initial),
     simulate_play(Initial,0,i12,Color,GameState3,Value),
-    write(value).
+    write(Value).
 
 attempt:-
     initial(GameState),

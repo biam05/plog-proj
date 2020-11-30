@@ -58,58 +58,58 @@ botInputHandler :- once(read(_)).
 *   play_player_bot(+GameState, +Player)
 *       -  game loop when it's a Player vs. Bot game (Bot is Player 1)
 */
-play_player_bot(GameState,1):-
+play_player_bot(GameState,1,Difficulty):-
     display_game(GameState,1),
     \+game_over(GameState,_Winner),
     botInputHandler,
-    choose_move(GameState,_Player,_, Move,Color),
+    choose_move(GameState,_Player,Difficulty, Move,Color),
     move(GameState,Move,Color,GameState2),
     check_win(1,GameState2,GameState3),
     check_win(0,GameState3,GameState4),
-    play_player_bot(GameState4, 0).
-play_player_bot(GameState,0):-
+    play_player_bot(GameState4, 0,Difficulty).
+play_player_bot(GameState,0,Difficulty):-
     display_game(GameState,0),
     \+game_over(GameState,_Winner),
     getUserInput(Row,Column,Color),
     move(GameState, Row,Column,Color, GameState2),
     check_win(0,GameState2,GameState3),
     check_win(1,GameState3,GameState4),
-    play_player_bot(GameState4, 1).
+    play_player_bot(GameState4, 1,Difficulty).
 
 /*
 *   play_bot_player(+GameState, +Player)
 *       -  game loop when it's a Bot vs. Player game (Bot is Player 0)
 */
-play_bot_player(GameState,0):-
+play_bot_player(GameState,0,Difficulty):-
     display_game(GameState,0),
     \+game_over(GameState,_Winner),
     botInputHandler,
-    choose_move(GameState,_Player,_, Move,Color),
+    choose_move(GameState,_Player,Difficulty, Move,Color),
     move(GameState,Move,Color,GameState2),
     check_win(0,GameState2,GameState3),
     check_win(1,GameState3,GameState4),
-    play_bot_player(GameState4, 1).
-play_bot_player(GameState,1):-
+    play_bot_player(GameState4, 1,Difficulty).
+play_bot_player(GameState,1,Difficulty):-
     display_game(GameState,1),
     \+game_over(GameState,_Winner),
     getUserInput(Row,Column,Color),
     move(GameState,Row,Column,Color,GameState2),
     check_win(1,GameState2,GameState3),
     check_win(0,GameState3,GameState4),
-    play_bot_player(GameState4, 0).
+    play_bot_player(GameState4, 0,Difficulty).
 
 /*
 *   play_bot_player(+GameState, +Player)
 *       -  game loop when it's a Bot vs. Bot game
 */
-play_bot_bot(GameState,Player):-
+play_bot_bot(GameState,Player,Difficulty):-
     Player2 is Player + 1,
     Player1 is mod(Player2, 2),
     display_game(GameState,Player),
     \+game_over(GameState,_Winner),
     botInputHandler,
-    choose_move(GameState,Player,_, Move,Color),
+    choose_move(GameState,Player,Difficulty, Move,Color),
     move(GameState,Move,Color,GameState2),
     check_win(Player,GameState2,GameState3),
     check_win(Player1,GameState3,GameState4),
-    play_bot_bot(GameState4, Player1).
+    play_bot_bot(GameState4, Player1,Difficulty).

@@ -161,8 +161,11 @@ board(GameState) :-
 *   choose_move(+GameState, +Player, +Level, -Move, +Color)​
 *       - makes a move, depending on the Level of the bot
 */
-choose_move(GameState,_,_, Move,Color):-
+choose_move(GameState,_,1, Move,Color):-
     random_bot(GameState,Move,Color).
+
+choose_move(GameState,Player,2,Move,Color):-
+    greedy_bot(GameState,Player,Move,Color).
 
 /*
 *   printStartingMenu
@@ -206,6 +209,8 @@ printDifficultyMenu :-
     write('                       _________________________                       \n'),
     write('                      |                         |                      \n'),
     write('                      | 1. Easy                 |                      \n'),
+    write('                      |                         |                      \n'),
+    write('                      | 2. Hard                 |                      \n'),
     write('                      |                         |                      \n'),
     write('                      | 0. Exit                 |                      \n'),
     write('                      |_________________________|                      \n\n\n').

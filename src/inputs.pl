@@ -9,7 +9,7 @@ checkGameModeOption(_) :- write('Invalid Option. Try Again\n'), fail.
 *   checkDifficultyOption(+Option)
 *       - verifies if the user's input is valid, failing if it's not
 */
-checkDifficultyOption(Option) :- Option >= 0, Option =< 1.
+checkDifficultyOption(Option) :- Option >= 0, Option =< 2.
 checkDifficultyOption(_) :- write('Invalid Option. Try Again\n'), fail.
 
 /*
