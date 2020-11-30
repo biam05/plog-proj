@@ -5,15 +5,20 @@
 :- dynamic(connected_fake/2).
 
 
-
-% Generates a Random Move for the bot
+/*
+*   random_bot(+GameState, -RandomMove, -RandomColor)
+*       - Generates a Random Move for the bot
+*/
 random_bot(GameState,RandomMove,RandomColor):-
     achata_lista(GameState, Flat),
     random_member(RandomMove, Flat),
     random_member(RandomColor, [1,2,3]).
 
 
-% value(+GameState, +Player, -Value)
+/*
+*   value(+GameState, +Player, -Value)
+*       - evaluates the current GameState
+*/
 value(GameState, Player, Value):-
     won_color(1,GameState,Value1),
     won_color(2,GameState,Value2),
@@ -25,7 +30,10 @@ value(GameState, Player, Value):-
 
     Value is Score1 + Score2 + Score3.
 
-
+/*
+*   calculate_color(+Player, +Color, +Aux, -Total)
+*       - calculates estimated total points obtained by the Player
+*/
 calculate_color(Player,_Color,Player,50).
 calculate_color(Player,Color,2,Total):-
     get_single_color(Player,Color,Color2),
@@ -39,93 +47,37 @@ calculate_color(Player,Color,2,Total):-
 calculate_color(_Player,_Color,_,0).
 
 
-
-testing:-
-    intermediate(GameState),
-    value(GameState, 0, Value0),
-    value(GameState, 1, Value1),
-    nl,
-    write(Value0),nl,
-    write(Value1).
-
-
-medium_bot(GameState,Move,Color):-
-    valid_move(Position),
-    findall(Move,valid_move(GameState,Move),List).
-
-l:-
-    %fake_color(a6,2),
-    P1 = fake_color(i10,2),
-    assert(P1),
-    fake_color(a6,2),
-    write(1),
-    retract(P1),
-    fake_color(a6,2),
-    write(2).
-
+/*
+*   greedy_bot(+GameState,+Player,-GreedyMove,-GreedyColor)
+*       - generates a GreedyMove and a GreedyColor for the bot
+*/
 greedy_bot(GameState,Player,GreedyMove,GreedyColor):-
-
     findall(Value-Move-Color,(valid_move(GameState,Move),simulate_play(GameState,0,Move,Color,GameState3,Value)),List),
-    %write(List),
     sort(List,Sorted),
     reverse(Sorted,Reverse),
     nth0(0,Reverse,GreedyValue-GreedyMove-GreedyColor),
-
-    %write(Reverse),nl,
     write(GreedyValue),nl,
     write(GreedyMove),nl,
     write(GreedyColor),nl.
 
-    %listing(connected_fake),
-    %retractall(connected_fake(_,_)),
-    %retractall(color_fake(_,_)).
-
-
+/*
+*   simulate_play(+GameState,+Player,+Position,+Color,-GameState3,-Value)
+*       - simulates the Value of the GameState after a certain play defined
+*   by Position and Color
+*/
 simulate_play(GameState,Player,Position,Color,GameState3,Value):-
-    %valid_move(Position),
     random_member(Color, [1,2,3]),!,
     move_fake(GameState,Position,Color, GameState2),
     check_win(Player,GameState2,GameState3),
     value(GameState3, Player, Value),
-    %rt2,
     Cl = color(Position,Color),
     retractall(connected_fake(_,_)),
     retract(Cl).
-    %retractall(connected(_,_)),
-    %retractall(color(_,_)).
-    %remove_conection
-    %write(Position),nl,
-    %write(Color),nl,
-    %write(Value),nl.
-rt2:-
-    retractall(connected(_,_)),
-    retractall(color(_,_)).
-
-rt:-
-
-    initial(Initial),
-    simulate_play(Initial,0,i12,Color,GameState3,Value),
-    write(Value).
-
-attempt:-
-    initial(GameState),
-    findall(Value-Move-Color,(valid_move(GameState,Move),simulate_play(GameState,0,Move,Color,GameState3,Value)),List),
-    %write(List),
-    sort(List,Sorted),
-    reverse(Sorted,Reverse),
-    nth0(0,Reverse,V-M-C),
-    /*
-    %write(Reverse),nl,
-    write(V),nl,
-    write(M),nl,
-    write(C),nl,
-    */
-    %listing(connected_fake),
-    %retractall(connected_fake(_,_)),
-    retractall(color_fake(_,_)).
-
-
-
+    
+% The following Predicates are similar to others existing in other .pl files.
+% Though, they are specifically made to allow simulating a Move without changing the previous existing facts.
+% Hence, all this predicates have the same name as other existing predicates, but with the _fake name extension.
+% No further Documentation will be added because similar methods are already documentated.
 
 move_fake(GameState,Move,Color,GameState2):-
     position_to_row_column(Move,Row,Column),

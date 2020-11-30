@@ -52,7 +52,9 @@ game_over(GameState, Winner) :-
 getWinner(V0, _V1, 0) :- V0 >= 2.     % Player 0 won
 getWinner(_V0, V1, 1) :- V1 >= 2.     % Player 1 won
 
-botInputHandler :- once(read(_)).
+botInputHandler :- 
+    write('Type any key: (exemple "y.")\n'),
+    once(read(_)).
 
 /*
 *   play_player_bot(+GameState, +Player)
