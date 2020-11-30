@@ -94,7 +94,7 @@ l:-
 simulate_play(GameState,Player,Position,Color,GameState3,Value):-
     %valid_move(Position),
     random_member(Color, [1,2,3]),!,
-    move(GameState,Position,Color, GameState2),
+    move_fake(GameState,Position,Color, GameState2),
     check_win(Player,GameState2,GameState3),
     value(GameState3, Player, Value),
     %rt2,
@@ -141,7 +141,6 @@ move_fake(GameState,Move,Color,GameState2):-
     move_fake(GameState,Row,Column,Color,GameState2).
 
 move_fake(GameState,Row,Column,Color,GameState2):-
-    valid_move(GameState,Row,Column),
     set_value(GameState,GameState2,Row,Column,Color),
     get_position_string(Row,Column,Position),
     add_color_fake(Position,Color),
@@ -158,7 +157,7 @@ add_connections_fake(Row,Column):-
     check_existance_fake(Adjacent,String,[]).
 
 
-check_existance_fake([],_,X,X).
+check_existance_fake([],_,X).
 check_existance_fake([H1-H2|T],Position,Current):-
     index_to_letter(H1,Letter),
     get_position_string(Letter,H2,String),
