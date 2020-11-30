@@ -114,12 +114,12 @@ attempt:-
     sort(List,Sorted),
     reverse(Sorted,Reverse),
     nth0(0,Reverse,V-M-C),
-
+    /*
     %write(Reverse),nl,
     write(V),nl,
     write(M),nl,
     write(C),nl,
-
+    */
     %listing(connected_fake),
     %retractall(connected_fake(_,_)),
     retractall(color_fake(_,_)).
