@@ -123,4 +123,23 @@ keep_numbers([_H|T],Current,Final):-
     keep_numbers(T,NewList,Final).
 
 
+/*
+*   remove_numbers(+Flat, -ListReady)
+*       - removes numbers from a list
+*/
+remove_numbers(Flat,ListReady):-
+    remove_numbers(Flat,[],ListReady).
+remove_numbers([],X,X).
+remove_numbers([H|T],Current,Final):-
+    \+number(H),!,
+    append(Current,[H],NList),
+    remove_numbers(T,NList,Final).
+remove_numbers([_H|T],Current,Final):-remove_numbers(T,Current,Final).
+  
+/*
+*   permutation_(+NodeBaseList,+NodeEndList,-PermutationList)
+*       - makes permutations between 2 lists
+*/ 
+permutation_(NodeBaseList,NodeEndList,PermutationList):-
+    findall(A-B,(member(A,NodeBaseList),member(B,NodeEndList)),PermutationList).
 

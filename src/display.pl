@@ -1,8 +1,10 @@
 :- use_module(library(lists)).
 :- use_module(library(random)).
-% inicialização do array com o estado inicial de jogo
 
-% Gameboard with initial variables
+/*
+*   initial
+*       - Gameboard with initial variables
+*/
 initial([
     % P, G, O
     [2, 2, 2],
@@ -31,16 +33,11 @@ initial([
     ['w6', 'w8']
 ]).
 
-
-
-% colors used to display the board
-symbol(green, 'g').
-symbol(purple,'p').
-symbol(orange,'o').
-symbol(gWall, 'G').
-symbol(pWall, 'P').
-symbol(oWall, 'O').
-
+/*
+*   display_game(+GameState, +Player)
+*       - displays the board of the current game state so the user can visualize
+*   the progress of the game
+*/
 display_game(GameState,Player) :-
     Player2 is Player + 1,
     Player1 is mod(Player2, 2),
@@ -50,7 +47,10 @@ display_game(GameState,Player) :-
     displayTurn(Player, Player1), 
     displayHeader(1, Victories).
 
-% move(+GameState,+Move,-NewGameState)
+/* 
+*   move(+GameState,+Move,-NewGameState)
+*       - makes a Move with a Color
+*/
 move(GameState,Move,Color,GameState2):-
     position_to_row_column(Move,Row,Column),
     move(GameState,Row,Column,Color,GameState2).
@@ -84,7 +84,7 @@ displayHeader(0, Victories) :-
     write('----------------------------------------------------------------------------'), nl,
     format('Victories: ~w~n', X),
     write('\t\t\t     Win Conditions'), nl,
-    write('Green : Purple & Green ; Purple : Orange & Purple ; Orange : Green & Orange'), nl,
+    write('Purple : Orange & Purple ; Green : Purple & Green ; Orange : Green & Orange'), nl,
     write('----------------------------------------------------------------------------'), nl, nl.
 
 /*
@@ -99,7 +99,7 @@ displayHeader(1, Victories) :-
     write('----------------------------------------------------------------------------'), nl,
     format('Victories: ~w~n', X),
     write('\t\t\t     Win Conditions'), nl,
-    write('Green : Orange & Green ; Purple : Green & Purple ; Orange : Purple & Orange'), nl,
+    write('Purple : Green & Purple ; Green : Orange & Green ; Orange : Purple & Orange'), nl,
     write('----------------------------------------------------------------------------'), nl, nl.
 
 
