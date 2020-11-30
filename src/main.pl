@@ -6,6 +6,7 @@
 :- ensure_loaded(coordinates).
 :- ensure_loaded(brainstorm).
 :- ensure_loaded(menus).
+:- ensure_loaded(inputs).
 
 /*
 *   play

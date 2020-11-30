@@ -46,36 +46,37 @@ display_game(GameState,Player) :-
     board(GameState),
     displayTurn(Player, Player1), 
     displayHeader(1, Victories).
+display_game([],_) :-
+    write('\n\nWrong Player given\n').
 
 /* 
-*   move(+GameState,+Move,-NewGameState)
-*       - makes a Move with a Color
+*   move(+GameState,+Move, +Color, -NewGameState)
+*       - makes a Move with a Color, returning the new changes in GameState2
 */
 move(GameState,Move,Color,GameState2):-
     position_to_row_column(Move,Row,Column),
     move(GameState,Row,Column,Color,GameState2).
 
+/*   
+*   move(+GameState,+Row,+Column,+Color,-NewGameState)
+*       - makes a move defined by Row and Column with a Color, returning the new changes in GameState2
+*/
 move(GameState,Row,Column,Color,GameState2):-
     valid_move(GameState,Row,Column),
     set_value(GameState,GameState2,Row,Column,Color),
     add_color(Row,Column,Color),
     add_connections(Row,Column).
 
-    
-
-
-% Function used to display if this turn belongs to Player 0 or Player 1
+/*
+*   displayTurn(+Player0, Player1)
+*       - displays information about the current turn and the next turn
+*/
 displayTurn(Player1, Player2) :-
     format('~n~*t ~w ~w ~w ~w ~53|~n', [32, 'Player', Player1, 'Turn; Next: Player', Player2]).
 
-display_game([],_) :-
-    write('\n\nWrong Player given\n').
-
-
 /*
-    *   Function used to display Players 0's header
-    *   Victories: number os colors won
-    *   Win conditions: colors that can be used to win a certain color
+*   displayHeader(Player, Victories)
+*       - displayes the Players information and Victories
 */
 displayHeader(0, Victories) :-
     count(Victories, 0, X), nl,nl,nl,
@@ -86,12 +87,6 @@ displayHeader(0, Victories) :-
     write('\t\t\t     Win Conditions'), nl,
     write('Purple : Orange & Purple ; Green : Purple & Green ; Orange : Green & Orange'), nl,
     write('----------------------------------------------------------------------------'), nl, nl.
-
-/*
-    *   Function used to display Players 1's header
-    *   Victories: number os colors won
-    *   Win conditions: colors that can be used to win a certain color
-*/
 displayHeader(1, Victories) :-
     count(Victories, 1, X),
     write('----------------------------------------------------------------------------'), nl,
@@ -103,7 +98,10 @@ displayHeader(1, Victories) :-
     write('----------------------------------------------------------------------------'), nl, nl.
 
 
-% function to print the game board (EXPERIMENTAL VERSION)
+/*
+*   board(GameState)
+*       - displays the current game board defined by GameState
+*/
 board(GameState) :-
     keep_number_lists_of_lists(GameState,L),
     nth0(1,L,L0),
@@ -160,81 +158,16 @@ board(GameState) :-
 
 
 /*
-    *   Relation between the user's input and the color written in the board
-    *       1       - purple  (pp)
-    *       2       - green   (gg)
-    *       3       - orange  (oo)
-    *       other   - error
+*   choose_move(+GameState, +Player, +Level, -Move, +Color)​
+*       - makes a move, depending on the Level of the bot
 */
-value(1, 'pp').
-value(2, 'gg').
-value(3, 'oo').
-value(_, '').
-
-/*
-    *   Function used to read the user's input
-    *       Column  - column ('a' to 'w')
-    *       Row     - row    ('1' to '13')
-    *       Color   - color  ('1' - purple; '2' - green; '3' - orange)
-*/
-getUserInput(Column, Row, Color) :-
-    repeat,
-        write('Please Enter Valid Coordinates'),nl,
-        getUserColumn(Column),
-        getUserRow(Row),
-        getUserColor(Color).
-
-
-getUserColumn(Column) :-
-    repeat,
-        write('Enter the column letter:\n'),
-        once(read(Column)),
-        checkReadColumn(Column),!.
-
-checkReadColumn(Column) :- atom(Column), char_code(Column,Number), Number >= 97, Number =< 119.
-checkReadColumn(_) :- write('Invalid Column. Has to be between \'a\' and \'w\'. Try Again\n'), fail.
-
-getUserRow(Row) :-
-    repeat,
-        write('Enter the row number:\n'),
-        once(read(Row)),
-        checkReadRow(Row),!.
-
-checkReadRow(Row) :- integer(Row), Row >= 1, Row =< 13.
-checkReadRow(_) :- write('Invalid Row. Has to be between \'1\' and \'13\'. Try Again\n'), fail.
-
-getUserColor(Color) :-
-    repeat,
-        write('Enter the color number (purple - 1; green - 2; orange - 3):\n'),
-        once(read(Color)),
-        checkReadColor(Color),!.
-
-checkReadColor(Color) :- integer(Color), Color >= 1, Color =< 3.
-checkReadColor(_) :- write('Invalid Color. Try Again\n'), fail.
-
-/*
-checkBounds(Row-Column):-
-    initial(Initial),
-    RowCode is Row + 97,
-    char_code(Letter,RowCode),
-    numberToAtom(Column,ColumnAtom),
-    atom_concat(Letter, ColumnAtom, Position),
-    nth0(Row,Initial,Col),
-    member(Position,Col).
-*/
-/*
-fu:-
-    initial(Initial),
-    random_bot(Initial,Move),!,
-    %write(Move),nl,
-    %validMove(Initial,a6).
-*/
-    
-
 choose_move(GameState,_,_, Move,Color):-
     random_bot(GameState,Move,Color).
 
-
+/*
+*   printStartingMenu
+*       - prints the starting menu
+*/
 printStartingMenu :-
     nl, nl, nl,
     write('                       _ _ _                                           \n'),
@@ -256,6 +189,10 @@ printStartingMenu :-
     write('                      | 0. Exit                 |                      \n'),
     write('                      |_________________________|                      \n\n\n').
 
+/*
+*   printDifficultyMenu
+*       - prints the difficulty menu
+*/
 printDifficultyMenu :-
     nl, nl, nl,
     write('                       _ _ _                                           \n'),
@@ -273,6 +210,10 @@ printDifficultyMenu :-
     write('                      | 0. Exit                 |                      \n'),
     write('                      |_________________________|                      \n\n\n').
 
+/*
+*   printBotPlayerMenu
+*       - prints the bot player option menu
+*/
 printBotPlayerMenu :-
     nl, nl, nl,
     write('                       _ _ _                                           \n'),

@@ -1,84 +1,73 @@
 :- use_module(library(lists)).
 
 /*
-    * Function that transfroms a Number into an Atom of that same number ex: 8 -> '8'
-    *   Number  - number to be transformed
-    *   Atom    - final atom
+*   numberToAtom(+Number, -Atom)
+*       - transfroms a Number into an Atom of that same number ex: 8 -> '8'
 */
 numberToAtom(Number,Atom):-
     number_chars(Number, CharList),
     nAtoms(CharList,Atom).
 
 /*
-    * Function that concatenates 2 List items into an Element
-    *   [H, H2] -
-    *   Atom    -
+*   nAtoms(+Items, -Atom)
+*       - concatenates 2 List items into an Element
 */
 nAtoms([H],H).
 nAtoms([H,H2],Atom):-
     atom_concat(H,H2,Atom).
 
 /*
-    * Function that turns a letter into a number representing the Column index position in the Gamestate List
-    *   Letter  - letter to be transformed
-    *   Index   - letter's index
+*   letter_to_index(+Letter, -Index)
+*       - turns a letter into a number representing the Column index position in the Gamestate List
 */
 letter_to_index(Letter,Index):-
     char_code(Letter,Number),
     Index is Number - 96.
 
 /*
-    * Function that turns an index representing the list Column in the Gamestate into a number 
-    *   Index   - Index to be transformed
-    *   Letter  - letter in the index given
+*   index_to_letter(+Index, -Letter)
+*       - turns an index representing the list Column in the Gamestate into a number 
 */
 index_to_letter(Index,Letter):-
     Code is Index + 96,
     char_code(Letter,Code).
 
 /*
-    * Function that concatenates a String Given a Row and Column, returning a position as an atom
-    *   Row         - row to be concatenated
-    *   Column      - column to be concatenated
-    *   Position    - concatenation of row and column  
+*   get_position_string(+Row,+Column,-Position)
+*       - concatenates a String Given a Row and Column, returning a position as an atom
 */
 get_position_string(Row,Column,Position):-
     numberToAtom(Column,ColumnAtom),
     atom_concat(Row, ColumnAtom, Position).
 
 /*
-    * Function that 
-    *   Position    - 
-    *   Row         - 
-    *   Column      - 
+*   position_to_row_column(+Position, -Row, -Column)
+*       - turns a Position into Row and Column
 */
 position_to_row_column(Position,Row,Column):-
     name(Position, CodeList),
     convert(CodeList,Row,Column).
 
 /*
-    * Function that 
-    *   [H|T]   - 
-    *   Row     - 
-    *   Column  - 
+*   convert(+Element,-Row,-Column)
+*       - converts the Element to Row and Column
 */
 convert([H|T],Row,Column):-
     char_code(Row,H),
     convertColumn(T,Column).
 
 /*
-    * Function that 
-    *   [H1, H2]    - 
-    *   Column      -
+*   convertColumn(+Element,-Column)
+*       - converts the Element to a Column
 */
 convertColumn([H1],Column):-
     number_codes(Column,[H1]).
-
 convertColumn([H1,H2],Column):-
     number_codes(Column,[H1,H2]).
 
 /*
-    * Function that flattens a given list, returning the final result in the last argument
+*   achata_lista(+L,-Final)
+*       - flattens L, turning it into Final
 */
 achata_lista([],[]).
 achata_lista(X,[X]):- atomic(X).
@@ -88,40 +77,47 @@ achata_lista([Cab|Rest],L):-
     append(L1,L2,L). 
 
 /*
-    * Function that gets the First Element of a given list, returning the final result in the last argument
+*   get_list_head(+L, -H)
+*       - gets the list L head, returning it in H
 */
 get_list_head([H|_],H).
 
+/*
+*   count(+L, +X, -N)
+*       - counts the number os elements X in the list L, returning it in N
+*/
 count([],_X,0).
 count([X|T],X,Y):- count(T,X,Z), Y is 1+Z.
 count([X1|T],X,Z):- X1\=X,count(T,X,Z).
 
-
-
+/*
+*   keep_number_lists_of_lists(+L,-Current,-FinalList)
+*       - removes all the elements that aren't numbers from a list of lists, returning
+*   it in FinalList
+*/
 keep_number_lists_of_lists([H|T],FinalList):-
     keep_number_lists_of_lists([H|T],[],FinalList).
-
 keep_number_lists_of_lists([],X,X).
 keep_number_lists_of_lists([H|T],Current,FinalList):-
     keep_numbers(H,ListReady),
     append(Current,[ListReady],NewList),
     keep_number_lists_of_lists(T,NewList,FinalList).
 
-
-
+/*
+*   keep_numbers(+L,-ListReady)
+*       - removes all the elements that aren't numbers from a list, returning
+*   it in ListReady
+*/
 keep_numbers(Flat,ListReady):-
     keep_numbers(Flat,[],ListReady).
-
 keep_numbers([],X,X).
 keep_numbers([H|T],Current,Final):-
     number(H),!,
     append(Current,[H],NList),
     keep_numbers(T,NList,Final).
-
 keep_numbers([_H|T],Current,Final):-
     append(Current,[' '],NewList),
     keep_numbers(T,NewList,Final).
-
 
 /*
 *   remove_numbers(+Flat, -ListReady)

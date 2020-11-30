@@ -18,13 +18,6 @@ readGameModeOption :-
     runGameModeOption(Option).
 
 /*
-*   checkGameModeOption(Option)
-*       - verifies if the user's input is valid, failing if it's not
-*/
-checkGameModeOption(Option) :- Option >= 0, Option =< 3.
-checkGameModeOption(_) :- write('Invalid Option. Try Again\n'), fail.
-
-/*
 *   runGameModeOption(Option)
 *       - runs the option given by the user for the game mode
 */
@@ -48,13 +41,6 @@ runGameModeOption(3) :-
     runBVBOption(Option).
 
 /*
-*   checkDifficultyOption(Option)
-*       - verifies if the user's input is valid, failing if it's not
-*/
-checkDifficultyOption(Option) :- Option >= 0, Option =< 1.
-checkDifficultyOption(_) :- write('Invalid Option. Try Again\n'), fail.
-
-/*
 *   runPVBOption(Option)
 *       - runs the option given by the user for the Player vs. Bot difficulty
 */
@@ -66,13 +52,6 @@ runPVBOption(1) :-
         once(read(Option)),
         checkPlayerOption(Option),
     runPlayerOption(Option).
-
-/*
-*   checkPlayerOption(Option)
-*       - verifies if the user's input is valid, failing if it's not
-*/
-checkPlayerOption(Option) :- Option >= 0, Option =< 2.
-checkPlayerOption(_) :- write('Invalid Option. Try Again\n'), fail.
 
 /*
 *   runPlayerOption(Option)
