@@ -14,7 +14,6 @@
 6 - Todos os valores na tabela têm que ser distintos
 7 - Cada número aparece exatamente 1 vez
 
-
 transposing funciona!!
 */
 
@@ -22,8 +21,11 @@ example(Table):-
 
     % Declaração de variáveis
     
-    RowValues = [2,13,29,31], % Valores na vertical (2,13,29,31)
-    ColValues = [3,11,23,41], % Valores na horizontal (3,11,23,41)
+    RowValues = [R1,R2,R3,R4], % Valores na vertical (2,13,29,31)
+    ColValues = [C1,C2,C3,C4], % Valores na horizontal (3,11,23,41)
+
+    %RowValues = [2,13,29,31],
+    %ColValues = [3,11,23,41],
 
     % Todos os valores
     Table = [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P], % Células que podem ser preenchidas
@@ -44,6 +46,8 @@ example(Table):-
 
     % Restrições de domínio
     domain(Table,0,8), % 8 porque é 2*número_de_rows(aka 4)
+    domain(RowValues,0,56),
+    domain(ColValues,0,56),
 
     % Condições de jogo
 
@@ -64,30 +68,32 @@ example(Table):-
     exactly(0,Col4,2),
     
     % Ensuring lines and columns multiply to correct value
-    mult_list(Row1,2),
-    mult_list(Row2,13),
-    mult_list(Row3,29),
-    mult_list(Row4,31),
+    mult_list(Row1,R1),
+    mult_list(Row2,R2),
+    mult_list(Row3,R3),
+    mult_list(Row4,R4),
 
-    mult_list(Col1,3),
-    mult_list(Col2,11),
-    mult_list(Col3,23),
-    mult_list(Col4,41),
+    mult_list(Col1,C1),
+    mult_list(Col2,C2),
+    mult_list(Col3,C3),
+    mult_list(Col4,C4),
 
 
     % Cálculo de resultados
     labeling([],Table),
+    labeling([],RowValues),
+    labeling([],ColValues),
 
     write(Table),nl,
-    write(Row1),nl,
-    write(Row2),nl,
-    write(Row3),nl,
-    write(Row4),nl,nl,
+    write(Row1),write(R1),nl,
+    write(Row2),write(R2),nl,
+    write(Row3),write(R3),nl,
+    write(Row4),write(R4),nl,nl,
 
-    write(Col1),nl,
-    write(Col2),nl,
-    write(Col3),nl,
-    write(Col4).
+    write(Col1),write(C1),nl,
+    write(Col2),write(C2),nl,
+    write(Col3),write(C3),nl,
+    write(Col4),write(C4).
     
 
 
@@ -107,7 +113,6 @@ mult_list(List,Total):-
     mult_list(List,1,Total).
 
 mult_list([],Current,Total):-
-    %Total #= (Current #\/ Current + 1 #\/ Current - 1).
     (Total #= Current) #\/ (Total #= Current + 1) #\/ (Total #= Current - 1).
 
 mult_list([H|T],Current,Total):-
