@@ -55,7 +55,7 @@ print_ColValues([H|T]) :-
     tab(1), write(H), tab(1), 
     print_ColValues(T).
 
-print_board([],_,_).
+print_board([],_,_).    
 print_board([H|T], [R|RT], Length) :-
     write(R), tab(1),
     print_line(H), write('|'), nl,
@@ -63,6 +63,9 @@ print_board([H|T], [R|RT], Length) :-
     print_board(T, RT, Length).
 
 print_line([]).
+print_line([0|T]):-
+    write('|'), tab(1), write(' '), tab(1),
+    print_line(T).
 print_line([H|T]):-
     write('|'), tab(1), write(H), tab(1), 
     print_line(T).
