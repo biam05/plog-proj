@@ -1,0 +1,194 @@
+\documentclass[11pt]{article}
+
+\usepackage[english]{babel}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage[section]{placeins}
+
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{capt-of}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{CStyle}{
+    backgroundcolor=\color{backgroundColour},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
+}
+
+\begin{document}
+
+\begin{titlepage}
+	\begin{center}
+		\vspace*{1cm}
+		
+		\Large
+		\textbf{Puzzle 2D - Wrong Products}
+		
+		\vspace{0.5cm}
+		\large
+		Segundo Projeto
+		
+		\vspace{1.5cm}
+		
+		\textbf{Hugo Miguel Monteiro Guimarães}\\
+		\textbf{Beatriz Costa Silva Mendes}
+		
+		\vspace{5cm}
+		
+		Trabalho realizado no âmbito da\\
+		Unidade Curricular de Programação Lógica
+		
+		\vspace{0.8cm}
+	
+		\includegraphics[width=0.4 \textwidth]{feup_logo.png}
+		
+		\vspace{1.5cm}		
+		
+		\large
+		Mestrado Integrado em Engenharia Informática e Computação\\
+		Faculdade de Engenharia da Universidade do Porto\\
+		Porto\\
+		28	 de dezembro de 2020
+	
+	\end{center}
+\end{titlepage}
+
+
+\pagebreak
+\tableofcontents
+
+\pagebreak
+
+
+\section{Resumo} Contextualizar e resumir o trabalho, salientando o objetivo, o método
+utilizado e referindo os principais resultados e conclusões.
+
+Este trabalho foi desenvolvido no âmbito da Unidade Curricular de Programação em Lógica, através do sistema SICStus Prolog, e o seu objetivo foi resolver um problema de decisão/otimização utilizando Programação de lógica com restrição sobre domínios finitos. O problema escolhido foi \textbf{\emph{Wrong Products}} e tem como objetivo colocar números numa grelha de modo a que cada linha e coluna contenha apenas 2 dígitos e que o produto entre os mesmos corresponda a um determinado valor no exterior da grelha, com variação de uma unidade.
+
+
+\section{Introdução} Descrição da contextualização, objetivos e motivação do
+trabalho (não do ponto de vista de relatório da UC, mas de um ponto de vista
+computacional / aplicacional), referência sucinta ao problema em análise (idealmente,
+incluindo referências a outros trabalhos sobre o mesmo problema e sua abordagem), e
+descrição sucinta da estrutura do resto do artigo
+
+O Problema de Otimização escolhido ,\emph{Wrong Products}, tem como objetivo colocar números numa grelha de modo a que cada linha e coluna contenha apenas 2 dígitos e que o produto entre os mesmos corresponda a um determinado valor no exterior da grelha, com variação de uma unidade.
+
+Este problema tem como objetivo a implementação de uma grelha matricial com restrições sobre linhas, colunas e toda a malha utilizando programação de lógica com restrições sobre domínios finitos.
+
+\bigskip
+
+Este artigo possui a seguinte estrutura:
+
+\begin{description}
+
+\item[Descrição do Problema:] Descrever com detalhe o problema de
+otimização ou decisão em análise, incluindo todas as restrições envolvidas.
+
+\item[Abordagem:] Descrever a modelação do problema como um PSR / POR:
+
+\begin{description}
+
+\item[Variáveis de Decisão] Descrever as variáveis de decisão e
+respectivos domínios, assim como o seu significado no contexto do problema em análise.
+
+\item[Restrições] Descrever as restrições rígidas e flexíveis do problema e a
+sua implementação utilizando o SICStus Prolog.
+
+\item[Visualização da Solução:] Explicar os predicados que permitem
+visualizar a solução em modo de texto.
+
+\end{description}
+
+
+\item[Experiências e Resultados:]
+
+\begin{description}
+
+\item[Análise Dimensional] Incluir exemplos de execução em instâncias do problema com
+diferentes dimensões e analisar os resultados obtidos.
+
+\item[Estratégias de Pesquisa] Devem ser testadas diferentes estratégias de pesquisa
+(heurísticas de escolha de variável e de valor), comparando os resultados obtidos.
+Devem ser usadas formas convenientes para apresentar os resultados (tabelas/gráficos).
+
+\end{description}
+
+
+\item[Conclusões e Trabalho Futuro:] Que conclusões retira
+deste projeto? O que mostram os resultados obtidos? Quais as vantagens e limitações da
+solução proposta? Como poderia melhorar o trabalho desenvolvido?
+
+\item[Referências] Fontes bibliográficas usadas, incluindo Livros, artigos, páginas
+Web, entre outros, e apresentados segundo o formato sugerido no template.
+
+\item[Anexo] Resultados detalhados, e outros elementos úteis que não sejam essenciais
+ao relatório (não contabilizados para o limite de páginas).
+
+\end{description}
+
+
+
+
+
+
+\section{Descrição do Problema} Descrever com detalhe o problema de
+otimização ou decisão em análise, incluindo todas as restrições envolvidas.
+
+
+\section{Abordagem} Descrever a modelação do problema como um PSR / POR:
+
+\subsection{Variáveis de Decisão} Descrever as variáveis de decisão e
+respetivos domínios, assim como o seu significado no contexto do problema em análise.
+
+\subsection{Restrições} Descrever as restrições rígidas e flexíveis do problema e a
+sua implementação utilizando o SICStus Prolog
+
+\section{Visualização da Solução} Explicar os predicados que permitem
+visualizar a solução em modo de texto.
+
+\section{Experiências e Resultados}
+
+\subsection{Análise Dimensional} Incluir exemplos de execução em instâncias do problema com
+diferentes dimensões e analisar os resultados obtidos.
+
+\subsection{Estratégias de Pesquisa} Devem ser testadas diferentes estratégias de pesquisa
+(heurísticas de escolha de variável e de valor), comparando os resultados obtidos.
+Devem ser usadas formas convenientes para apresentar os resultados (tabelas/gráficos).
+
+\section{Conclusões e Trabalho Futuro} Que conclusões retira
+deste projeto? O que mostram os resultados obtidos? Quais as vantagens e limitações da
+solução proposta? Como poderia melhorar o trabalho desenvolvido?
+
+
+\section{Referências} Fontes bibliográficas usadas, incluindo Livros, artigos, páginas
+Web, entre outros, e apresentados segundo o formato sugerido no template.
+
+\section{Anexo} Resultados detalhados, e outros elementos úteis que não sejam essenciais
+ao relatório (não contabilizados para o limite de páginas).
+
+
+
+
+\end{document}
