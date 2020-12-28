@@ -10,6 +10,9 @@ main(Length):-
     length(RowValues,Length), % Valores na vertical (2,13,29,31)
     length(ColValues,Length), % Valores na horizontal (3,11,23,41)
 
+    %RowValues = [2,13,29,31], % Valores na vertical (2,13,29,31)
+    %ColValues = [3,11,23,41], % Valores na horizontal (3,11,23,41)
+
     % Gerar uma lista de listas dinâmica tendo em conta o parâmetro fornecido
     generateListofLists(Length,ListOfLists),
 
