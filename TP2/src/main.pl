@@ -24,8 +24,8 @@ example(Table):-
     RowValues = [R1,R2,R3,R4], % Valores na vertical (2,13,29,31)
     ColValues = [C1,C2,C3,C4], % Valores na horizontal (3,11,23,41)
 
-    %RowValues = [2,13,29,31],
-    %ColValues = [3,11,23,41],
+    RowValues = [2,13,29,31],
+    ColValues = [3,11,23,41],
 
     % Todos os valores
     Table = [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P], % Células que podem ser preenchidas
@@ -109,6 +109,91 @@ test(List):-
     labeling([],List).
 
 
+
+
+
+
+main(Length):-
+
+    % Para começar, vamos estabelecer que a matrix é 4x4
+
+    % Declaração de variáveis
+    
+    length(RowValues,Length), % Valores na vertical (2,13,29,31)
+    length(ColValues,Length), % Valores na horizontal (3,11,23,41)
+
+
+    % Gerar uma lista de listas dinâmica tendo em conta o parâmetro fornecido
+    generateListofLists(Length,ListOfLists),
+
+    % Gerar a matriz transposta para poder aceder às colunas
+    transpose(ListOfLists,Transpose),
+    
+    % Dar flatten à lista de modo a que seja possível atribuir um domínio
+    append(ListOfLists,Table),
+
+    % Restrições de domínio
+
+    TableValues is Length * 2,
+    TableMaxValue is TableValues * (TableValues - 1),
+
+    domain(Table,0,TableValues), % 8 porque é 2*número_de_rows(aka 4)
+    domain(RowValues,0,TableMaxValue),
+    domain(ColValues,0,TableMaxValue),
+
+    % Condições de jogo
+
+    % Os valores têm que ser todos distintios, quando diferentes de 0
+    all_distinct_except_0(Table),
+
+    % Cada linha ou coluna deve ter exatamente 2 valores diferentes de 0
+    Amount is Length - 2,
+
+    % Linhas
+    line_restriction(ListOfLists,Amount),
+    %Colunas
+    line_restriction(Transpose,Amount),
+
+    % Ensuring lines and columns multiply to correct value
+    multiplication_restriction(ListOfLists,RowValues),
+
+    multiplication_restriction(Transpose,ColValues),
+
+
+    % Cálculo de resultados
+    labeling([],Table),
+    labeling([],RowValues),
+    labeling([],ColValues),
+
+    write_table(ListOfLists),nl,
+    write(RowValues),nl,
+    write(ColValues).
+
+
+generateListofLists(Length,ListOfLists):-
+    length(ListOfLists,Length),
+    generator(ListOfLists,Length).
+
+generator([],_).
+generator([H|T],Length):-
+    length(H,Length),
+    generator(T,Length).
+
+
+line_restriction([],_).
+line_restriction([H|T],Amount):-
+     exactly(0,H,Amount),
+     line_restriction(T,Amount).
+
+     
+
+multiplication_restriction(_,[]).
+multiplication_restriction([H|T],[H2|T2]):-
+    mult_list(H,H2),
+    multiplication_restriction(T,T2).
+    
+
+
 mult_list(List,Total):-
     mult_list(List,1,Total).
 
@@ -130,7 +215,7 @@ exactly(X, [Y|L], N) :-
     N #= M + B,
 exactly(X, L, M).
 
-
-
-
-
+write_table([]).
+write_table([H|T]):-
+    write(H),nl,
+    write_table(T).
