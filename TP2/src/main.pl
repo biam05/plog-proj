@@ -2,6 +2,8 @@
 :- use_module(library(random)). % POde ser necessário retirar no fim se não se usar
 :- use_module(library(clpfd)). % Permite utilizar o módulo de restrições
 
+:- ensure_loaded(display).
+
 main(Length):-
     % Declaração de variáveis
     
@@ -47,9 +49,7 @@ main(Length):-
     labeling([],RowValues),
     labeling([],ColValues),
 
-    write_table(ListOfLists),nl,
-    write(RowValues),nl,
-    write(ColValues).
+    display(ListOfLists, RowValues, ColValues, Length).
 
 
 generateListofLists(Length,ListOfLists):-
@@ -95,9 +95,3 @@ exactly(X, [Y|L], N) :-
     X #= Y #<=> B,
     N #= M + B,
 exactly(X, L, M).
-
-
-write_table([]).
-write_table([H|T]):-
-    write(H),nl,
-    write_table(T).
