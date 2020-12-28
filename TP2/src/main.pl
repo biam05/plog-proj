@@ -49,7 +49,7 @@ main(Length):-
     labeling([],RowValues),
     labeling([],ColValues),
 
-    display(ListOfLists, RowValues, ColValues, Length).
+    display(ListOfLists, RowValues, ColValues, Length, TableValues).
 
 
 generateListofLists(Length,ListOfLists):-
