@@ -81,7 +81,7 @@ mult_list(List,Total):-
     mult_list(List,1,Total).
 
 mult_list([],Current,Total):-
-    (Total #= Current) #\/ (Total #= Current + 1) #\/ (Total #= Current - 1).
+    (Total #= Current + 1) #\/ (Total #= Current - 1).
 
 mult_list([H|T],Current,Total):-
     H #= 0,
