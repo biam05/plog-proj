@@ -11,6 +11,14 @@
 \usepackage{float}
 \usepackage{capt-of}
 
+\usepackage{harvard}
+\usepackage{hyperref}
+
+\usepackage{apacite}
+
+\bibliographystyle{apacite}
+\bibliography{References}
+
 \definecolor{mGreen}{rgb}{0,0.6,0}
 \definecolor{mGray}{rgb}{0.5,0.5,0.5}
 \definecolor{mPurple}{rgb}{0.58,0,0.82}
@@ -156,26 +164,71 @@ ao relatório (não contabilizados para o limite de páginas).
 \section{Descrição do Problema} Descrever com detalhe o problema de
 otimização ou decisão em análise, incluindo todas as restrições envolvidas.
 
+Wrong Products é um problema de decisão. Este problema pretende descobrir se é possível colocar números numa grelha de modo a que cada que cada número apareça uma única vez, e que cada linha e coluna contenha unicamente dois números, e que o seu produto corresponda a uma unidade acima ou abaixo de um determinado valor no exterior da grelha associado à respetiva linha ou coluna.
+
 
 \section{Abordagem} Descrever a modelação do problema como um PSR / POR:
+
+Wrong Products é um Problema de Satisfação de Restrições(PSR) e é modelizado por:
 
 \subsection{Variáveis de Decisão} Descrever as variáveis de decisão e
 respetivos domínios, assim como o seu significado no contexto do problema em análise.
 
+Na resolução deste problema, é necessário criar as seguintes listas:
+
+\begin{description}
+
+\item[Length - ] Tamanho da grelha, indicando o número de linhas e colunas. Estes valores são iguais dado que a grelha corresponde a uma matriz quadrada. O Valor de length é passado como argumento do predicado, pelo que o seu domínio varia conforme o pretendido pelo utilizador.
+
+\item[RowValues - ] Lista com os valores iniciais cuja diferença entre o produto dos 2 valores da respetiva linha seja 1.
+
+\item[ColValues - ] Lista com os valores iniciais cuja diferença entre o produto dos 2 valores da respetiva coluna seja 1.
+
+RowValues e ColValues possuem o mesmo domínio, todos os valores inteiros positivos que não sejam superiores ao produto entre os 2 maiores valores permitidos, que corresponde a (Length *2)*(Length * 2 - 1)
+
+\item[ListOfLists - ] Lista de Listas contendo a grelha do problema. Pode ser interpretada como uma representação matricial do problema. Contém valores inteiros a serem multiplicados em cada linha e coluna, e zeros que correspondem a casas vazias
+
+\item[Transpose - ] Lista de Listas contendo a matriz transposta da grelha do problema. Tem como propósito facilitar a aplicação de restrições às colunas da grelha do problema.
+
+\item[Table - ] Forma achatada de ListOfLists. tem como objetivo permitir a aplicação de restrições sobre toda a grelha. 
+
+Dado que apenas podem existir 2 números por linha e coluna, o domínio de ListOfLists, Transpose e Table é o mesmo e corresponde a todos os valores inteiros entre 0 e 2*Length.
+
+
+
+\end{description}
+
 \subsection{Restrições} Descrever as restrições rígidas e flexíveis do problema e a
 sua implementação utilizando o SICStus Prolog
 
+Através do predicado\textbf{ all\_distinct\_except\_0(List)}, foi possível aplicar uma restrição a todos os valores da grelha, de modo a que, tal como o nome indica, todos os valores sejam distintos exceto os zeros. Desta forma é possível garantir que não há valores semelhantes e, simultaneamente, utilizar o valor zero como representação de uma casa não ocupada.
+
+\textbf{line\_restriction(List,Amount)} Recebe como argumentos uma lista de listas e um valor inteiro amount, e restringe a quantidade de zeros em cada linha de uma Lista de Listas, consequentemente garantindo que existem apenas 2 valores em cada linha. Este predicado é evocado duas vezes, a primeira para ListOfList, e a segunda para Transpose, de modo a que a restrição seja aplicada quer a linhas quer a colunas.
+
+
+\textbf{multiplication\_restriction(ListOfLists,List)} Recebe uma Lista de Listas e Verifica se o produto dos valores diferentes de zero de cada linha variam uma unidade em relação ao respetivo valor de uma Lista. Este predicado é evocado duas vezes, a primeira para ListOfList e RowValues, e a segunda para Transpose e Colvalues, garantindo que tanto o produto de uma linha como o de uma coluna cumprem a restrição da multiplicação enunciada anteriormente.
+
+
 \section{Visualização da Solução} Explicar os predicados que permitem
 visualizar a solução em modo de texto.
+
+A solução pode ser facilmente visualizada através do predicado display, o qual representa a grelha preenchida com uma solução correta para os valroes de RowValue e ColValue que são apresentados em frente de cada linha e coluna.
+
 
 \section{Experiências e Resultados}
 
 \subsection{Análise Dimensional} Incluir exemplos de execução em instâncias do problema com
 diferentes dimensões e analisar os resultados obtidos.
 
+Embora Wrong Products seja um problema apresentado sobre a forma de uma matriz quadrada de dimensão 4, resolvemos este problema de decisão dinamicamente, sendo possível fazer variar a dimensão da grelha e obter as soluções existentes, se possível.
+
+Deste modo, executamos o problema com várias dimensões e verificamos que ...(acrescentar aqui algo após se terminaro projeto e fizer os gráficos)
+
 \subsection{Estratégias de Pesquisa} Devem ser testadas diferentes estratégias de pesquisa
 (heurísticas de escolha de variável e de valor), comparando os resultados obtidos.
 Devem ser usadas formas convenientes para apresentar os resultados (tabelas/gráficos).
+
+Temos que criar um gerador e arranjar varias heurísticas que produzam uma solução
 
 \section{Conclusões e Trabalho Futuro} Que conclusões retira
 deste projeto? O que mostram os resultados obtidos? Quais as vantagens e limitações da
@@ -184,6 +237,8 @@ solução proposta? Como poderia melhorar o trabalho desenvolvido?
 
 \section{Referências} Fontes bibliográficas usadas, incluindo Livros, artigos, páginas
 Web, entre outros, e apresentados segundo o formato sugerido no template.
+
+
 
 \section{Anexo} Resultados detalhados, e outros elementos úteis que não sejam essenciais
 ao relatório (não contabilizados para o limite de páginas).
