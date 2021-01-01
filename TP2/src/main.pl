@@ -99,11 +99,6 @@ exactly(X, [Y|L], N) :-
     N #= M + B,
 exactly(X, L, M).
 
-selRandom(Var, Rest, BB0, BB1):- % seleciona valor de forma aleatória
-    fd_set(Var, Set), fdset_to_list(Set, List),
-    random_member(Value, List), % da library(random)
-    ( first_bound(BB0, BB1), Var #= Value ;
-    later_bound(BB0, BB1), Var #\= Value ).
 
 main_test(Length):-
     % Declaração de variáveis
@@ -148,15 +143,20 @@ main_test(Length):-
     multiplication_restriction(ListOfLists,RowValues),
     multiplication_restriction(Transpose,ColValues),
 
+    labeling([value(selRandom)],Table),
     % Cálculo de resultados
-    labeling([value(selRandom)],ColValues),
-    write('ColValues: '), write(ColValues), nl,
-    labeling([value(selRandom)],RowValues),
-    write('RowValues: '), write(RowValues), nl,
-    labeling([], Table),
+    labeling([],RowValues),
+    labeling([],ColValues),    
     %write('ColValues: '), write(ColValues), nl,
     %write('RowValues: '), write(RowValues), nl,
     %labeling([],Table),
     %labeling([],ColValues),
 
     display(ListOfLists, RowValues, ColValues, Length, TableValues).
+
+
+selRandom(Var, Rest, BB0, BB1):- % seleciona valor de forma aleatória
+    fd_set(Var, Set), fdset_to_list(Set, List),
+    random_member(Value, List), % da library(random)
+    ( first_bound(BB0, BB1), Var #= Value ;
+    later_bound(BB0, BB1), Var #\= Value ).
