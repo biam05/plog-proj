@@ -1,24 +1,36 @@
+% ------------------------------------------------------------------------------------
+% ------------------------- PRINCIPAIS FUNÇÕES DE DISPLAY ----------------------------
+% ------------------------------------------------------------------------------------
+
+% display(+ListOfLists, +RowValues, +ColValues, +Length, +TableValues))
+% dá display a um problema, passando pela limpeza de ecrã e imprimindo um header
 display([],_,_,_).
 display(ListOfLists, RowValues, ColValues, Length, TableValues) :-
     header,
     tab(1), print_ColValues(ColValues), nl,
     tab(1), print_horizontal_division(Length), nl,
     print_board(ListOfLists, RowValues, Length),
-    new_line(2),
+    nl, nl,
     tab(1), write('{1-'), write(TableValues), write('}'), nl, nl.
 
+% displayWithoutClean(+ListOfLists, +RowValues, +ColValues, +Length, +TableValues))
+% semelhante ao predicado display, mas sem limpar o ecrã e sem imprimir um header
 displayWithoutClean([],_,_,_).
 displayWithoutClean(ListOfLists, RowValues, ColValues, Length, TableValues) :-
     tab(1), print_ColValues(ColValues), nl,
     tab(1), print_horizontal_division(Length), nl,
     print_board(ListOfLists, RowValues, Length),
-    new_line(2),
+    nl, nl,
     tab(1), write('{1-'), write(TableValues), write('}'), nl, nl.
 
+% menuDisplay
+% imprime um header e imrpime as opções que podem ser escolhidas pelo utilizador
 menuDisplay :-
     header,
     menuOptions.
 
+% header
+% imprime um header
 header :-
     clr,
     write('\t _    _                        ______              _            _       '), nl,
@@ -37,6 +49,8 @@ header :-
     write('\tthe product of the two numbers in the corresponding row/column'), nl,    
     nl, nl, nl.
 
+% menuOptions
+% imprime as opções que podem ser escolhidas pelo utilizador
 menuOptions :-
     write('                                 Options\n'),
     write('                     1 - Solve Problem of Length 3\n'),
@@ -50,26 +64,15 @@ menuOptions :-
 
 
 % ------------------------------------------------------------------------------------
-% ------------------------------------------------------------------------------------
-% ------------------------------------------------------------------------------------
+% ---------------------------- FUNÇÕES AUXILIARES DE DISPLAY -------------------------
 % ------------------------------------------------------------------------------------
 
+% clr
+% limpa o ecrã
 clr :- write('\33\[2J').
 
-new_line(N) :-
-    N > 1,
-    nl,
-    Next is N - 1,
-    new_line(Next).
-new_line(1) :- nl.
-
-space(N) :-
-    N > 1,
-    write(' '),
-    Next is N - 1,
-    space(Next).
-space(1) :- write(' ').
-
+% tab(+N)
+% imprime N tabs
 tab(N) :-
     N > 1,
     write('\t'),
@@ -77,12 +80,16 @@ tab(N) :-
     tab(Next).
 tab(1) :- write('\t').
 
-
+% print_ColValues(+L)
+% imprime recursivamente os valores das colunas do tabuleiro, que se encontram na lista L
 print_ColValues([]).
 print_ColValues([H|T]) :-
     tab(1), write(H), tab(1), 
     print_ColValues(T).
 
+% print_board(+L, +R, +Length)
+% imprime recursivamente um tabuleiro de dimensão Length, imprimindo o valor da linha atual
+% e o conteúdo dessa mesma linha
 print_board([],_,_).    
 print_board([H|T], [R|RT], Length) :-
     write(R), tab(1),
@@ -90,6 +97,8 @@ print_board([H|T], [R|RT], Length) :-
     tab(1), print_horizontal_division(Length),  nl,
     print_board(T, RT, Length).
 
+% print_line(+L)
+% imprime recursivamente o conteúdo de uma linha de um tabuleiro
 print_line([]).
 print_line([0|T]):-
     write('|'), tab(1), write(' '), tab(1),
@@ -98,6 +107,8 @@ print_line([H|T]):-
     write('|'), tab(1), write(H), tab(1), 
     print_line(T).
 
+% print_horizontal_division(+N)
+% imprime uma linha horizontal do tabuleiro
 print_horizontal_division(N) :-
     N > 0,
     write('+'),
