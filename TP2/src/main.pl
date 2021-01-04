@@ -9,37 +9,35 @@ generatePuzzle(Length,RowValues,ColValues):-
     
     length(RowValues,Length), % Valores na vertical (2,13,29,31)
     length(ColValues,Length), % Valores na horizontal (3,11,23,41)
-
     % Gerar uma lista de listas dinâmica tendo em conta o parâmetro fornecido
     generateListofLists(Length,ListOfLists),
-
+ 
     % Gerar a matriz transposta para poder aceder às colunas
     transpose(ListOfLists,Transpose),
-
     % Dar flatten à lista de modo a que seja possível atribuir um domínio
     append(ListOfLists,Table),
-
+ 
     % Restrições de domínio
     TableValues is Length * 2,
     TableMaxValue is TableValues * (TableValues - 1),
-
+ 
     domain(Table,0,TableValues), % 8 porque é 2*número_de_rows(aka 4)
     domain(RowValues,0,TableMaxValue),
     domain(ColValues,0,TableMaxValue),
-
+ 
     % Condições de jogo
-
+ 
     % Os valores têm que ser todos distintios, quando diferentes de 0
     all_distinct_except_0(Table),
-
+ 
     % Cada linha ou coluna deve ter exatamente 2 valores diferentes de 0
     Amount is Length - 2,
-
+ 
     % Linhas
     line_restriction(ListOfLists,Amount),
     %Colunas
     line_restriction(Transpose,Amount),
-
+ 
     % Ensuring lines and columns multiply to correct value
     multiplication_restriction(ListOfLists,RowValues),
     multiplication_restriction(Transpose,ColValues),
@@ -96,7 +94,7 @@ solver(Length,RowValues,ColValues):-
     labeling([],Table),
     
 
-    %display(ListOfLists, FinalRowValues, FinalColValues, Length, TableValues),
+    displayWithoutClean(ListOfLists, FinalRowValues, FinalColValues, Length, TableValues),
 
     print_time('Labeling Time: ').
 
