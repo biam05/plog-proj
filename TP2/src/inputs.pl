@@ -67,7 +67,7 @@ runOption(6) :-
         checkDimension(Option),
     runDimension(Option).
 
-checkDimension(Option) :- Option >= 3, Option =< 10.
+checkDimension(Option) :- Option >= 2, Option =< 12.
 checkDimension(_) :- write('Invalid Option. Try Again\n'), fail.
 
 runDimension(Dimension) :-

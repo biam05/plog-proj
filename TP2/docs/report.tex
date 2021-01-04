@@ -74,46 +74,46 @@ Este problema tem como objetivo a implementação de uma grelha matricial com re
 
 Este artigo possui a seguinte estrutura:
 
-\begin{description}
+\begin{itemize}
 
-\item[Descrição do Problema:] Descrição com detalhe do problema de
+\item \textbf{Descrição do Problema:} Descrição com detalhe do problema de
 otimização ou decisão em análise, incluindo todas as restrições envolvidas.
 
-\item[Abordagem:] Descrição da modelação do problema como um Problema de Satisfação de Restrições(PSR)
+\item \textbf{Abordagem:} Descrição da modelação do problema como um Problema de Satisfação de Restrições(PSR)
 
-\begin{description}
+\begin{itemize}
 
-\item[Variáveis de Decisão] Descrição das variáveis de decisão e
+\item \textbf{Variáveis de Decisão:}  Descrição das variáveis de decisão e
 respetivos domínios, assim como o seu significado no contexto do problema em análise.
 
-\item[Restrições] Descrição das restrições rígidas e flexíveis do problema e a
+\item\textbf{ Restrições:} Descrição das restrições rígidas e flexíveis do problema e a
 sua implementação utilizando o SICStus Prolog.
 
-\item[Visualização da Solução:] Explicação dos predicados que permitem
+\item \textbf{Visualização da Solução:} Explicação dos predicados que permitem
 visualizar a solução em modo de texto.
 
-\end{description}
+\end{itemize}
 
 
-\item[Experiências e Resultados] Análise de problema e resultados obtidos
+\item \textbf{Experiências e Resultados:} Análise de problema e resultados obtidos
 
-\begin{description}
+\begin{itemize}
 
-\item[Análise Dimensional] Exemplificação da execução de instâncias do problema com
+\item \textbf{Análise Dimensional:} Exemplificação da execução de instâncias do problema com
 diferentes dimensões e análise dos resultados obtidos.
 
-\item[Estratégias de Pesquisa] Descrição de diferentes estratégias de pesquisa, comparando os resultados.
+\item \textbf{Estratégias de Pesquisa:} Descrição de diferentes estratégias de pesquisa, comparando os resultados.
 
-\end{description}
+\end{itemize}
 
 
-\item[Conclusões e Trabalho Futuro:] Conclusões obtidas pela realização do trabalho
+\item \textbf{Conclusões e Trabalho Futuro:} Conclusões obtidas pela realização do trabalho
 
-\item[Referências] Referências bibliográficas utilizadas
+\item \textbf{Referências:} Referências bibliográficas utilizadas
 
-\item[Anexo] Anexos de resultados úteis para a resolução do problema.
+\item \textbf{Anexos:} Anexos de resultados úteis para a resolução do problema.
 
-\end{description}
+\end{itemize}
 
 \bigskip
 \bigskip
@@ -177,7 +177,16 @@ Dado que apenas podem existir 2 números por linha e coluna, o domínio de ListO
 
 \section{Visualização da Solução}
 
-Ao selecionar a opção de execução do nosso programa (se quiser ver um dos problemas 
+Para visualizar a solução do solução do nosso problema, é necessário primeiro seguir os seguintes passos:
+
+\begin{itemize}
+	\item Iniciar o SICStus Prolog.
+	\item Dar \textbf{consult} ao ficheiro \textbf{wrongproducts.pl}.
+	\item Selecionar a fonte através de: \(Settings \to Font \to Consolas \to ok \) (Este passo é necessário para que a formatação dos resultados esteja correta).
+	\item Executar o predicado \textbf{main} para executar o programa.
+\end{itemize}
+
+Ao executar o nosso programa (se quiser ver um dos problemas 
 \textit{default} ou resolver um problema gerado aleatoriamente), primeiro é 
 mostrado um problema por resolver, ou seja, com os espaços dentro da matriz em branco.
 Este problema por resolver é obtido através do predicado \textbf{display}, que além
@@ -196,9 +205,9 @@ diferentes dimensões e analisar os resultados obtidos.
 
 Embora Wrong Products seja um problema apresentado sobre a forma de uma matriz quadrada de dimensão 4, resolvemos este problema de decisão dinamicamente, sendo possível fazer variar a dimensão da grelha e obter as soluções existentes, se possível.
 
-O predicado \emph{generatePuzzle(Length,RowValues,ColValues)} recebe como argumento o parâmetro \emph{Length}, que corresponde à dimensão da matriz, gerando parâmetros aleatórios de \emph{RowValues} e \emph{ColValues} que garantem a existência de uma solução válida para o problema, sendo então possível gerar um problema resolúvel de qualquer dimensão.
+O predicado \textbf{\emph{generatePuzzle(Length,RowValues,ColValues)}} recebe como argumento o parâmetro \emph{Length}, que corresponde à dimensão da matriz, gerando parâmetros aleatórios de \emph{RowValues} e \emph{ColValues} que garantem a existência de uma solução válida para o problema, sendo então possível gerar um problema resolúvel de qualquer dimensão.
 
-O predicado \emph{solver(Length,RowValues,ColValues)} recebe como argumento as variáveis de decisão obtidas pelo predicado \emph{generatePuzzle}, obtendo uma solução possível para o problema. No fim, é chamado o predicado \emph{displayWithoutClean} que permite visualizar a solução do problema conforme explicado na secção anterior. Tal como o \emph{generatePuzzle}, possui como argumento a variável \emph{Length}, que indica a dimensão da matriz.
+O predicado \textbf{\emph{solver(Length,RowValues,ColValues)}} recebe como argumento as variáveis de decisão obtidas pelo predicado \emph{generatePuzzle}, obtendo uma solução possível para o problema. No fim, é chamado o predicado \emph{displayWithoutClean} que permite visualizar a solução do problema conforme explicado na secção anterior. Tal como o \emph{generatePuzzle}, possui como argumento a variável \emph{Length}, que indica a dimensão da matriz.
 
 
 Exemplos de execução de um problema com diferentes dimensões encontram-se na secção de anexos
@@ -232,8 +241,7 @@ De seguida encontram-se 2 gráficos comparando tempos de execução de diferente
 
 \end{center}
 
-\bigskip
-\bigskip
+\pagebreak
 
 \section{Conclusões e Trabalho Futuro} 
 \paragraph{}
@@ -242,7 +250,8 @@ Este trabalho permitiu-nos	, por um lado, melhorar os nossos conhecimentos de Pr
 \paragraph{}
 Os resultados obtidos demonstram que o problema proposto é facilmente resolúvel computacionalmente em tempos reduzidos, inferiores à décima do segundo para tabuleiros de dimensão inferior a 10, pelo que podemos concluir que tivemos sucesso no desenvolvimento da estratégia da solução do problema escolhido. Como seria de esperar, a complexidade temporal da solução proposta aumenta exponencialmente em função da dimensão do tabuleiro, pelo que o nosso programa tem dificuldade em encontrar soluções em tempo útil para malhas de dimensão superior a 60.
 
-\pagebreak
+\bigskip
+\bigskip
 
 \section{Referências} 
 
