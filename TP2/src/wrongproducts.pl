@@ -1,6 +1,8 @@
 :- ensure_loaded(display).
 :- ensure_loaded(main).
+:- ensure_loaded(inputs).
 
 main:-
-    menu-display.
+    menuDisplay,
+    readOption.
     %runner(4).
