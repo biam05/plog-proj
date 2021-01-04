@@ -23,17 +23,20 @@ tab(1) :- write('\t').
 
 display([],_,_,_).
 display(ListOfLists, RowValues, ColValues, Length, TableValues) :-
-    clr, 
-    header, nl, nl, 
-    instructions, 
-    nl, nl, nl,
+    header,
     tab(1), print_ColValues(ColValues), nl,
     tab(1), print_horizontal_division(Length), nl,
     print_board(ListOfLists, RowValues, Length),
     new_line(2),
     tab(1), write('{1-'), write(TableValues), write('}').
 
+menu-display :-
+    header.
+
+
+
 header :-
+    clr,
     write('\t _    _                        ______              _            _       '), nl,
     write('\t| |  | |                       | ___ \\            | |          | |      '), nl,
     write('\t| |  | |_ __ ___  _ __   __ _  | |_/ / __ ___   __| |_   _  ___| |_ ___ '), nl,
@@ -41,14 +44,14 @@ header :-
     write('\t\\  /\\  / | | (_) | | | | (_| | | |  | | | (_) | (_| | |_| | (__| |_\\__ \\'), nl,
     write('\t \\/  \\/|_|  \\___/|_| |_|\\__, | \\_|  |_|  \\___/ \\__,_|\\__,_|\\___|\\__|___/'), nl,
     write('\t                         __/ |'), nl,
-    write('\t                        |___/').
-
-instructions :-
+    write('\t                        |___/'),
+    nl, nl, 
     write('\tPut the given numbers into the grid such that each'), nl,
     write('\tnumber appears exactly once in the grid and each'), nl, 
     write('\trow/column contains exactly two numbers. Each clue'), nl, 
     write('\toutside the grid is either one less or one more from'), nl,
-    write('\tthe product of the two numbers in the corresponding row/column'), nl.
+    write('\tthe product of the two numbers in the corresponding row/column'), nl,    
+    nl, nl, nl.
 
 print_ColValues([]).
 print_ColValues([H|T]) :-
