@@ -8,3 +8,5 @@ TP2/docs/report.blg
 TP2/docs/report.bbl
 TP2/docs/References.bib
 TP2/docs/report.synctex(busy)
+*.fls
+*.fdb_latexmk
