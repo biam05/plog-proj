@@ -1,9 +1,3 @@
-:- use_module(library(lists)).
-:- use_module(library(random)). % POde ser necessário retirar no fim se não se usar
-:- use_module(library(clpfd)). % Permite utilizar o módulo de restrições
-
-
-
 generatePuzzle(Length,RowValues,ColValues):-
     % Declaração de variáveis
     
