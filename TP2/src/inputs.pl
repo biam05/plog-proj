@@ -37,7 +37,7 @@ readRequest(Dimension) :-
         checkRequest(Option),
     runRequest(Dimension).
 
-checkRequest(Option) :- Option = 1.
+checkRequest(1).
 checkRequest(_) :- write('Invalid Option. Try Again\n'), fail.
 
 runRequest(1) :- 
@@ -59,3 +59,35 @@ runRequest(4) :-
 runRequest(5) :- 
     nl, nl,
     solver(7,[139,71,64,35,13,23,10],[43,6,11,38,59,79,125]).
+
+runOption(6) :-
+    repeat,
+        write('\tType the Dimension of the Puzzle:\n'),
+        once(read(Option)),
+        checkDimension(Option),
+    runDimension(Option).
+
+checkDimension(Option) :- Option >= 3, Option =< 10.
+checkDimension(_) :- write('Invalid Option. Try Again\n'), fail.
+
+runDimension(Dimension) :-
+    MaxValue is Dimension * 2,
+    generateListofLists(Dimension,ListOfLists),
+    generatePuzzle(Dimension, RowValues, ColValues),
+    display(ListOfLists, RowValues, ColValues, Dimension, MaxValue),
+    readRandom(Dimension,RowValues, ColValues).
+
+readRandom(Dimension, RowValues, ColValues) :-
+    repeat,
+        write('\tType 1 if you want to see the solution of the problem:\n'),
+        once(read(Option)),
+        checkAux(Option),
+    runRandom(Dimension, RowValues, ColValues).
+
+checkAux(1).
+checkAux(_) :- write('Invalid Option. Try Again\n'), fail.
+
+
+runRandom(Dimension, RowValues, ColValues) :- 
+    nl, nl,
+    solver(Dimension, RowValues, ColValues).
