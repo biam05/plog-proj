@@ -11,14 +11,6 @@
 \usepackage{float}
 \usepackage{capt-of}
 
-\usepackage{harvard}
-\usepackage{hyperref}
-
-\usepackage{apacite}
-
-\bibliographystyle{apacite}
-\bibliography{References}
-
 \definecolor{mGreen}{rgb}{0,0.6,0}
 \definecolor{mGray}{rgb}{0.5,0.5,0.5}
 \definecolor{mPurple}{rgb}{0.58,0,0.82}
@@ -196,11 +188,19 @@ Dado que apenas podem existir 2 números por linha e coluna, o domínio de ListO
 \textbf{multiplication\_restriction(ListOfLists,List)} Recebe uma Lista de Listas e verifica se o produto dos valores diferentes de zero de cada linha difere uma unidade em relação ao respetivo valor de uma Lista. Este predicado é evocado duas vezes, a primeira para \emph{ListOfList} e \emph{RowValues}, e a segunda para \emph{Transpose} e \emph{Colvalues}, garantindo que tanto o produto de uma linha como o de uma coluna cumprem a restrição da multiplicação enunciada anteriormente.
 
 
-\section{Visualização da Solução} Explicar os predicados que permitem
-visualizar a solução em modo de texto.
+\section{Visualização da Solução}
 
-A solução pode ser facilmente visualizada através do predicado \textbf{display}, o qual representa a grelha preenchida com uma solução correta para os valores de \emph{RowValue} e \emph{ColValue} que são apresentados em frente de cada linha e coluna.
+Ao selecionar a opção de execução do nosso programa (se quer ver um dos problemas 
+\textit{default} ou resolver um problema gerado aleatoriamente), primeiro é 
+mostrado um problema por resolver, ou seja, com os espaços dentro da matriz em branco.
+Este problema por resolver é obtido através do predicado \textbf{display}, que além
+de demonstrar a solução, faz também um \textit{refresh} ao ecrã.
+Posteriormente, quando o utilizador pede a solução do problema, esta é apresentada graças
+ao predicado \textbf{displayWithoutClean}, que faz o mesmo que o predicado \textbf{display},
+no entanto não faz um \textit{refresh} ao ecrã.
 
+Ambos os predicados mencionados anteriormente imprimem os valores das colunas inicialmente
+e imprimem recursivamente os valores da tabela juntamente com os valores por cada linha.
 
 \section{Experiências e Resultados}
 
@@ -210,6 +210,20 @@ diferentes dimensões e analisar os resultados obtidos.
 Embora Wrong Products seja um problema apresentado sobre a forma de uma matriz quadrada de dimensão 4, resolvemos este problema de decisão dinamicamente, sendo possível fazer variar a dimensão da grelha e obter as soluções existentes, se possível.
 
 Deste modo, executamos o problema com várias dimensões e verificamos que ...(acrescentar aqui algo após se terminaro projeto e fizer os gráficos)
+
+\begin{figure}[h!]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{tabela-normal.jpg}
+		\caption{Tabela com Média de Tempos de Execução}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{grafico-normal.jpg}
+		\caption{Grafico com Média de Tempos de Execução}
+	\end{center}
+\end{figure}
 
 \subsection{Estratégias de Pesquisa} Devem ser testadas diferentes estratégias de pesquisa
 (heurísticas de escolha de variável e de valor), comparando os resultados obtidos.
@@ -225,7 +239,6 @@ Temos que criar um gerador e arranjar varias heurísticas que produzam uma solu�
 
 
 \section{Anexo} 
-
 
 
 \end{document}
