@@ -51,6 +51,8 @@ generatePuzzle(Length,RowValues,ColValues):-
 
 solver(Length,RowValues,ColValues):-
 
+    reset_timer,
+
     length(RowValues,Length), % Valores na vertical (2,13,29,31)
     length(ColValues,Length), % Valores na horizontal (3,11,23,41)
 
@@ -92,8 +94,11 @@ solver(Length,RowValues,ColValues):-
     multiplication_restriction2(Transpose,ColValues,FinalColValues),
 
     labeling([],Table),
+    
 
-    display(ListOfLists, FinalRowValues, FinalColValues, Length, TableValues).
+    %display(ListOfLists, FinalRowValues, FinalColValues, Length, TableValues),
+
+    print_time('Labeling Time: ').
 
 
 runner(Length):-
@@ -172,6 +177,16 @@ selRandom(Var, Rest, BB0, BB1):- % seleciona valor de forma aleatória
     random_member(Value, List), % da library(random)
     ( first_bound(BB0, BB1), Var #= Value ;
     later_bound(BB0, BB1), Var #\= Value ).
+
+
+
+reset_timer:-
+    statistics(total_runtime,_).
+
+print_time(Msg):-
+    statistics(total_runtime,[_,T]),
+    TS is ((T//10)*10)/1000,nl,
+    write(Msg),write(TS),write('s'),nl,nl. 
 
 
 
