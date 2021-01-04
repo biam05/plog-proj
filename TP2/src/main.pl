@@ -2,8 +2,6 @@
 :- use_module(library(random)). % POde ser necessário retirar no fim se não se usar
 :- use_module(library(clpfd)). % Permite utilizar o módulo de restrições
 
-:- ensure_loaded(display).
-
 main(Length):-
     % Declaração de variáveis
     
@@ -251,4 +249,4 @@ display(ListOfLists, RowValues, ColValues, Length, TableValues).
 
 runner(Length):-
     generator(Length,Table),
-    solver(Length,Table).
+    solver(Length,Table).    
