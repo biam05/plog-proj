@@ -11,30 +11,6 @@
 \usepackage{float}
 \usepackage{capt-of}
 
-\definecolor{mGreen}{rgb}{0,0.6,0}
-\definecolor{mGray}{rgb}{0.5,0.5,0.5}
-\definecolor{mPurple}{rgb}{0.58,0,0.82}
-\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
-
-\lstdefinestyle{CStyle}{
-    backgroundcolor=\color{backgroundColour},   
-    commentstyle=\color{mGreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{mGray},
-    stringstyle=\color{mPurple},
-    basicstyle=\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2,
-    language=C
-}
 
 \begin{document}
 
@@ -81,9 +57,11 @@
 \pagebreak
 
 
-\section{Resumo} 
+\section*{Resumo} 
 Este trabalho foi desenvolvido no âmbito da Unidade Curricular de Programação em Lógica, através do sistema SICStus Prolog, e o seu objetivo foi resolver um problema de decisão utilizando Programação de lógica com restrição sobre domínios finitos. O problema escolhido foi \textbf{\emph{Wrong Products}} e tem como objetivo colocar números numa grelha de modo a que cada linha e coluna contenha apenas 2 dígitos e que o produto entre os mesmos corresponda a um determinado valor no exterior da grelha, com variação de uma unidade.
 
+\bigskip
+\bigskip
 
 \section{Introdução}
 
@@ -136,12 +114,14 @@ diferentes dimensões e análise dos resultados obtidos.
 
 \end{description}
 
-
+\bigskip
+\bigskip
 
 \section{Descrição do Problema}
 
 Wrong Products é um problema de decisão. Este problema pretende descobrir se é possível colocar números numa grelha de modo a que cada que cada número apareça uma única vez, e que cada linha e coluna contenha unicamente dois números, e que o seu produto corresponda a uma unidade acima ou abaixo de um determinado valor no exterior da grelha associado à respetiva linha ou coluna.
 
+\pagebreak
 
 \section{Abordagem}
 
@@ -159,9 +139,14 @@ Na resolução deste problema, é necessário criar as seguintes variáveis:
 
 \item[ColValues - ] Lista com os valores iniciais cuja diferença entre o produto dos 2 valores da respetiva coluna seja 1.
 
-RowValues e ColValues possuem o mesmo domínio, todos os valores inteiros positivos que não sejam superiores ao produto entre os 2 maiores valores permitidos, que corresponde a:
+\item[FinalRowValues - ] Lista com os valores finais cuja diferença entre o produto dos 2 valores da respetiva linha seja 1.
+
+\item[FinalColValues - ] Lista com os valores finais cuja diferença entre o produto dos 2 valores da respetiva coluna seja 1.
+
+\emph{RowValues}, \emph{ColValues}, \emph{FinalRowValues} e \emph{FinalColValues} possuem o mesmo domínio, todos os valores inteiros positivos que não sejam superiores ao produto entre os 2 maiores valores permitidos, que corresponde a:
 
 \[(Length *2)*(Length * 2 - 1)\]
+
 
 \item[ListOfLists - ] Lista de Listas contendo a grelha do problema. Pode ser interpretada como uma representação matricial do problema. Contém valores inteiros a serem multiplicados em cada linha e coluna, e zeros que correspondem a casas vazias.
 
@@ -187,10 +172,11 @@ Dado que apenas podem existir 2 números por linha e coluna, o domínio de ListO
 
 \textbf{multiplication\_restriction(ListOfLists,List)} Recebe uma Lista de Listas e verifica se o produto dos valores diferentes de zero de cada linha difere uma unidade em relação ao respetivo valor de uma Lista. Este predicado é evocado duas vezes, a primeira para \emph{ListOfList} e \emph{RowValues}, e a segunda para \emph{Transpose} e \emph{Colvalues}, garantindo que tanto o produto de uma linha como o de uma coluna cumprem a restrição da multiplicação enunciada anteriormente.
 
+\pagebreak
 
 \section{Visualização da Solução}
 
-Ao selecionar a opção de execução do nosso programa (se quer ver um dos problemas 
+Ao selecionar a opção de execução do nosso programa (se quiser ver um dos problemas 
 \textit{default} ou resolver um problema gerado aleatoriamente), primeiro é 
 mostrado um problema por resolver, ou seja, com os espaços dentro da matriz em branco.
 Este problema por resolver é obtido através do predicado \textbf{display}, que além
@@ -209,36 +195,72 @@ diferentes dimensões e analisar os resultados obtidos.
 
 Embora Wrong Products seja um problema apresentado sobre a forma de uma matriz quadrada de dimensão 4, resolvemos este problema de decisão dinamicamente, sendo possível fazer variar a dimensão da grelha e obter as soluções existentes, se possível.
 
-Deste modo, executamos o problema com várias dimensões e verificamos que ...(acrescentar aqui algo após se terminaro projeto e fizer os gráficos)
+O predicado \emph{generatePuzzle(Length,RowValues,ColValues)} recebe como argumento o parâmetro \emph{Length}, que corresponde à dimensão da matriz, gerando parâmetros aleatórios de \emph{RowValues} e \emph{ColValues} que garantem a existência de uma solução válida para o problema, sendo então possível gerar um problema resolúvel de qualquer dimensão.
 
-\begin{figure}[h!]
-	\begin{center}
-		\includegraphics[width=0.8\textwidth]{tabela-normal.jpg}
-		\caption{Tabela com Média de Tempos de Execução}
-	\end{center}
-\end{figure}
+O predicado \emph{solver(Length,RowValues,ColValues)} recebe como argumento as variáveis de decisão obtidas pelo predicado \emph{generatePuzzle}, obtendo uma solução possível para o problema. No fim, é chamado o predicado \emph{displayWithoutClean} que permite visualizar a solução do problema conforme explicado na secção anterior. Tal como o \emph{generatePuzzle}, possui como argumento a variável \emph{Length}, que indica a dimensão da matriz.
 
-\begin{figure}[h!]
-	\begin{center}
-		\includegraphics[width=0.8\textwidth]{grafico-normal.jpg}
-		\caption{Grafico com Média de Tempos de Execução}
-	\end{center}
-\end{figure}
+
+Exemplos de execução de um problema com diferentes dimensões encontram-se na secção de anexos
+
+
 
 \subsection{Estratégias de Pesquisa} Devem ser testadas diferentes estratégias de pesquisa
 (heurísticas de escolha de variável e de valor), comparando os resultados obtidos.
 Devem ser usadas formas convenientes para apresentar os resultados (tabelas/gráficos).
 
-Temos que criar um gerador e arranjar varias heurísticas que produzam uma solução
+Após encontrarmos uma forma de resolver o problema, decidimos analisar diferentes estratégias de pesquisa, de modo a obter uma solução da maneira mais eficiente.
+
+Para tal ser possível, utilizamos os predicados \emph{reset\_time} e \emph{print\_time(Msg)} disponibilizados no \emph{Moodle} para obter tempos de execução do \emph{solver} do problema.
+
+Deste modo, decidimos variar as opções de escolha de variável e valor do \emph{labeling} do \emph{solver} do nosso problema, analisando o tempo de execução da resolução de problemas de diferentes dimensões.
+Concluímos então que a opção que gerava os tempos de execução da forma mais eficiente eram os valores default de \emph{labeling}:  \[labeling([leftmost, step, down, satisfy],Table)\]
+
+As restantes combinações de valores testadas acabam por ser sempre menos eficientes que a \emph{default}, sendo a discrepância notável quando maior a dimensão do problema gerado.
+
+O valor de \(labeling([max, step, down, satisfy],Table)\) surpreendeu-nos pela negativa, dado que não era possível resolver o problema com a dimensão 30, enquanto as outras combinações conseguiam calcular o resultado em frações de tempo inferiores a 1 segundo, o que o que nos permitiu entender a importância da busca por uma estratégia de pesquisa eficiente.
+
+De seguida encontram-se 2 gráficos comparando tempos de execução de diferentes opções de pesquisa, fazendo variar a dimensão do problema.
+
+\bigskip
+
+\begin{center}
+
+	\includegraphics[width=0.8\textwidth]{tabela-comparacao.jpg}
+	\captionof{figure}{Tabela com Média de Tempos de Execução, em segundos}
+
+	\includegraphics[width=0.8\textwidth]{grafico-comparacao.jpg}
+	\captionof{figure}{Grafico com Média de Tempos de Execução}
+
+\end{center}
+
+\bigskip
+\bigskip
 
 \section{Conclusões e Trabalho Futuro} 
+\paragraph{}
+Este trabalho permitiu-nos , por um lado, melhorar os nossos conhecimentos de Programação de lógica com restrições sobre domínios finitos, nomeadamente a sua utilização para resolução de Problema de Satisfação de Restrições. Por outro lado, também nos permitiu verificar na prática a influência de diferentes estratégias de pesquisa na resolução de um problema.
 
+\paragraph{}
+Os resultados obtidos demonstram que o problema proposto é facilmente resolúvel computacionalmente em tempos reduzidos, inferiores à décima do segundo para tabuleiros de dimensão inferior a 10, pelo que podemos concluir que tivemos sucesso no desenvolvimento da estratégia da solução do problema escolhido. Como seria de esperar, a complexidade temporal da solução proposta aumenta exponencialmente em função da dimensão do tabuleiro, pelo que o nosso programa tem dificuldade em encontrar soluções em tempo útil para malhas de dimensão superior a 60.
+
+\pagebreak
 
 \section{Referências} 
 
+\pagebreak
 
+\section{Anexos}
 
-\section{Anexo} 
+\begin{center}
+\includegraphics[width=0.65\textwidth]{dimension3.png}
+\captionof{figure}{Execução do programa com dimensão 3}
+
+\bigskip
+\bigskip
+
+\includegraphics[width=0.65\textwidth]{dimension6.png}
+\captionof{figure}{Execução do programa com dimensão 6}
+\end{center}
 
 
 \end{document}
