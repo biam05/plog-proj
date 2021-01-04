@@ -82,14 +82,21 @@
 
 
 \section{Resumo} 
-Este trabalho foi desenvolvido no âmbito da Unidade Curricular de Programação em Lógica, através do sistema SICStus Prolog, e o seu objetivo foi resolver um problema de decisão utilizando Programação de lógica com restrição sobre domínios finitos. O problema escolhido foi \textbf{\emph{Wrong Products}} e tem como objetivo colocar números numa grelha de modo a que cada linha e coluna contenha apenas 2 dígitos e que o produto entre os mesmos corresponda a um determinado valor no exterior da grelha, com variação de uma unidade.
+Este trabalho foi desenvolvido no âmbito da Unidade Curricular de Programação em Lógica, 
+através do sistema SICStus Prolog, e o seu objetivo foi resolver um problema de decisão 
+utilizando Programação de lógica com restrição sobre domínios finitos. O problema escolhido 
+foi \textbf{\emph{Wrong Products}} e ao longo do relatório iremos explicar no que este consiste.
 
 
 \section{Introdução}
 
-O Problema de Otimização escolhido ,\emph{Wrong Products}, tem como objetivo colocar números numa grelha de modo a que cada linha e coluna contenha apenas 2 dígitos e que o produto entre os mesmos corresponda a um determinado valor no exterior da grelha, com variação de uma unidade.
+O Problema de Otimização escolhido, \emph{Wrong Products}, tem em vista colocar números 
+numa grelha de modo a que cada linha e coluna contenha apenas 2 dígitos e que o produto entre 
+os mesmos corresponda a um determinado valor no exterior da grelha, com variação de uma unidade.
 
-Este problema tem como objetivo a implementação de uma grelha matricial com restrições sobre linhas, colunas e toda a malha utilizando programação de lógica com restrições sobre domínios finitos.
+Este problema tem como objetivo a implementação de uma grelha matricial com restrições sobre 
+linhas, colunas e toda a malha utilizando programação de lógica com restrições sobre domínios 
+finitos.
 
 \bigskip
 
@@ -100,7 +107,8 @@ Este artigo possui a seguinte estrutura:
 \item[Descrição do Problema:] Descrição com detalhe do problema de
 otimização ou decisão em análise, incluindo todas as restrições envolvidas.
 
-\item[Abordagem:] Descrição da modelação do problema como um Problema de Satisfação de Restrições(PSR)
+\item[Abordagem:] Descrição da modelação do problema como um Problema de Satisfação de 
+Restrições(PSR)
 
 \begin{description}
 
@@ -123,7 +131,8 @@ visualizar a solução em modo de texto.
 \item[Análise Dimensional] Exemplificação da execução de instâncias do problema com
 diferentes dimensões e análise dos resultados obtidos.
 
-\item[Estratégias de Pesquisa] Descrição de diferentes estratégias de pesquisa, comparando os resultados.
+\item[Estratégias de Pesquisa] Descrição de diferentes estratégias de pesquisa, comparando 
+os resultados.
 
 \end{description}
 
@@ -140,7 +149,11 @@ diferentes dimensões e análise dos resultados obtidos.
 
 \section{Descrição do Problema}
 
-Wrong Products é um problema de decisão. Este problema pretende descobrir se é possível colocar números numa grelha de modo a que cada que cada número apareça uma única vez, e que cada linha e coluna contenha unicamente dois números, e que o seu produto corresponda a uma unidade acima ou abaixo de um determinado valor no exterior da grelha associado à respetiva linha ou coluna.
+Wrong Products é um problema de decisão. Este problema pretende descobrir se é possível 
+colocar números numa grelha de modo a que cada que cada número apareça uma única vez, e que 
+cada linha e coluna contenha unicamente dois números, e que o seu produto corresponda a uma 
+unidade acima ou abaixo de um determinado valor no exterior da grelha associado à respetiva 
+linha ou coluna.
 
 
 \section{Abordagem}
@@ -153,23 +166,33 @@ Na resolução deste problema, é necessário criar as seguintes variáveis:
 
 \begin{description}
 
-\item[Length - ] Tamanho da grelha, indicando o número de linhas e colunas. Estes valores são iguais dado que a grelha corresponde a uma matriz quadrada. O valor de \emph{length} é passado como argumento do predicado, pelo que o seu domínio varia conforme o pretendido pelo utilizador.
+\item[Length - ] Tamanho da grelha, indicando o número de linhas e colunas. Estes valores são 
+iguais dado que a grelha corresponde a uma matriz quadrada. O valor de \emph{length} é passado 
+como argumento do predicado, pelo que o seu domínio varia conforme o pretendido pelo utilizador.
 
-\item[RowValues - ] Lista com os valores iniciais cuja diferença entre o produto dos 2 valores da respetiva linha seja 1.
+\item[RowValues - ] Lista com os valores iniciais cuja diferença entre o produto dos 2 valores 
+da respetiva linha seja 1.
 
-\item[ColValues - ] Lista com os valores iniciais cuja diferença entre o produto dos 2 valores da respetiva coluna seja 1.
+\item[ColValues - ] Lista com os valores iniciais cuja diferença entre o produto dos 2 valores 
+da respetiva coluna seja 1.
 
-RowValues e ColValues possuem o mesmo domínio, todos os valores inteiros positivos que não sejam superiores ao produto entre os 2 maiores valores permitidos, que corresponde a:
+RowValues e ColValues possuem o mesmo domínio, todos os valores inteiros positivos que não 
+sejam superiores ao produto entre os 2 maiores valores permitidos, que corresponde a:
 
 \[(Length *2)*(Length * 2 - 1)\]
 
-\item[ListOfLists - ] Lista de Listas contendo a grelha do problema. Pode ser interpretada como uma representação matricial do problema. Contém valores inteiros a serem multiplicados em cada linha e coluna, e zeros que correspondem a casas vazias.
+\item[ListOfLists - ] Lista de Listas contendo a grelha do problema. Pode ser interpretada 
+como uma representação matricial do problema. Contém valores inteiros a serem multiplicados 
+em cada linha e coluna, e zeros que correspondem a casas vazias.
 
-\item[Transpose - ] Lista de Listas contendo a matriz transposta da grelha do problema. Tem como propósito facilitar a aplicação de restrições às colunas da grelha do problema.
+\item[Transpose - ] Lista de Listas contendo a matriz transposta da grelha do problema. Tem 
+como propósito facilitar a aplicação de restrições às colunas da grelha do problema.
 
-\item[Table - ] Forma achatada de ListOfLists. tem como objetivo permitir a aplicação de restrições sobre toda a grelha. 
+\item[Table - ] Forma achatada de ListOfLists. tem como objetivo permitir a aplicação de 
+restrições sobre toda a grelha. 
 
-Dado que apenas podem existir 2 números por linha e coluna, o domínio de ListOfLists, Transpose e Table é o mesmo e corresponde a todos os valores inteiros entre 0 e \(2*Length\).
+Dado que apenas podem existir 2 números por linha e coluna, o domínio de ListOfLists, 
+Transpose e Table é o mesmo e corresponde a todos os valores inteiros entre 0 e \(2*Length\).
 
 
 
@@ -177,15 +200,27 @@ Dado que apenas podem existir 2 números por linha e coluna, o domínio de ListO
 
 \subsection{Restrições}
 
-\textbf{ all\_distinct\_except\_0(List)} Permite aplicar uma restrição a todos os valores da grelha, de modo a que, tal como o nome indica, todos os valores sejam distintos exceto os zeros. Desta forma é possível garantir que não há valores semelhantes e, simultaneamente, utilizar o valor zero como representação de uma casa não ocupada.
+\textbf{ all\_distinct\_except\_0(List)} Permite aplicar uma restrição a todos os valores da 
+grelha, de modo a que, tal como o nome indica, todos os valores sejam distintos exceto os zeros. 
+Desta forma é possível garantir que não há valores semelhantes e, simultaneamente, utilizar o 
+valor zero como representação de uma casa não ocupada.
 
 \bigskip
 
-\textbf{line\_restriction(List,Amount)} Recebe como argumentos uma lista de listas e um valor inteiro \emph{amount}, e restringe a quantidade de zeros em cada linha de uma Lista de Listas, consequentemente garantindo que existem apenas 2 valores em cada linha. Este predicado é evocado duas vezes, a primeira para \emph{ListOfList}, e a segunda para \emph{Transpose}, de modo a que a restrição seja aplicada quer a linhas quer a colunas.
+\textbf{line\_restriction(List,Amount)} Recebe como argumentos uma lista de listas e um valor 
+inteiro \emph{amount}, e restringe a quantidade de zeros em cada linha de uma Lista de Listas,
+ consequentemente garantindo que existem apenas 2 valores em cada linha. Este predicado é 
+ evocado duas vezes, a primeira para \emph{ListOfList}, e a segunda para \emph{Transpose}, 
+ de modo a que a restrição seja aplicada quer a linhas quer a colunas.
 
 \bigskip
 
-\textbf{multiplication\_restriction(ListOfLists,List)} Recebe uma Lista de Listas e verifica se o produto dos valores diferentes de zero de cada linha difere uma unidade em relação ao respetivo valor de uma Lista. Este predicado é evocado duas vezes, a primeira para \emph{ListOfList} e \emph{RowValues}, e a segunda para \emph{Transpose} e \emph{Colvalues}, garantindo que tanto o produto de uma linha como o de uma coluna cumprem a restrição da multiplicação enunciada anteriormente.
+\textbf{multiplication\_restriction(ListOfLists,List)} Recebe uma Lista de Listas e verifica 
+se o produto dos valores diferentes de zero de cada linha difere uma unidade em relação ao 
+respetivo valor de uma Lista. Este predicado é evocado duas vezes, a primeira para 
+\emph{ListOfList} e \emph{RowValues}, e a segunda para \emph{Transpose} e \emph{Colvalues}, 
+garantindo que tanto o produto de uma linha como o de uma coluna cumprem a restrição da 
+multiplicação enunciada anteriormente.
 
 
 \section{Visualização da Solução}
@@ -207,9 +242,12 @@ e imprimem recursivamente os valores da tabela juntamente com os valores por cad
 \subsection{Análise Dimensional} Incluir exemplos de execução em instâncias do problema com
 diferentes dimensões e analisar os resultados obtidos.
 
-Embora Wrong Products seja um problema apresentado sobre a forma de uma matriz quadrada de dimensão 4, resolvemos este problema de decisão dinamicamente, sendo possível fazer variar a dimensão da grelha e obter as soluções existentes, se possível.
+Embora Wrong Products seja um problema apresentado sobre a forma de uma matriz quadrada de 
+dimensão 4, resolvemos este problema de decisão dinamicamente, sendo possível fazer variar a 
+dimensão da grelha e obter as soluções existentes, se possível.
 
-Deste modo, executamos o problema com várias dimensões e verificamos que ...(acrescentar aqui algo após se terminaro projeto e fizer os gráficos)
+Deste modo, executamos o problema com várias dimensões e verificamos que ...(acrescentar aqui a
+lgo após se terminaro projeto e fizer os gráficos)
 
 \begin{figure}[h!]
 	\begin{center}
