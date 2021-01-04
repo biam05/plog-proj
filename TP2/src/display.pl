@@ -5,7 +5,15 @@ display(ListOfLists, RowValues, ColValues, Length, TableValues) :-
     tab(1), print_horizontal_division(Length), nl,
     print_board(ListOfLists, RowValues, Length),
     new_line(2),
-    tab(1), write('{1-'), write(TableValues), write('}').
+    tab(1), write('{1-'), write(TableValues), write('}'), nl, nl.
+
+displayWithoutClean([],_,_,_).
+displayWithoutClean(ListOfLists, RowValues, ColValues, Length, TableValues) :-
+    tab(1), print_ColValues(ColValues), nl,
+    tab(1), print_horizontal_division(Length), nl,
+    print_board(ListOfLists, RowValues, Length),
+    new_line(2),
+    tab(1), write('{1-'), write(TableValues), write('}'), nl, nl.
 
 menuDisplay :-
     header,
@@ -31,12 +39,13 @@ header :-
 
 menuOptions :-
     write('                                 Options\n'),
-    write('                     1 - I Want to Solve a Problem\n'),
+    write('                     1 - Solve Problem of Length 3\n'),
     % --------------------------------------- TODO --------------------------------------- 
-    write('                     2 - \n'),
-    write('                     3 - \n'),
-    write('                     4 - \n'),
-    write('                     5 - \n'),    
+    write('                     2 - Solve Problem of Length 4\n'),
+    write('                     3 - Solve Problem of Length 5\n'),
+    write('                     4 - Solve Problem of Length 6\n'),
+    write('                     5 - Solve Problem of Length 7\n'),  
+    write('                     6 - Show Random Problem\n'),   
     % ------------------------------------------------------------------------------------ 
     write('                     0 - Leave Program\n'),
     write('\n\n\n').
