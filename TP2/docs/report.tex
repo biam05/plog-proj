@@ -89,17 +89,11 @@
 \pagebreak
 
 
-\section{Resumo} Contextualizar e resumir o trabalho, salientando o objetivo, o método
-utilizado e referindo os principais resultados e conclusões.
-
-Este trabalho foi desenvolvido no âmbito da Unidade Curricular de Programação em Lógica, através do sistema SICStus Prolog, e o seu objetivo foi resolver um problema de decisão/otimização utilizando Programação de lógica com restrição sobre domínios finitos. O problema escolhido foi \textbf{\emph{Wrong Products}} e tem como objetivo colocar números numa grelha de modo a que cada linha e coluna contenha apenas 2 dígitos e que o produto entre os mesmos corresponda a um determinado valor no exterior da grelha, com variação de uma unidade.
+\section{Resumo} 
+Este trabalho foi desenvolvido no âmbito da Unidade Curricular de Programação em Lógica, através do sistema SICStus Prolog, e o seu objetivo foi resolver um problema de decisão utilizando Programação de lógica com restrição sobre domínios finitos. O problema escolhido foi \textbf{\emph{Wrong Products}} e tem como objetivo colocar números numa grelha de modo a que cada linha e coluna contenha apenas 2 dígitos e que o produto entre os mesmos corresponda a um determinado valor no exterior da grelha, com variação de uma unidade.
 
 
-\section{Introdução} Descrição da contextualização, objetivos e motivação do
-trabalho (não do ponto de vista de relatório da UC, mas de um ponto de vista
-computacional / aplicacional), referência sucinta ao problema em análise (idealmente,
-incluindo referências a outros trabalhos sobre o mesmo problema e sua abordagem), e
-descrição sucinta da estrutura do resto do artigo
+\section{Introdução}
 
 O Problema de Otimização escolhido ,\emph{Wrong Products}, tem como objetivo colocar números numa grelha de modo a que cada linha e coluna contenha apenas 2 dígitos e que o produto entre os mesmos corresponda a um determinado valor no exterior da grelha, com variação de uma unidade.
 
@@ -111,108 +105,101 @@ Este artigo possui a seguinte estrutura:
 
 \begin{description}
 
-\item[Descrição do Problema:] Descrever com detalhe o problema de
+\item[Descrição do Problema:] Descrição com detalhe do problema de
 otimização ou decisão em análise, incluindo todas as restrições envolvidas.
 
-\item[Abordagem:] Descrever a modelação do problema como um PSR / POR:
+\item[Abordagem:] Descrição da modelação do problema como um Problema de Satisfação de Restrições(PSR)
 
 \begin{description}
 
-\item[Variáveis de Decisão] Descrever as variáveis de decisão e
-respectivos domínios, assim como o seu significado no contexto do problema em análise.
+\item[Variáveis de Decisão] Descrição das variáveis de decisão e
+respetivos domínios, assim como o seu significado no contexto do problema em análise.
 
-\item[Restrições] Descrever as restrições rígidas e flexíveis do problema e a
+\item[Restrições] Descrição das restrições rígidas e flexíveis do problema e a
 sua implementação utilizando o SICStus Prolog.
 
-\item[Visualização da Solução:] Explicar os predicados que permitem
+\item[Visualização da Solução:] Explicação dos predicados que permitem
 visualizar a solução em modo de texto.
 
 \end{description}
 
 
-\item[Experiências e Resultados:]
+\item[Experiências e Resultados] Análise de problema e resultados obtidos
 
 \begin{description}
 
-\item[Análise Dimensional] Incluir exemplos de execução em instâncias do problema com
-diferentes dimensões e analisar os resultados obtidos.
+\item[Análise Dimensional] Exemplificação da execução de instâncias do problema com
+diferentes dimensões e análise dos resultados obtidos.
 
-\item[Estratégias de Pesquisa] Devem ser testadas diferentes estratégias de pesquisa
-(heurísticas de escolha de variável e de valor), comparando os resultados obtidos.
-Devem ser usadas formas convenientes para apresentar os resultados (tabelas/gráficos).
+\item[Estratégias de Pesquisa] Descrição de diferentes estratégias de pesquisa, comparando os resultados.
 
 \end{description}
 
 
-\item[Conclusões e Trabalho Futuro:] Que conclusões retira
-deste projeto? O que mostram os resultados obtidos? Quais as vantagens e limitações da
-solução proposta? Como poderia melhorar o trabalho desenvolvido?
+\item[Conclusões e Trabalho Futuro:] Conclusões obtidas pela realização do trabalho
 
-\item[Referências] Fontes bibliográficas usadas, incluindo Livros, artigos, páginas
-Web, entre outros, e apresentados segundo o formato sugerido no template.
+\item[Referências] Referências bibliográficas utilizadas
 
-\item[Anexo] Resultados detalhados, e outros elementos úteis que não sejam essenciais
-ao relatório (não contabilizados para o limite de páginas).
+\item[Anexo] Anexos de resultados úteis para a resolução do problema.
 
 \end{description}
 
 
 
-
-
-
-\section{Descrição do Problema} Descrever com detalhe o problema de
-otimização ou decisão em análise, incluindo todas as restrições envolvidas.
+\section{Descrição do Problema}
 
 Wrong Products é um problema de decisão. Este problema pretende descobrir se é possível colocar números numa grelha de modo a que cada que cada número apareça uma única vez, e que cada linha e coluna contenha unicamente dois números, e que o seu produto corresponda a uma unidade acima ou abaixo de um determinado valor no exterior da grelha associado à respetiva linha ou coluna.
 
 
-\section{Abordagem} Descrever a modelação do problema como um PSR / POR:
+\section{Abordagem}
 
-Wrong Products é um Problema de Satisfação de Restrições(PSR) e é modelizado por:
+Wrong Products é um Problema de Satisfação de Restrições(PSR) e é modelado por:
 
-\subsection{Variáveis de Decisão} Descrever as variáveis de decisão e
-respetivos domínios, assim como o seu significado no contexto do problema em análise.
+\subsection{Variáveis de Decisão}
 
-Na resolução deste problema, é necessário criar as seguintes listas:
+Na resolução deste problema, é necessário criar as seguintes variáveis:
 
 \begin{description}
 
-\item[Length - ] Tamanho da grelha, indicando o número de linhas e colunas. Estes valores são iguais dado que a grelha corresponde a uma matriz quadrada. O Valor de length é passado como argumento do predicado, pelo que o seu domínio varia conforme o pretendido pelo utilizador.
+\item[Length - ] Tamanho da grelha, indicando o número de linhas e colunas. Estes valores são iguais dado que a grelha corresponde a uma matriz quadrada. O valor de \emph{length} é passado como argumento do predicado, pelo que o seu domínio varia conforme o pretendido pelo utilizador.
 
 \item[RowValues - ] Lista com os valores iniciais cuja diferença entre o produto dos 2 valores da respetiva linha seja 1.
 
 \item[ColValues - ] Lista com os valores iniciais cuja diferença entre o produto dos 2 valores da respetiva coluna seja 1.
 
-RowValues e ColValues possuem o mesmo domínio, todos os valores inteiros positivos que não sejam superiores ao produto entre os 2 maiores valores permitidos, que corresponde a (Length *2)*(Length * 2 - 1)
+RowValues e ColValues possuem o mesmo domínio, todos os valores inteiros positivos que não sejam superiores ao produto entre os 2 maiores valores permitidos, que corresponde a:
 
-\item[ListOfLists - ] Lista de Listas contendo a grelha do problema. Pode ser interpretada como uma representação matricial do problema. Contém valores inteiros a serem multiplicados em cada linha e coluna, e zeros que correspondem a casas vazias
+\[(Length *2)*(Length * 2 - 1)\]
+
+\item[ListOfLists - ] Lista de Listas contendo a grelha do problema. Pode ser interpretada como uma representação matricial do problema. Contém valores inteiros a serem multiplicados em cada linha e coluna, e zeros que correspondem a casas vazias.
 
 \item[Transpose - ] Lista de Listas contendo a matriz transposta da grelha do problema. Tem como propósito facilitar a aplicação de restrições às colunas da grelha do problema.
 
 \item[Table - ] Forma achatada de ListOfLists. tem como objetivo permitir a aplicação de restrições sobre toda a grelha. 
 
-Dado que apenas podem existir 2 números por linha e coluna, o domínio de ListOfLists, Transpose e Table é o mesmo e corresponde a todos os valores inteiros entre 0 e 2*Length.
+Dado que apenas podem existir 2 números por linha e coluna, o domínio de ListOfLists, Transpose e Table é o mesmo e corresponde a todos os valores inteiros entre 0 e \(2*Length\).
 
 
 
 \end{description}
 
-\subsection{Restrições} Descrever as restrições rígidas e flexíveis do problema e a
-sua implementação utilizando o SICStus Prolog
+\subsection{Restrições}
 
-Através do predicado\textbf{ all\_distinct\_except\_0(List)}, foi possível aplicar uma restrição a todos os valores da grelha, de modo a que, tal como o nome indica, todos os valores sejam distintos exceto os zeros. Desta forma é possível garantir que não há valores semelhantes e, simultaneamente, utilizar o valor zero como representação de uma casa não ocupada.
+\textbf{ all\_distinct\_except\_0(List)} Permite aplicar uma restrição a todos os valores da grelha, de modo a que, tal como o nome indica, todos os valores sejam distintos exceto os zeros. Desta forma é possível garantir que não há valores semelhantes e, simultaneamente, utilizar o valor zero como representação de uma casa não ocupada.
 
-\textbf{line\_restriction(List,Amount)} Recebe como argumentos uma lista de listas e um valor inteiro amount, e restringe a quantidade de zeros em cada linha de uma Lista de Listas, consequentemente garantindo que existem apenas 2 valores em cada linha. Este predicado é evocado duas vezes, a primeira para ListOfList, e a segunda para Transpose, de modo a que a restrição seja aplicada quer a linhas quer a colunas.
+\bigskip
 
+\textbf{line\_restriction(List,Amount)} Recebe como argumentos uma lista de listas e um valor inteiro \emph{amount}, e restringe a quantidade de zeros em cada linha de uma Lista de Listas, consequentemente garantindo que existem apenas 2 valores em cada linha. Este predicado é evocado duas vezes, a primeira para \emph{ListOfList}, e a segunda para \emph{Transpose}, de modo a que a restrição seja aplicada quer a linhas quer a colunas.
 
-\textbf{multiplication\_restriction(ListOfLists,List)} Recebe uma Lista de Listas e Verifica se o produto dos valores diferentes de zero de cada linha variam uma unidade em relação ao respetivo valor de uma Lista. Este predicado é evocado duas vezes, a primeira para ListOfList e RowValues, e a segunda para Transpose e Colvalues, garantindo que tanto o produto de uma linha como o de uma coluna cumprem a restrição da multiplicação enunciada anteriormente.
+\bigskip
+
+\textbf{multiplication\_restriction(ListOfLists,List)} Recebe uma Lista de Listas e verifica se o produto dos valores diferentes de zero de cada linha difere uma unidade em relação ao respetivo valor de uma Lista. Este predicado é evocado duas vezes, a primeira para \emph{ListOfList} e \emph{RowValues}, e a segunda para \emph{Transpose} e \emph{Colvalues}, garantindo que tanto o produto de uma linha como o de uma coluna cumprem a restrição da multiplicação enunciada anteriormente.
 
 
 \section{Visualização da Solução} Explicar os predicados que permitem
 visualizar a solução em modo de texto.
 
-A solução pode ser facilmente visualizada através do predicado display, o qual representa a grelha preenchida com uma solução correta para os valroes de RowValue e ColValue que são apresentados em frente de cada linha e coluna.
+A solução pode ser facilmente visualizada através do predicado \textbf{display}, o qual representa a grelha preenchida com uma solução correta para os valores de \emph{RowValue} e \emph{ColValue} que são apresentados em frente de cada linha e coluna.
 
 
 \section{Experiências e Resultados}
@@ -230,19 +217,14 @@ Devem ser usadas formas convenientes para apresentar os resultados (tabelas/grá
 
 Temos que criar um gerador e arranjar varias heurísticas que produzam uma solução
 
-\section{Conclusões e Trabalho Futuro} Que conclusões retira
-deste projeto? O que mostram os resultados obtidos? Quais as vantagens e limitações da
-solução proposta? Como poderia melhorar o trabalho desenvolvido?
+\section{Conclusões e Trabalho Futuro} 
 
 
-\section{Referências} Fontes bibliográficas usadas, incluindo Livros, artigos, páginas
-Web, entre outros, e apresentados segundo o formato sugerido no template.
+\section{Referências} 
 
 
 
-\section{Anexo} Resultados detalhados, e outros elementos úteis que não sejam essenciais
-ao relatório (não contabilizados para o limite de páginas).
-
+\section{Anexo} 
 
 
 

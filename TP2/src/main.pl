@@ -200,7 +200,11 @@ generator(Length,Table):-
     multiplication_restriction(ListOfLists,RowValues),
     multiplication_restriction(Transpose,ColValues),
 
-    labeling([value(selRandom)],Table).
+    labeling([value(selRandom)],Table),nl,
+    labeling([],RowValues),
+    labeling([],ColValues),
+    write(RowValues),
+    write(ColValues).
 
 solver(Length,Table):-
 
@@ -246,7 +250,124 @@ labeling([],ColValues),
 
 display(ListOfLists, RowValues, ColValues, Length, TableValues).
 
+generator2(Length,RowValues,ColValues):-
+    % Declaração de variáveis
+    
+    length(RowValues,Length), % Valores na vertical (2,13,29,31)
+    length(ColValues,Length), % Valores na horizontal (3,11,23,41)
+
+    % Gerar uma lista de listas dinâmica tendo em conta o parâmetro fornecido
+    generateListofLists(Length,ListOfLists),
+
+    % Gerar a matriz transposta para poder aceder às colunas
+    transpose(ListOfLists,Transpose),
+
+    % Dar flatten à lista de modo a que seja possível atribuir um domínio
+    append(ListOfLists,Table),
+
+    % Restrições de domínio
+    TableValues is Length * 2,
+    TableMaxValue is TableValues * (TableValues - 1),
+
+    domain(Table,0,TableValues), % 8 porque é 2*número_de_rows(aka 4)
+    domain(RowValues,0,TableMaxValue),
+    domain(ColValues,0,TableMaxValue),
+
+    % Condições de jogo
+
+    % Os valores têm que ser todos distintios, quando diferentes de 0
+    all_distinct_except_0(Table),
+
+    % Cada linha ou coluna deve ter exatamente 2 valores diferentes de 0
+    Amount is Length - 2,
+
+    % Linhas
+    line_restriction(ListOfLists,Amount),
+    %Colunas
+    line_restriction(Transpose,Amount),
+
+    % Ensuring lines and columns multiply to correct value
+    multiplication_restriction(ListOfLists,RowValues),
+    multiplication_restriction(Transpose,ColValues),
+
+    labeling([value(selRandom)],Table),nl,
+    labeling([],RowValues),
+    labeling([],ColValues),
+    write(RowValues),
+    write(ColValues).
+
+
+solver2(Length,RowValues,ColValues):-
+
+    length(RowValues,Length), % Valores na vertical (2,13,29,31)
+    length(ColValues,Length), % Valores na horizontal (3,11,23,41)
+
+    % Gerar uma lista de listas dinâmica tendo em conta o parâmetro fornecido
+    generateListofLists(Length,ListOfLists),
+
+    % Gerar a matriz transposta para poder aceder às colunas
+    transpose(ListOfLists,Transpose),
+
+    % Dar flatten à lista de modo a que seja possível atribuir um domínio
+    append(ListOfLists,Table),
+
+    % Restrições de domínio
+    TableValues is Length * 2,
+    TableMaxValue is TableValues * (TableValues - 1),
+
+    domain(Table,0,TableValues), % 8 porque é 2*número_de_rows(aka 4)
+    domain(RowValues,0,TableMaxValue),
+    domain(ColValues,0,TableMaxValue),
+
+    % Condições de jogo
+
+    % Os valores têm que ser todos distintios, quando diferentes de 0
+    all_distinct_except_0(Table),
+
+    % Cada linha ou coluna deve ter exatamente 2 valores diferentes de 0
+    Amount is Length - 2,
+
+    % Linhas
+    line_restriction(ListOfLists,Amount),
+    %Colunas
+    line_restriction(Transpose,Amount),
+
+    % Ensuring lines and columns multiply to correct value
+    multiplication_restriction(ListOfLists,RowValues),
+    multiplication_restriction(Transpose,ColValues),
+
+    labeling([],RowValues),
+    labeling([],ColValues),    
+
+    display(ListOfLists, RowValues, ColValues, Length, TableValues).
+
 
 runner(Length):-
     generator(Length,Table),
-    solver(Length,Table).    
+    solver(Length,Table).
+
+runner2(Length):-
+    generator2(Length,RowValues,ColValues),
+    solver2(Length,RowValues,ColValues).   
+
+
+
+multiplication_restriction2(_,[],[]).
+multiplication_restriction2([H|T],[H2|T2],[H3|T3]):-
+    mult_list2(H,H2,H3),
+    multiplication_restriction2(T,T2,T3).
+    
+
+mult_list2(List,Total,ActualValue):-
+    mult_list2(List,1,Total,ActualValue).
+
+mult_list2([],Current,Total,Total):-
+    (Total #= Current + 1) #\/ (Total #= Current - 1).
+
+mult_list2([H|T],Current,Total,ActualValue):-
+    H #= 0,
+    mult_list2(T,Current,Total,ActualValue).
+
+mult_list2([H|T],Current,Total,ActualValue):-
+    Current2 #= Current * H,
+    mult_list2(T,Current2,Total,ActualValue).
