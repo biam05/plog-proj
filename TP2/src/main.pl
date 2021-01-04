@@ -336,8 +336,7 @@ solver2(Length,RowValues,ColValues):-
     multiplication_restriction(ListOfLists,RowValues),
     multiplication_restriction(Transpose,ColValues),
 
-    labeling([],RowValues),
-    labeling([],ColValues),    
+    labeling([],Table),   
 
     display(ListOfLists, RowValues, ColValues, Length, TableValues).
 
