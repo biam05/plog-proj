@@ -40,13 +40,11 @@ header :-
 menuOptions :-
     write('                                 Options\n'),
     write('                     1 - Solve Problem of Length 3\n'),
-    % --------------------------------------- TODO --------------------------------------- 
     write('                     2 - Solve Problem of Length 4\n'),
     write('                     3 - Solve Problem of Length 5\n'),
     write('                     4 - Solve Problem of Length 6\n'),
     write('                     5 - Solve Problem of Length 7\n'),  
-    write('                     6 - Show Random Problem\n'),   
-    % ------------------------------------------------------------------------------------ 
+    write('                     6 - Show Random Problem\n'),    
     write('                     0 - Leave Program\n'),
     write('\n\n\n').
 

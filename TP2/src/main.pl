@@ -91,17 +91,23 @@ solver(Length,RowValues,ColValues):-
     multiplication_restriction2(ListOfLists,RowValues,FinalRowValues),
     multiplication_restriction2(Transpose,ColValues,FinalColValues),
 
-    labeling([],Table),
+    
+    % default
+    %labeling([leftmost, step, up, satisfy],Table),
+
+    labeling([leftmost, step, down, satisfy],Table), 
+    
+    %labeling([max, step, down, satisfy],Table), 
     
 
-    displayWithoutClean(ListOfLists, FinalRowValues, FinalColValues, Length, TableValues),
+    %displayWithoutClean(ListOfLists, FinalRowValues, FinalColValues, Length, TableValues),
 
     print_time('Labeling Time: ').
 
 
 runner(Length):-
     generatePuzzle(Length,RowValues,ColValues),
-    solver(Length,RowValues,ColValues).   
+    solver(Length,RowValues,ColValues).
 
 
 generateListofLists(Length,ListOfLists):-
