@@ -49,8 +49,6 @@ generatePuzzle(Length,RowValues,ColValues):-
 
 solver(Length,RowValues,ColValues):-
 
-    reset_timer,
-
     length(RowValues,Length), % Valores na vertical (2,13,29,31)
     length(ColValues,Length), % Valores na horizontal (3,11,23,41)
 
@@ -95,14 +93,9 @@ solver(Length,RowValues,ColValues):-
     % default
     %labeling([leftmost, step, up, satisfy],Table),
 
-    labeling([leftmost, step, down, satisfy],Table), 
+    labeling([],Table), 
     
-    %labeling([max, step, down, satisfy],Table), 
-    
-
-    %displayWithoutClean(ListOfLists, FinalRowValues, FinalColValues, Length, TableValues),
-
-    print_time('Labeling Time: ').
+    displayWithoutClean(ListOfLists, FinalRowValues, FinalColValues, Length, TableValues).
 
 
 runner(Length):-
