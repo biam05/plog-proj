@@ -2,9 +2,12 @@
 % ----------------------------------- BIBLIOTECAS ------------------------------------
 % ------------------------------------------------------------------------------------
 
+% Permite utilizar funções de manipulação de listas
 :- use_module(library(lists)).
-:- use_module(library(random)). % POde ser necessário retirar no fim se não se usar
-:- use_module(library(clpfd)). % Permite utilizar o módulo de restrições
+% Permite utilizar funções para gerar valores aleatórios
+:- use_module(library(random)).
+% Permite utilizar o módulo de restrições
+:- use_module(library(clpfd)). 
 
 % ------------------------------------------------------------------------------------
 % ----------------------------------- FICHEIROS  -------------------------------------
